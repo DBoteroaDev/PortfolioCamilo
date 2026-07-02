@@ -1,11 +1,283 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camilo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marco Vidal — Filmmaker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+<!-- Botón menú (flecha lateral) -->
+<button id="menuBtn" class="menu-btn" aria-label="Abrir menú" aria-expanded="false">
+  <span class="menu-arrow">&#8250;</span>
+</button>
+
+<div id="overlay" class="overlay"></div>
+
+<!-- Menú lateral -->
+<nav id="sidebar" class="sidebar">
+  <div class="sidebar-header">
+    <span class="sidebar-logo">M<span class="dot">.</span>V</span>
+    <button id="closeBtn" class="close-btn" aria-label="Cerrar menú">&times;</button>
+  </div>
+  <div class="sprocket-row">
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <ul class="sidebar-links">
+    <li><a href="#trabajo" class="nav-link" data-index="01">Trabajo</a></li>
+    <li><a href="#descripcion" class="nav-link" data-index="02">Descripción</a></li>
+    <li><a href="#contacto" class="nav-link" data-index="03">Contáctame</a></li>
+  </ul>
+  <div class="sidebar-footer">
+    <p>Basado en Barcelona<br>Disponible en todo el mundo</p>
+    <div class="sidebar-social">
+      <a href="#">Instagram</a>
+      <a href="#">Vimeo</a>
+      <a href="#">IMDb</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Contenido principal -->
+<main id="top">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="film-strip film-strip--top">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="hero-content">
+      <p class="eyebrow">Director &amp; Director de Fotografía</p>
+      <h1 class="hero-title">MARCO<br><span class="outline">VIDAL</span></h1>
+      <p class="hero-tagline">Historias que se sienten, no solo se ven.</p>
+      <a href="#trabajo" class="btn-primary nav-link">Ver el trabajo →</a>
+    </div>
+    <div class="film-strip film-strip--bottom">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </header>
+
+  <!-- SECCIÓN 1: TRABAJO / VIDEOS -->
+  <section id="trabajo" class="section section--work">
+    <div class="section-heading">
+      <span class="reel-tag">ROLLO 01</span>
+      <h2>Trabajo</h2>
+      <p class="section-sub">Documentales, cortometrajes y piezas de marca rodadas entre 2019 y 2026.</p>
+    </div>
+
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">Todo</button>
+      <button class="filter-btn" data-filter="documental">Documental</button>
+      <button class="filter-btn" data-filter="corto">Cortometraje</button>
+      <button class="filter-btn" data-filter="comercial">Comercial</button>
+      <button class="filter-btn" data-filter="videoclip">Videoclip</button>
+    </div>
+
+    <div class="video-grid">
+
+      <article class="video-card" data-category="documental" data-title="La Última Marea" data-year="2026" data-desc="Un retrato de los últimos pescadores artesanales de la costa cantábrica.">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#1c1c1e,#3a3a1a);">
+          <button class="play-btn" aria-label="Reproducir tráiler">▶</button>
+        </div>
+        <div class="video-info">
+          <h3>La Última Marea</h3>
+          <p>Documental · 2026</p>
+        </div>
+      </article>
+
+      <article class="video-card" data-category="corto" data-title="Ceniza" data-year="2025" data-desc="Cortometraje de ficción sobre la memoria y el fuego. Selección Oficial, Festival de Málaga.">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#2a1a1a,#3a2a10);">
+          <button class="play-btn" aria-label="Reproducir tráiler">▶</button>
+        </div>
+        <div class="video-info">
+          <h3>Ceniza</h3>
+          <p>Cortometraje · 2025</p>
+        </div>
+      </article>
+
+      <article class="video-card" data-category="comercial" data-title="Nace — Campaña" data-year="2025" data-desc="Campaña de lanzamiento para la marca de moda sostenible Nace.">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#1a1a1a,#2c2c05);">
+          <button class="play-btn" aria-label="Reproducir tráiler">▶</button>
+        </div>
+        <div class="video-info">
+          <h3>Nace — Campaña</h3>
+          <p>Comercial · 2025</p>
+        </div>
+      </article>
+
+      <article class="video-card" data-category="videoclip" data-title="Sombra Eléctrica" data-year="2024" data-desc="Videoclip para la banda Sombra Eléctrica, rodado en 16mm.">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#111,#332800);">
+          <button class="play-btn" aria-label="Reproducir tráiler">▶</button>
+        </div>
+        <div class="video-info">
+          <h3>Sombra Eléctrica</h3>
+          <p>Videoclip · 2024</p>
+        </div>
+      </article>
+
+      <article class="video-card" data-category="documental" data-title="Barrio de Cristal" data-year="2023" data-desc="Serie documental corta sobre los talleres de vidrio soplado de Barcelona.">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#1c1c1e,#2b2405);">
+          <button class="play-btn" aria-label="Reproducir tráiler">▶</button>
+        </div>
+        <div class="video-info">
+          <h3>Barrio de Cristal</h3>
+          <p>Documental · 2023</p>
+        </div>
+      </article>
+
+      <article class="video-card" data-category="corto" data-title="Domingo" data-year="2022" data-desc="Cortometraje sobre tres generaciones alrededor de una misma mesa.">
+        <div class="video-thumb" style="background:linear-gradient(135deg,#161616,#2e2410);">
+          <button class="play-btn" aria-label="Reproducir tráiler">▶</button>
+        </div>
+        <div class="video-info">
+          <h3>Domingo</h3>
+          <p>Cortometraje · 2022</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- SECCIÓN 2: DESCRIPCIÓN -->
+  <section id="descripcion" class="section section--about">
+    <div class="about-grid">
+      <div class="about-portrait">
+        <div class="portrait-frame">
+          <div class="portrait-placeholder">MV</div>
+        </div>
+        <div class="sprocket-row sprocket-row--vertical">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <div class="about-text">
+        <span class="reel-tag">ROLLO 02</span>
+        <h2>Descripción</h2>
+        <p class="about-lead">Soy Marco Vidal, director y director de fotografía con base en Barcelona. Llevo diez años contando historias reales con ojo de ficción: cámara al hombro, luz natural y paciencia para esperar el momento que no se puede dirigir.</p>
+        <p>Mi trabajo se mueve entre el documental de autor y la pieza de marca, siempre con la misma exigencia: que la imagen tenga textura y que el silencio también hable. He rodado en Cantabria, Barcelona, Lisboa y Buenos Aires, casi siempre con equipos pequeños y mucho 16mm.</p>
+
+        <div class="stats-row">
+          <div class="stat">
+            <span class="stat-num">37</span>
+            <span class="stat-label">Proyectos rodados</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">9</span>
+            <span class="stat-label">Premios de festival</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">10</span>
+            <span class="stat-label">Años detrás de cámara</span>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <span class="timeline-year">2026</span>
+            <span class="timeline-text">Estreno de "La Última Marea" en el Festival de Gijón.</span>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-year">2023</span>
+            <span class="timeline-text">Mención especial del jurado por "Barrio de Cristal".</span>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-year">2019</span>
+            <span class="timeline-text">Fundación de Vidal Films, estudio de producción independiente.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 3: CONTACTO -->
+  <section id="contacto" class="section section--contact">
+    <div class="section-heading">
+      <span class="reel-tag">ROLLO 03</span>
+      <h2>Contáctame</h2>
+      <p class="section-sub">Cuéntame sobre tu proyecto. Respondo en menos de 48 horas.</p>
+    </div>
+
+    <div class="contact-grid">
+      <form id="contactForm" class="contact-form" novalidate>
+
+        <div class="form-row">
+          <label for="name">Nombre</label>
+          <input type="text" id="name" name="name" placeholder="Tu nombre" required>
+          <span class="error-msg" data-for="name"></span>
+        </div>
+
+        <div class="form-row">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" placeholder="tucorreo@ejemplo.com" required>
+          <span class="error-msg" data-for="email"></span>
+        </div>
+
+        <div class="form-row">
+          <label for="projectType">Tipo de proyecto</label>
+          <select id="projectType" name="projectType" required>
+            <option value="" disabled selected>Selecciona una opción</option>
+            <option value="documental">Documental</option>
+            <option value="corto">Cortometraje</option>
+            <option value="comercial">Comercial / Marca</option>
+            <option value="videoclip">Videoclip</option>
+            <option value="otro">Otro</option>
+          </select>
+          <span class="error-msg" data-for="projectType"></span>
+        </div>
+
+        <div class="form-row">
+          <label for="message">Mensaje</label>
+          <textarea id="message" name="message" rows="5" placeholder="Cuéntame sobre tu idea, plazos y presupuesto aproximado" required></textarea>
+          <span class="error-msg" data-for="message"></span>
+        </div>
+
+        <button type="submit" class="btn-primary btn-submit">Enviar mensaje</button>
+
+        <p id="formSuccess" class="form-success" hidden>Gracias — tu mensaje ha sido enviado. Te responderé muy pronto.</p>
+      </form>
+
+      <div class="contact-side">
+        <div class="contact-info-block">
+          <h3>Correo</h3>
+          <p>hola@marcovidalfilms.com</p>
+        </div>
+        <div class="contact-info-block">
+          <h3>Teléfono</h3>
+          <p>+34 600 000 000</p>
+        </div>
+        <div class="contact-info-block">
+          <h3>Estudio</h3>
+          <p>Barcelona, España</p>
+        </div>
+        <div class="sprocket-row">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Marco Vidal Films. Todos los derechos reservados.</p>
+    <a href="#top" class="back-top">Volver arriba ↑</a>
+  </footer>
+
+</main>
+
+<!-- Modal de vídeo -->
+<div id="videoModal" class="video-modal" hidden>
+  <div class="video-modal-inner">
+    <button id="modalClose" class="modal-close" aria-label="Cerrar">&times;</button>
+    <div class="modal-video-area">
+      <span class="modal-play">▶</span>
+    </div>
+    <h3 id="modalTitle"></h3>
+    <p id="modalDesc"></p>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
