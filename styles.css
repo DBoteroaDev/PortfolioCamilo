@@ -1,6 +1,8 @@
 /* ===========================
    TOKENS
 =========================== */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600&display=swap');
+
 :root {
   --black: #0a0a0b;
   --black-soft: #151517;
@@ -68,6 +70,455 @@ ul {
 }
 
 /* ===========================
+SECTION - TRABAJO
+=========================== */
+.trabajo {
+  position: relative;
+  min-height: 100vh;
+  background: var(--black);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 44px 20px 34px;
+  overflow: hidden;
+}
+
+/* --- Toggle superior --- */
+.trabajo-toggle {
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid var(--gray-line);
+  border-radius: 999px;
+  background: var(--black-soft);
+  z-index: 5;
+}
+
+.toggle-btn {
+  font-family: var(--font-body);
+  font-size: .8rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--gray);
+  cursor: pointer;
+  transition: background .25s ease, color .25s ease;
+}
+
+.toggle-btn.active {
+  background: var(--yellow);
+  color: var(--black);
+  font-weight: 600;
+}
+
+.toggle-btn:hover:not(.active) {
+  color: var(--cream);
+}
+
+.toggle-btn:focus-visible {
+  outline: 2px solid var(--yellow);
+  outline-offset: 3px;
+}
+
+/* --- Contenedor de vistas --- */
+.view {
+  width: 100%;
+  max-width: 1690px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 0;
+}
+
+.view-lista {
+  display: none;
+  gap: var(--gap-lg);
+}
+
+.trabajo[data-view="lista"] .view-videos {
+  display: none;
+}
+
+.trabajo[data-view="lista"] .view-lista {
+  display: flex;
+}
+
+/* --- Vista VIDEOS: carrusel controlado por clic --- */
+.h-carousel {
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  padding: 30px 0;
+}
+
+.h-track {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  /* Separación compacta */
+  width: max-content;
+  will-change: transform;
+  transform: translateX(0);
+}
+
+.h-item {
+  position: relative;
+  width: min(30vw, 300px);
+  aspect-ratio: 16 / 10;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--gray-line);
+  flex-shrink: 0;
+  cursor: pointer;
+  opacity: .55;
+  filter: grayscale(35%);
+  transform: scale(.92) translateX(0);
+  /* Ajuste de transición para un efecto fluido y elástico como el agua */
+  transition: transform .7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity .4s ease, filter .4s ease, border-color .4s ease, box-shadow .4s ease;
+}
+
+.h-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.h-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 1;
+  transition: opacity .35s ease;
+  pointer-events: none;
+}
+
+.h-item.is-playing .h-thumb {
+  opacity: 0;
+}
+
+.h-item .h-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 14px 16px;
+  background: linear-gradient(0deg, rgba(10, 10, 11, .9), transparent);
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--cream);
+  z-index: 2;
+}
+
+.h-item.is-selected {
+  opacity: 1;
+  filter: grayscale(0);
+  transform: scale(1.22) translateX(0);
+  border-color: var(--yellow);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, .55);
+  z-index: 4;
+}
+
+/* ========================================================
+   SEPARACIÓN INTELIGENTE CON GPU (CERO SALTOS)
+   ======================================================== */
+.h-item:has(~ .h-item.is-selected) {
+  transform: scale(.92) translateX(-22px);
+}
+
+.h-item.is-selected~.h-item {
+  transform: scale(.92) translateX(22px);
+}
+
+/* ========================================================
+   EFECTO GOTA DE AGUA (RIPPLE LÍQUIDO)
+   ======================================================== */
+.ripple-drop {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(245, 197, 24, 0.35);
+  /* Tono amarillo sutil */
+  transform: translate(-50%, -50%) scale(0);
+  animation: ripple-water 0.75s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@keyframes ripple-water {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.9;
+    box-shadow: 0 0 0 0px rgba(245, 197, 24, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.4);
+  }
+
+  100% {
+    width: 320px;
+    height: 320px;
+    opacity: 0;
+    box-shadow: 0 0 0 30px rgba(245, 197, 24, 0), inset 0 0 30px rgba(255, 255, 255, 0);
+    transform: translate(-50%, -50%) scale(1.4);
+  }
+}
+
+/* Botón expandir */
+.h-expand {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(.7);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(243, 239, 228, .4);
+  background: rgba(10, 10, 11, .55);
+  backdrop-filter: blur(4px);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: .78rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease, transform .3s ease, background .25s ease, border-color .25s ease;
+  z-index: 5;
+}
+
+.h-item.is-selected .h-expand {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.h-expand:hover {
+  background: var(--yellow);
+  border-color: var(--yellow);
+  color: var(--black);
+}
+
+.h-expand:focus-visible {
+  outline: 2px solid var(--yellow);
+  outline-offset: 3px;
+}
+
+/* --- Vista LISTA: nombres a los lados + carrusel vertical --- */
+.side-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  width: 230px;
+}
+
+.side-left {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.side-right {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.side-list li {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--gray);
+  opacity: .4;
+  padding: 10px 6px;
+  cursor: pointer;
+  transition: color .3s ease, opacity .3s ease, transform .3s ease;
+}
+
+.side-left li {
+  transform-origin: right center;
+}
+
+.side-right li {
+  transform-origin: left center;
+}
+
+.side-list li.active {
+  color: var(--yellow);
+  opacity: 1;
+  transform: scale(1.08);
+}
+
+.v-carousel {
+  position: relative;
+  width: 240px;
+  height: 480px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+.v-track {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: v-scroll 55s linear infinite;
+}
+
+.trabajo.is-v-hover .v-track {
+  animation-play-state: paused;
+}
+
+.v-item {
+  position: relative;
+  width: 240px;
+  height: 135px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color .3s ease, transform .3s ease;
+}
+
+.v-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.v-item.active {
+  border-color: var(--yellow);
+  transform: scale(1.06);
+}
+
+@keyframes v-scroll {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+/* --- Editor, pie de sección --- */
+.trabajo-editor {
+  font-family: var(--font-body);
+  font-size: .78rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gray);
+  z-index: 5;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.trabajo-editor span {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  letter-spacing: .04em;
+  text-transform: none;
+  color: var(--cream);
+}
+
+/* --- Modal de vídeo a pantalla grande --- */
+.video-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 11, .95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+}
+
+.video-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.video-modal video {
+  max-width: 90vw;
+  max-height: 82vh;
+  border-radius: 10px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .6);
+}
+
+.modal-title {
+  position: absolute;
+  top: 28px;
+  left: 32px;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--cream);
+}
+
+.modal-close {
+  position: absolute;
+  top: 22px;
+  right: 32px;
+  background: none;
+  border: 2px solid var(--gray-line);
+  color: var(--cream);
+  font-size: 1.3rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all .25s ease;
+}
+
+.modal-close:hover {
+  border-color: var(--yellow);
+  color: var(--yellow);
+}
+
+@media (max-width: 860px) {
+  .view-lista {
+    gap: 20px;
+  }
+
+  .side-list {
+    width: 110px;
+  }
+
+  .side-list li {
+    font-size: 1rem;
+    padding: 7px 2px;
+  }
+
+  .v-carousel,
+  .v-item {
+    width: 160px;
+  }
+
+  .v-item {
+    height: 92px;
+  }
+}
+
+@media (max-width: 560px) {
+  .side-list {
+    display: none;
+  }
+}SS
+
+/* ===========================
    MENU BUTTON (FLECHA LATERAL)
 =========================== */
 .menu-btn {
@@ -91,9 +542,11 @@ ul {
     transform 0.4s cubic-bezier(0.77, 0, 0.18, 1),
     background 0.2s ease;
 }
+
 .menu-btn:hover {
   background: var(--cream);
 }
+
 .menu-btn:focus-visible {
   outline: 3px solid var(--cream);
   outline-offset: 3px;
@@ -111,6 +564,7 @@ ul {
 .menu-btn[aria-expanded="true"] {
   transform: translateY(-50%) translateX(min(340px, 84vw));
 }
+
 .menu-btn[aria-expanded="true"] .menu-arrow {
   transform: rotate(180deg) translateX(-1px);
 }
@@ -133,6 +587,7 @@ ul {
   flex-direction: column;
   padding: 28px 0;
 }
+
 .sidebar.open {
   transform: translateX(0);
 }
@@ -144,12 +599,14 @@ ul {
   padding: 0 32px 20px;
   border-bottom: 1px solid var(--gray-line);
 }
+
 .sidebar-logo {
   font-family: var(--font-display);
   font-size: 1.8rem;
   color: var(--cream);
   letter-spacing: 0.05em;
 }
+
 .sidebar-logo .dot {
   color: var(--yellow);
 }
@@ -162,6 +619,7 @@ ul {
   line-height: 1;
   cursor: pointer;
 }
+
 .close-btn:hover {
   color: var(--yellow);
 }
@@ -173,6 +631,7 @@ ul {
   gap: 6px;
   flex: 1;
 }
+
 .sidebar-links li a {
   display: flex;
   align-items: baseline;
@@ -187,12 +646,14 @@ ul {
     color 0.2s ease,
     padding-left 0.2s ease;
 }
+
 .sidebar-links li a::before {
   content: attr(data-index);
   font-family: var(--font-body);
   font-size: 0.8rem;
   color: var(--yellow);
 }
+
 .sidebar-links li a:hover,
 .sidebar-links li a.active {
   color: var(--yellow);
@@ -204,10 +665,12 @@ ul {
   padding: 20px 32px 0;
   border-top: 1px solid var(--gray-line);
 }
+
 .sidebar-footer p {
   font-size: 0.85rem;
   margin: 0 0 12px;
 }
+
 .sidebar-social {
   display: flex;
   justify-content: center;
@@ -234,6 +697,7 @@ ul {
   transform: translateY(-3px);
   box-shadow: 0 0 15px rgba(245, 197, 24, 0.35);
 }
+
 /* ===========================
    SECTION - TRABAJO
 =========================== */
@@ -241,13 +705,13 @@ ul {
    SECTION - Descripción
 =========================== */
 .descripcion-section {
-    min-height: 100vh;
-    background: rgb(35, 0, 231);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 60px 20px;
-    flex-direction: column;
+  min-height: 100vh;
+  background: rgb(35, 0, 231);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  flex-direction: column;
 }
 
 .descripcion-container {
@@ -282,6 +746,7 @@ ul {
   margin-bottom: 12px;
   max-width: 600px;
 }
+
 /* ===========================
    SECTION - Descripción - Carrusel
 =========================== */
@@ -335,10 +800,12 @@ ul {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
 }
+
 /* ===========================
    SECTION - Contacto
 =========================== */
