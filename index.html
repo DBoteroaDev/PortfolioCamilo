@@ -1,158 +1,275 @@
 <!doctype html>
 <html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+    <title>Portfolio</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
-  <title>Portfolio</title>
-</head>
+  <body>
+    <!-- Botón menú (flecha lateral) -->
+    <button
+      id="menuBtn"
+      class="menu-btn"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+    >
+      <span class="menu-arrow">&#8250;</span>
+    </button>
 
-<body>
-  <!-- Botón menú (flecha lateral) -->
-  <button id="menuBtn" class="menu-btn" aria-label="Abrir menú" aria-expanded="false">
-    <span class="menu-arrow">&#8250;</span>
-  </button>
-
-  <!-- Menú lateral -->
-  <nav id="sidebar" class="sidebar">
-    <div class="sidebar-header">
-      <span class="sidebar-logo">Camilo</span>
-    </div>
-    <div class="sprocket-row">
-      <span></span><span></span><span></span><span></span><span></span><span></span>
-    </div>
-    <ul class="sidebar-links">
-      <li><a href="#trabajo" class="nav-link" data-index="01">Trabajo</a></li>
-      <li>
-        <a href="#descripcion" class="nav-link" data-index="02">Descripción</a>
-      </li>
-      <li>
-        <a href="#contacto" class="nav-link" data-index="03">Contáctame</a>
-      </li>
-    </ul>
-    <div class="sidebar-footer">
-      <div class="sidebar-social">
-        <a href="https://instagram.com/tu_usuario" target="_blank" aria-label="Instagram">
-          <i class="fa-brands fa-instagram"></i>
-        </a>
-
-        <a href="https://facebook.com/tu_pagina" target="_blank" aria-label="X">
-          <i class="fa-brands fa-x-twitter"></i>
-        </a>
-
-        <a href="https://wa.me/34123456789" target="_blank" aria-label="WhatsApp">
-          <i class="fa-brands fa-whatsapp"></i>
-        </a>
-
-        <a href="https://instagram.com/tu_usuario" target="_blank" aria-label="Gmail">
-          <i class="fa-solid fa-envelope"></i>
-        </a>
+    <!-- Menú lateral -->
+    <nav id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-logo">Camilo</span>
       </div>
-    </div>
-  </nav>
-
-  <!-- Contenido principal -->
-  <!-- =========================== SECCIÓN TRABAJO =========================== -->
-  <section id="trabajo" class="trabajo" data-view="videos">
-    <div class="trabajo-toggle" role="tablist" aria-label="Cambiar vista de trabajo">
-      <button class="toggle-btn active" data-view-btn="videos" role="tab" aria-selected="true">Videos</button>
-      <button class="toggle-btn" data-view-btn="lista" role="tab" aria-selected="false">Lista</button>
-    </div>
-    <div class="view view-videos">
-      <div class="h-carousel">
-        <div class="h-track" id="hTrack"></div>
+      <div class="sprocket-row">
+        <span></span><span></span><span></span><span></span><span></span
+        ><span></span>
       </div>
-    </div>
-    <div class="view view-lista">
-      <ul class="side-list side-left" id="sideLeft"></ul>
-      <div class="v-carousel">
-        <div class="v-track" id="vTrack"></div>
-      </div>
-      <ul class="side-list side-right" id="sideRight"></ul>
-    </div>
-    <p class="trabajo-editor">Editado por <span>Camilo Botero Arango</span></p>
-  </section>
-  <div class="video-modal" id="videoModal" aria-hidden="true">
-    <span class="modal-title" id="modalTitle"></span>
-    <button class="modal-close" id="modalClose" aria-label="Cerrar vídeo">✕</button>
-    <video id="modalVideo" playsinline controls></video>
-  </div>
+      <ul class="sidebar-links">
+        <li><a href="#trabajo" class="nav-link" data-index="01">Trabajo</a></li>
+        <li>
+          <a href="#descripcion" class="nav-link" data-index="02"
+            >Descripción</a
+          >
+        </li>
+        <li>
+          <a href="#contacto" class="nav-link" data-index="03">Contáctame</a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="sidebar-social">
+          <a
+            href="https://instagram.com/tu_usuario"
+            target="_blank"
+            aria-label="Instagram"
+          >
+            <i class="fa-brands fa-instagram"></i>
+          </a>
 
-  <!-- Contenido Descripción -->
-  <section id="descripcion" class="descripcion-section">
-    <div class="descripcion-container">
-      <div class="descripcion-img">
-        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800" alt="Perfil" />
-      </div>
+          <a
+            href="https://facebook.com/tu_pagina"
+            target="_blank"
+            aria-label="X"
+          >
+            <i class="fa-brands fa-x-twitter"></i>
+          </a>
 
-      <div class="descripcion-texto">
-        <h2>Sobre mí</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-          ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
-        </p>
+          <a
+            href="https://wa.me/34123456789"
+            target="_blank"
+            aria-label="WhatsApp"
+          >
+            <i class="fa-brands fa-whatsapp"></i>
+          </a>
 
-        <p>
-          Duis aute irure dolor in reprehenderit in voluptate velit esse
-          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-          cupidatat non proident, sunt in culpa qui officia deserunt mollit
-          anim id est laborum.
-        </p>
-      </div>
-    </div>
-    <div class="carousel-wrapper">
-      <div class="carousel-track">
-        <div class="carousel-item">
-          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400" alt="" />
-          <p>Nombre 1</p>
-        </div>
-
-        <div class="carousel-item">
-          <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400" alt="" />
-          <p>Nombre 2</p>
-        </div>
-
-        <div class="carousel-item">
-          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400" alt="" />
-          <p>Nombre 3</p>
-        </div>
-
-        <div class="carousel-item">
-          <img src="https://images.unsplash.com/photo-1502767089025-6572583495b4?w=400" alt="" />
-          <p>Nombre 4</p>
-        </div>
-
-        <!-- repetimos para efecto infinito -->
-        <div class="carousel-item">
-          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400" alt="" />
-          <p>Nombre 1</p>
-        </div>
-
-        <div class="carousel-item">
-          <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400" alt="" />
-          <p>Nombre 2</p>
-        </div>
-
-        <div class="carousel-item">
-          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400" alt="" />
-          <p>Nombre 3</p>
-        </div>
-
-        <div class="carousel-item">
-          <img src="https://images.unsplash.com/photo-1502767089025-6572583495b4?w=400" alt="" />
-          <p>Nombre 4</p>
+          <a
+            href="https://instagram.com/tu_usuario"
+            target="_blank"
+            aria-label="Gmail"
+          >
+            <i class="fa-solid fa-envelope"></i>
+          </a>
         </div>
       </div>
+    </nav>
+
+    <!-- PRINCIPAL -->
+    <div class="intro-wallpaper-container">
+      <div class="lightning-flash"></div>
+      <div class="intro-name">Camilo</div>
     </div>
-  </section>
 
-  <section id="contacto" style="min-height: 100vh; background: green"></section>
+    <section id="trabajo" class="trabajo" data-view="videos">
+      <div
+        class="trabajo-toggle"
+        role="tablist"
+        aria-label="Cambiar vista de trabajo"
+      >
+        <button
+          class="toggle-btn active"
+          data-view-btn="videos"
+          role="tab"
+          aria-selected="true"
+        >
+          Videos
+        </button>
+        <button
+          class="toggle-btn"
+          data-view-btn="lista"
+          role="tab"
+          aria-selected="false"
+        >
+          Lista
+        </button>
+      </div>
+      <div class="view-stage">
+        <div class="view view-videos">
+          <div class="h-carousel">
+            <div class="h-track" id="hTrack"></div>
+          </div>
+        </div>
+        <div class="view view-lista">
+          <ul class="side-list side-left" id="sideLeft"></ul>
+          <div class="v-carousel">
+            <div class="v-track" id="vTrack"></div>
+          </div>
+          <ul class="side-list side-right" id="sideRight"></ul>
+        </div>
+      </div>
+    </section>
 
-  <script src="script.js"></script>
-</body>
+    <div class="video-modal" id="videoModal" aria-hidden="true">
+      <div class="modal-header">
+        <div class="modal-info-wrapper">
+          <button class="modal-info-btn" aria-label="Ver enlace del proyecto">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+              />
+            </svg>
+          </button>
+          <a
+            href="#"
+            class="modal-info-banner"
+            id="modalInfoLink"
+            target="_blank"
+            rel="noopener"
+            >Ir al proyecto original</a
+          >
+        </div>
 
+        <span class="modal-title" id="modalTitle"></span>
+        <button class="modal-close" id="modalClose" aria-label="Cerrar vídeo">
+          ✕
+        </button>
+      </div>
+
+      <video id="modalVideo" playsinline></video>
+
+      <button
+        class="modal-play-pause"
+        id="modalPlayPause"
+        aria-label="Reproducir o pausar"
+      >
+        <svg class="icon-play" viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z" />
+        </svg>
+        <svg class="icon-pause" viewBox="0 0 24 24">
+          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+        </svg>
+      </button>
+
+      <div class="modal-watermark">Editado por <span>Camilo</span></div>
+    </div>
+
+    <!-- Contenido Descripción -->
+    <section id="descripcion" class="descripcion-section">
+      <div class="descripcion-container">
+        <div class="descripcion-img">
+          <img
+            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800"
+            alt="Perfil"
+          />
+        </div>
+
+        <div class="descripcion-texto">
+          <h2>Sobre mí</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+          </p>
+
+          <p>
+            Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+            cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.
+          </p>
+        </div>
+      </div>
+      <div class="carousel-wrapper">
+        <div class="carousel-track">
+          <div class="carousel-item">
+            <img
+              src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400"
+              alt=""
+            />
+            <p>Nombre 1</p>
+          </div>
+
+          <div class="carousel-item">
+            <img
+              src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400"
+              alt=""
+            />
+            <p>Nombre 2</p>
+          </div>
+
+          <div class="carousel-item">
+            <img
+              src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400"
+              alt=""
+            />
+            <p>Nombre 3</p>
+          </div>
+
+          <div class="carousel-item">
+            <img
+              src="https://images.unsplash.com/photo-1502767089025-6572583495b4?w=400"
+              alt=""
+            />
+            <p>Nombre 4</p>
+          </div>
+
+          <!-- repetimos para efecto infinito -->
+          <div class="carousel-item">
+            <img
+              src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400"
+              alt=""
+            />
+            <p>Nombre 1</p>
+          </div>
+
+          <div class="carousel-item">
+            <img
+              src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400"
+              alt=""
+            />
+            <p>Nombre 2</p>
+          </div>
+
+          <div class="carousel-item">
+            <img
+              src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400"
+              alt=""
+            />
+            <p>Nombre 3</p>
+          </div>
+
+          <div class="carousel-item">
+            <img
+              src="https://images.unsplash.com/photo-1502767089025-6572583495b4?w=400"
+              alt=""
+            />
+            <p>Nombre 4</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="contacto"
+      style="min-height: 100vh; background: green"
+    ></section>
+
+    <script src="script.js"></script>
+  </body>
 </html>
