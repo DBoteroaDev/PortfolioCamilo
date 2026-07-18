@@ -2,84 +2,1136 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-    />
-    <title>Portfolio</title>
+    <title>Sección Trabajo — Videos / Lista</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght=400;500;600&display=swap");
+      :root {
+        --black: #0a0a0b;
+        --black-soft: #151517;
+        --black-card: #1b1b1d;
+        --yellow: #f5c518;
+        --yellow-dim: #c9a312;
+        --cream: #f3efe4;
+        --gray: #8c8c8f;
+        --gray-line: #2a2a2c;
+        --font-display: "Bebas Neue", sans-serif;
+        --font-body: "Space Grotesk", sans-serif;
+
+        /* SEPARACIÓN DE LAS LISTAS LATERALES */
+        --gap-lg: clamp(4rem, 12vw, 15rem);
+
+        /* ANCHO DEL CONTENEDOR VERTICAL */
+        --v-container-w: clamp(340px, 32vw, 480px);
+        /* ANCHO DE LAS TARJETAS VERTICALES */
+        --v-card-w: clamp(260px, 22vw, 360px);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        width: 100vw;
+        overflow-x: hidden; /* Evita scroll horizontal, pero permite scroll vertical */
+        background: radial-gradient(
+          circle at 50% 50%,
+          var(--black-soft),
+          var(--black)
+        );
+        font-family: var(--font-body);
+        position: relative;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: var(--font-display);
+        letter-spacing: 0.02em;
+        margin: 0;
+        color: var(--cream);
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      a,
+      button {
+        color: inherit;
+      }
+
+      /* ========================================================
+   INTRO ANIMADA / CENTRADO ABSOLUTO AJUSTADO
+   ======================================================== */
+      .intro-wallpaper-container {
+        position: fixed;
+        inset: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      /* Capa de relámpagos ambientales */
+      .lightning-flash {
+        position: absolute;
+        inset: 0;
+        background: #fff;
+        opacity: 0;
+        z-index: 1;
+        pointer-events: none;
+        mix-blend-mode: color-dodge;
+        animation: storm-lightning 2.2s cubic-bezier(0.15, 0.85, 0.3, 1) 0.2s
+          forwards;
+      }
+
+      .intro-name {
+        position: relative;
+        z-index: 2;
+        font-family: var(--font-display);
+        color: var(--cream);
+        text-align: center;
+        white-space: nowrap;
+        text-transform: uppercase;
+        font-size: 24vw;
+        line-height: 0.85;
+        margin-top: 12vh;
+        will-change: transform, opacity;
+        animation:
+          intro-electricity 1.6s cubic-bezier(0.25, 1, 0.5, 1) 0.3s forwards,
+          transform-to-wallpaper 2.5s cubic-bezier(0.25, 1, 0.3, 1) 1.9s
+            forwards;
+        width: 66%;
+      }
+
+      /* Animación: Descarga de rayos ambientales */
+      @keyframes storm-lightning {
+        0%,
+        11%,
+        15%,
+        45%,
+        49%,
+        100% {
+          opacity: 0;
+        }
+        12% {
+          opacity: 0.9;
+          background: radial-gradient(
+            circle,
+            #ffffff 10%,
+            #7dbbff 70%,
+            transparent 100%
+          );
+        }
+        14% {
+          opacity: 0.3;
+        }
+        16% {
+          opacity: 0.95;
+          background: radial-gradient(
+            circle,
+            #ffffff 20%,
+            #a4ceff 80%,
+            transparent 100%
+          );
+        }
+        46% {
+          opacity: 0.8;
+          background: radial-gradient(
+            circle,
+            #ffffff 10%,
+            #f5c518 60%,
+            transparent 100%
+          );
+        }
+        48% {
+          opacity: 0.2;
+        }
+      }
+
+      /* Animación: Sobrecarga eléctrica en las letras sin saltos 3D */
+      @keyframes intro-electricity {
+        0% {
+          opacity: 0;
+          transform: scale(0.85);
+          text-shadow: 0 0 50px rgba(245, 197, 24, 0.8);
+        }
+        11% {
+          opacity: 0.1;
+          text-shadow: none;
+        }
+        12% {
+          opacity: 1;
+          text-shadow:
+            0 0 10px #fff,
+            0 0 30px #00a2ff,
+            0 0 60px #00a2ff;
+        }
+        14% {
+          text-shadow:
+            0 0 5px #fff,
+            0 0 15px #00a2ff;
+        }
+        16% {
+          text-shadow:
+            0 0 20px #fff,
+            0 0 40px #f5c518,
+            0 0 80px #f5c518;
+        }
+        25% {
+          opacity: 1;
+          transform: scale(1);
+          text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+        }
+        45% {
+          text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        }
+        46% {
+          text-shadow:
+            0 0 20px #fff,
+            0 0 50px #f5c518;
+        }
+        48% {
+          text-shadow: none;
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+          text-shadow: 0 0 15px rgba(243, 239, 228, 0.15);
+        }
+      }
+
+      /* Animación: Transición de zoom */
+      @keyframes transform-to-wallpaper {
+        0% {
+          opacity: 1;
+          transform: scale(1);
+          letter-spacing: 0.05em;
+        }
+        100% {
+          opacity: 0.1;
+          transform: scaleX(1.5) scaleY(2.4);
+          letter-spacing: 0.1em;
+          text-shadow: none;
+        }
+      }
+
+      /* ========================================================
+   SECTION - TRABAJO (Diseño con Centrado Absoluto del Carrusel)
+   ======================================================== */
+      .trabajo {
+        position: relative;
+        height: 100vh;
+        width: 100vw;
+        z-index: 2;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* --- Toggle superior (Sin left especificado) --- */
+      .trabajo-toggle {
+        position: absolute;
+        top: 40px;
+        display: flex;
+        gap: 6px;
+        padding: 6px;
+        border: 1px solid var(--gray-line);
+        border-radius: 999px;
+        background: var(--black-soft);
+        z-index: 10;
+
+        opacity: 0;
+        transform: translateY(-10px);
+        animation: toggle-fade-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) 2.6s
+          forwards;
+      }
+
+      @keyframes toggle-fade-in {
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .toggle-btn {
+        font-family: var(--font-body);
+        font-size: 0.8rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 10px 24px;
+        border-radius: 999px;
+        border: none;
+        background: transparent;
+        color: var(--gray);
+        cursor: pointer;
+        transition:
+          background 0.25s ease,
+          color 0.25s ease;
+      }
+      .toggle-btn.active {
+        background: var(--yellow);
+        color: var(--black);
+        font-weight: 600;
+      }
+      .toggle-btn:hover:not(.active) {
+        color: var(--cream);
+      }
+      .toggle-btn:focus-visible {
+        outline: 2px solid var(--yellow);
+        outline-offset: 3px;
+      }
+
+      /* --- Contenedor de vistas (Entrada de carrete físico: derecha a izquierda, sin fade) --- */
+      .view-stage {
+        width: 100%;
+        height: 100%;
+        max-width: 1690px;
+        position: relative;
+        perspective: 1400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        /* Empieza completamente fuera de pantalla (derecha) Y con opacity:0.
+   Así queda garantizado que no se pueda ver nada del carrusel en ningún
+   momento antes de que arranque su propia animación (que se dispara justo
+   cuando termina el zoom del nombre, vía el delay de abajo). En cuanto la
+   animación arranca, pasa a opacity:1 de golpe (ya en movimiento) y se
+   desliza hasta el centro. */
+        opacity: 0;
+        transform: translateX(100vw);
+        will-change: transform, opacity;
+        animation: carousel-slide-in 2.4s cubic-bezier(0.1, 0.85, 0.25, 1) 2.2s
+          forwards;
+      }
+
+      @keyframes carousel-slide-in {
+        0% {
+          opacity: 1;
+          transform: translateX(100vw);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(
+            0
+          ); /* Se desliza hasta su posición centrada de forma gradual */
+        }
+      }
+
+      .view {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          opacity 0.65s cubic-bezier(0.65, 0, 0.35, 1),
+          transform 0.65s cubic-bezier(0.65, 0, 0.35, 1);
+        will-change: opacity, transform;
+        backface-visibility: hidden;
+      }
+      .view-lista {
+        gap: var(--gap-lg);
+      }
+
+      .trabajo[data-view="videos"] .view-videos {
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+        z-index: 2;
+      }
+      .trabajo[data-view="videos"] .view-lista {
+        opacity: 0;
+        transform: scaleX(0.3) rotateY(8deg);
+        pointer-events: none;
+        z-index: 1;
+      }
+      .trabajo[data-view="lista"] .view-lista {
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+        z-index: 2;
+      }
+      .trabajo[data-view="lista"] .view-videos {
+        opacity: 0;
+        transform: scaleX(0.3) rotateY(-8deg);
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* --- Vista VIDEOS: carrusel centrado --- */
+      .h-carousel {
+        width: 100%;
+        padding: 60px 0;
+        display: flex;
+        align-items: center;
+        /* Base tal cual: SIN overflow:hidden y SIN mask-image.
+   Así, durante toda la animación de carrete se ve el carrusel completo,
+   sin recortar ni cortar ninguna tarjeta. */
+      }
+
+      .h-carousel.reel-done {
+        /* El overflow se activa al instante; el mask-image (la sombra) lo controla
+   el JS con un fade manual (ver initReelShadow) para que aparezca poco a
+   poco en vez de de golpe. */
+        overflow: hidden;
+      }
+      .h-track {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        width: max-content;
+        will-change: transform;
+        backface-visibility: hidden;
+        transform: translateX(0);
+      }
+
+      /* --- CONTENEDOR DE TARJETA EXTERNA --- */
+      .h-card-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        flex-shrink: 0;
+        transition:
+          transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
+          opacity 0.4s ease;
+        transform: scale(0.92);
+        opacity: 0.55;
+      }
+
+      /* --- Metadatos Superiores Externos --- */
+      .h-card-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 4px;
+        font-family: var(--font-body);
+        color: var(--cream);
+        font-size: 0.72rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        opacity: 0;
+        transform: translateY(5px);
+        transition:
+          opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+          transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+      .h-card-views {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .h-card-views svg {
+        width: 12px;
+        height: 12px;
+        fill: currentColor;
+      }
+
+      .h-card-wrapper:hover .h-card-meta {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .h-card-wrapper.is-selected .h-card-meta {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* --- El Recuadro del Video / Tarjeta --- */
+      .h-item {
+        position: relative;
+        width: min(30vw, 300px);
+        aspect-ratio: 16 / 10;
+        border-radius: 14px;
+        overflow: hidden;
+        border: 1px solid var(--gray-line);
+        cursor: pointer;
+        filter: grayscale(35%);
+        transition:
+          filter 0.4s ease,
+          border-color 0.4s ease,
+          box-shadow 0.4s ease;
+      }
+      .h-item video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .h-thumb {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        opacity: 1;
+        transition: opacity 0.35s ease;
+        pointer-events: none;
+      }
+      .h-item.is-playing .h-thumb {
+        opacity: 0;
+      }
+
+      .h-card-wrapper.is-selected {
+        opacity: 1;
+        transform: scale(1.22);
+        z-index: 4;
+      }
+      .h-card-wrapper.is-selected .h-item {
+        filter: grayscale(0);
+        border-color: var(--yellow);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.55);
+      }
+
+      /* SEPARACIÓN INTELIGENTE CON GPU */
+      .h-card-wrapper:has(~ .h-card-wrapper.is-selected) {
+        transform: scale(0.92) translateX(-22px);
+      }
+      .h-card-wrapper.is-selected ~ .h-card-wrapper {
+        transform: scale(0.92) translateX(22px);
+      }
+
+      /* EFFECT RIPPLE
+   Optimización: se anima transform:scale (solo compositor) en vez de
+   width/height (que obligaría a recalcular layout en cada frame). El
+   tamaño final se fija ya en la propia regla (320px) y se "esconde"
+   con scale(0), así el resultado visual es idéntico pero mucho más fluido. */
+      .ripple-drop {
+        position: absolute;
+        width: 448px;
+        height: 448px;
+        border-radius: 50%;
+        background: rgba(245, 197, 24, 0.35);
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0.9;
+        pointer-events: none;
+        z-index: 10;
+        animation: ripple-water 0.75s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+      }
+      @keyframes ripple-water {
+        0% {
+          transform: translate(-50%, -50%) scale(0);
+          opacity: 0.9;
+          box-shadow:
+            0 0 0 0px rgba(245, 197, 24, 0.4),
+            inset 0 0 15px rgba(255, 255, 255, 0.4);
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+          opacity: 0;
+          box-shadow:
+            0 0 0 30px rgba(245, 197, 24, 0),
+            inset 0 0 30px rgba(255, 255, 255, 0);
+        }
+      }
+
+      /* Botones Expandir */
+      .h-expand,
+      .v-expand {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.7);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        border-radius: 999px;
+        border: 1px solid rgba(243, 239, 228, 0.4);
+        background: rgba(10, 10, 11, 0.75);
+        backdrop-filter: blur(6px);
+        color: var(--cream);
+        font-family: var(--font-body);
+        font-size: 0.78rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        cursor: pointer;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s ease,
+          background 0.25s ease,
+          border-color 0.25s ease;
+        z-index: 5;
+      }
+      .h-card-wrapper.is-selected .h-expand,
+      .v-item.active .v-expand {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      .h-expand:hover,
+      .v-expand:hover {
+        background: var(--yellow);
+        border-color: var(--yellow);
+        color: var(--black);
+      }
+
+      /* --- Vista LISTA --- */
+      .side-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 2px;
+        width: 230px;
+        z-index: 5;
+      }
+      .side-left {
+        align-items: flex-end;
+        text-align: right;
+      }
+      .side-right {
+        align-items: flex-start;
+        text-align: left;
+      }
+      .side-list li {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        font-family: var(--font-display);
+        font-size: 1.4rem;
+        color: var(--gray);
+        opacity: 0.4;
+        padding: 10px 6px;
+        cursor: pointer;
+        transition:
+          color 0.3s ease,
+          opacity 0.3s ease,
+          transform 0.3s ease;
+      }
+      .side-left li {
+        transform-origin: right center;
+        justify-content: flex-end;
+      }
+      .side-right li {
+        transform-origin: left center;
+        justify-content: flex-start;
+      }
+      .side-list li:hover:not(.active) {
+        color: var(--cream);
+        opacity: 0.65;
+      }
+      .side-list li.active {
+        color: var(--yellow);
+        opacity: 1;
+        transform: scale(1.08);
+      }
+      .side-views {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-family: var(--font-body);
+        font-size: 0.74rem;
+        letter-spacing: 0.04em;
+        text-transform: none;
+        color: inherit;
+        opacity: 0.8;
+      }
+      .side-views svg {
+        width: 12px;
+        height: 12px;
+        fill: currentColor;
+      }
+
+      /* CONTENEDOR VERTICAL */
+      .v-carousel {
+        position: relative;
+        width: var(--v-container-w);
+        height: min(68vh, 700px);
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(
+          180deg,
+          transparent,
+          #000 8%,
+          #000 92%,
+          transparent
+        );
+        mask-image: linear-gradient(
+          180deg,
+          transparent,
+          #000 8%,
+          #000 92%,
+          transparent
+        );
+        z-index: 4;
+      }
+      .v-track {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 22px;
+        width: 100%;
+        will-change: transform;
+        backface-visibility: hidden;
+        transform: translateY(0);
+      }
+      /* TARJETAS VERTICALES */
+      .v-item {
+        position: relative;
+        width: var(--v-card-w);
+        aspect-ratio: 16 / 10;
+        border-radius: 14px;
+        overflow: hidden;
+        border: 2px solid var(--gray-line);
+        background: var(--black-card);
+        cursor: pointer;
+        flex-shrink: 0;
+        opacity: 0.5;
+        transform: scale(0.9);
+        transition:
+          border-color 0.35s ease,
+          transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+          opacity 0.35s ease,
+          box-shadow 0.35s ease;
+      }
+      .v-item video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .v-thumb {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        opacity: 1;
+        transition: opacity 0.35s ease;
+        pointer-events: none;
+      }
+      .v-item.is-playing .v-thumb {
+        opacity: 0;
+      }
+      .v-item.active {
+        opacity: 1;
+        border-color: var(--yellow);
+        transform: scale(1.06);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.65);
+      }
+
+      /* ========================================================
+   MODAL DE VIDEO A PANTALLA COMPLETA
+   ======================================================== */
+      .video-modal {
+        position: fixed;
+        inset: 0;
+        background: var(--black);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+      .video-modal.open {
+        opacity: 1;
+        pointer-events: auto;
+        transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .video-modal video {
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        transform: scale(0.85);
+        transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+        cursor: pointer;
+      }
+      .video-modal.open video {
+        transform: scale(1);
+        transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .modal-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        padding: 24px 32px;
+        z-index: 10;
+        background: linear-gradient(
+          180deg,
+          rgba(10, 10, 11, 0.85) 0%,
+          rgba(10, 10, 11, 0) 100%
+        );
+        pointer-events: none;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition:
+          opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+          transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+      .video-modal.open .modal-header {
+        pointer-events: auto;
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.3s;
+      }
+
+      .modal-info-wrapper {
+        justify-self: start;
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 44px;
+        max-width: 44px;
+        background: rgba(10, 10, 11, 0.55);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(243, 239, 228, 0.2);
+        border-radius: 999px;
+        overflow: hidden;
+        cursor: pointer;
+        transition:
+          max-width 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+          border-color 0.25s ease;
+      }
+      .modal-info-wrapper:hover {
+        max-width: 320px;
+        border-color: var(--yellow);
+      }
+      .modal-info-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        border: none;
+        background: transparent;
+        color: var(--cream);
+        cursor: pointer;
+        transition: color 0.25s ease;
+      }
+      .modal-info-btn svg {
+        width: 22px;
+        height: 22px;
+        fill: currentColor;
+      }
+      .modal-info-wrapper:hover .modal-info-btn {
+        color: var(--yellow);
+      }
+      .modal-info-banner {
+        white-space: nowrap;
+        font-family: var(--font-body);
+        font-size: 0.78rem;
+        letter-spacing: 0.05em;
+        color: var(--cream);
+        text-decoration: none;
+        padding-right: 20px;
+        opacity: 0;
+        transform: translateX(-10px);
+        transition:
+          opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+          transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+      .modal-info-wrapper:hover .modal-info-banner {
+        opacity: 1;
+        transform: translateX(0);
+        transition-delay: 0.1s;
+      }
+
+      .modal-title {
+        grid-column: 2;
+        text-align: center;
+        font-family: var(--font-display);
+        font-size: 2.2rem;
+        color: var(--cream);
+        letter-spacing: 0.04em;
+        text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-close {
+        grid-column: 3;
+        justify-self: end;
+        background: rgba(10, 10, 11, 0.55);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(243, 239, 228, 0.2);
+        color: var(--cream);
+        font-size: 1.3rem;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.25s ease;
+      }
+      .modal-close:hover {
+        border-color: var(--yellow);
+        color: var(--yellow);
+        background: rgba(245, 197, 24, 0.1);
+      }
+
+      .modal-play-pause {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: rgba(10, 10, 11, 0.65);
+        backdrop-filter: blur(8px);
+        border: 2px solid rgba(243, 239, 228, 0.25);
+        color: var(--yellow);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 15;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+          transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+          background 0.25s ease,
+          border-color 0.25s ease;
+      }
+      .modal-play-pause svg {
+        width: 32px;
+        height: 32px;
+        fill: currentColor;
+      }
+      .modal-play-pause:hover {
+        background: rgba(245, 197, 24, 0.15);
+        border-color: var(--yellow);
+        transform: translate(-50%, -50%) scale(1.05);
+      }
+
+      .modal-play-pause .icon-pause {
+        display: none;
+      }
+      .modal-play-pause.is-playing .icon-play {
+        display: none;
+      }
+      .modal-play-pause.is-playing .icon-pause {
+        display: block;
+      }
+      .modal-play-pause.visible {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      .modal-play-pause.flash {
+        animation: play-flash 0.75s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      }
+      @keyframes play-flash {
+        0% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(1.3);
+        }
+      }
+
+      .modal-watermark {
+        position: absolute;
+        bottom: 34px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: var(--font-body);
+        font-size: 0.78rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--gray);
+        pointer-events: none;
+        z-index: 10;
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        opacity: 0;
+        transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.8s;
+      }
+      .modal-watermark span {
+        font-family: var(--font-display);
+        font-size: 1.9rem;
+        letter-spacing: 0.04em;
+        text-transform: none;
+        color: var(--cream);
+      }
+      .video-modal.open .modal-watermark {
+        opacity: 1;
+      }
+
+      @media (max-width: 1024px) {
+        :root {
+          --gap-lg: clamp(2rem, 6vw, 4rem);
+        }
+      }
+      @media (max-width: 860px) {
+        :root {
+          --v-container-w: 240px;
+          --v-card-w: 180px;
+          --gap-lg: 20px;
+        }
+        .trabajo-toggle {
+          top: 20px;
+        }
+        .side-list {
+          width: 110px;
+        }
+        .side-list li {
+          font-size: 1rem;
+          padding: 7px 2px;
+        }
+        .v-carousel {
+          height: min(58vh, 520px);
+        }
+        .modal-title {
+          font-size: 1.5rem;
+        }
+        .modal-header {
+          padding: 16px 20px;
+        }
+        .modal-play-pause {
+          width: 64px;
+          height: 64px;
+        }
+        .modal-play-pause svg {
+          width: 24px;
+          height: 24px;
+        }
+      }
+      @media (max-width: 560px) {
+        .side-list {
+          display: none;
+        }
+      }
+
+      /* ========================================================
+   SECTION - DESCRIPCIÓN (3 columnas)
+   ======================================================== */
+      .descripcion {
+        position: relative;
+        z-index: 2;
+        height: 100vh;
+        width: 99%;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
+        gap: 0;
+        padding: 0;
+        background: transparent; /* deja ver el wallpaper de CAMILO detrás */
+      }
+
+      .descripcion-col {
+        position: relative;
+        z-index: 2;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 2.5rem;
+      }
+
+      /* --- Columna 1: presentación --- */
+      .descripcion-intro h3 {
+        font-family: var(--font-body);
+        text-transform: uppercase;
+        letter-spacing: 0.25em;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--yellow);
+        margin-bottom: 0.6rem;
+      }
+      .descripcion-intro h1 {
+        font-family: var(--font-display);
+        font-size: clamp(3rem, 6vw, 6rem);
+        line-height: 0.88;
+        color: var(--cream);
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        margin-bottom: 1.2rem;
+      }
+      .descripcion-intro p {
+        font-family: var(--font-body);
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--gray);
+        max-width: 380px;
+      }
+
+      /* --- Columna 2: foto de perfil (placeholder) --- */
+      .descripcion-col-foto {
+        align-items: center;
+      }
+      .foto-placeholder {
+        height: 90%;
+        width: 90%;
+        background: #e4e0bc; /* recuadro rojo temporal */
+        border-radius: 16px;
+      }
+
+      /* --- Columna 3: descripción breve + fichas youtubers --- */
+      .descripcion-texto {
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: var(--gray);
+        margin-bottom: 2rem;
+      }
+      .youtuber-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+      .youtuber-card {
+        background: var(--black-card);
+        border: 1px solid var(--gray-line);
+        border-radius: 10px;
+        padding: 1.4rem 1rem;
+        text-align: center;
+        font-family: var(--font-body);
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        color: var(--cream);
+        transition:
+          border-color 0.25s ease,
+          color 0.25s ease;
+      }
+      .youtuber-card:hover {
+        border-color: var(--yellow);
+        color: var(--yellow);
+      }
+
+      @media (max-width: 900px) {
+        .descripcion {
+          height: auto;
+          width: 100%;
+          grid-template-columns: 1fr;
+          gap: 2.5rem;
+          text-align: center;
+          padding: 4rem 8vw;
+        }
+        .descripcion-col {
+          height: auto;
+          align-items: center;
+        }
+        .descripcion-intro p {
+          margin: 0 auto;
+        }
+      }
+    </style>
   </head>
-
   <body>
-    <!-- Botón menú (flecha lateral) -->
-    <button
-      id="menuBtn"
-      class="menu-btn"
-      aria-label="Abrir menú"
-      aria-expanded="false"
-    >
-      <span class="menu-arrow">&#8250;</span>
-    </button>
-
-    <!-- Menú lateral -->
-    <nav id="sidebar" class="sidebar">
-      <div class="sidebar-header">
-        <span class="sidebar-logo">Camilo</span>
-      </div>
-      <div class="sprocket-row">
-        <span></span><span></span><span></span><span></span><span></span
-        ><span></span>
-      </div>
-      <ul class="sidebar-links">
-        <li><a href="#trabajo" class="nav-link" data-index="01">Trabajo</a></li>
-        <li>
-          <a href="#descripcion" class="nav-link" data-index="02"
-            >Descripción</a
-          >
-        </li>
-        <li>
-          <a href="#contacto" class="nav-link" data-index="03">Contáctame</a>
-        </li>
-      </ul>
-      <div class="sidebar-footer">
-        <div class="sidebar-social">
-          <a
-            href="https://instagram.com/tu_usuario"
-            target="_blank"
-            aria-label="Instagram"
-          >
-            <i class="fa-brands fa-instagram"></i>
-          </a>
-
-          <a
-            href="https://facebook.com/tu_pagina"
-            target="_blank"
-            aria-label="X"
-          >
-            <i class="fa-brands fa-x-twitter"></i>
-          </a>
-
-          <a
-            href="https://wa.me/34123456789"
-            target="_blank"
-            aria-label="WhatsApp"
-          >
-            <i class="fa-brands fa-whatsapp"></i>
-          </a>
-
-          <a
-            href="https://instagram.com/tu_usuario"
-            target="_blank"
-            aria-label="Gmail"
-          >
-            <i class="fa-solid fa-envelope"></i>
-          </a>
-        </div>
-      </div>
-    </nav>
-
-    <!-- PRINCIPAL -->
+    <!-- CAPA DE INTRO CON ZOOM DE CENTRADO ABSOLUTO AJUSTADO -->
     <div class="intro-wallpaper-container">
       <div class="lightning-flash"></div>
       <div class="intro-name">Camilo</div>
@@ -120,6 +1172,31 @@
             <div class="v-track" id="vTrack"></div>
           </div>
           <ul class="side-list side-right" id="sideRight"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="descripcion" class="descripcion">
+      <!-- Contenido Descripción -->
+      <div class="descripcion-col descripcion-intro">
+        <h3>Hola soy</h3>
+        <h1>Camilo</h1>
+        <p>Editor de los mejores youtubers de España.</p>
+      </div>
+
+      <div class="descripcion-col descripcion-col-foto">
+        <div class="foto-placeholder"></div>
+      </div>
+
+      <div class="descripcion-col descripcion-col-info">
+        <p class="descripcion-texto">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </p>
+        <div class="youtuber-grid">
+          <div class="youtuber-card">Youtuber 1</div>
+          <div class="youtuber-card">Youtuber 2</div>
+          <div class="youtuber-card">Youtuber 3</div>
+          <div class="youtuber-card">Youtuber 4</div>
         </div>
       </div>
     </section>
@@ -168,108 +1245,601 @@
       <div class="modal-watermark">Editado por <span>Camilo</span></div>
     </div>
 
-    <!-- Contenido Descripción -->
-    <section id="descripcion" class="descripcion-section">
-      <div class="descripcion-container">
-        <div class="descripcion-img">
-          <img
-            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800"
-            alt="Perfil"
-          />
-        </div>
+    <script>
+      (function () {
+        // --- Reactivar recorte + sombra del carrusel al terminar la animación de carrete ---
+        // Mientras .view-stage hace el "carousel-slide-in" el carrusel se ve completo
+        // (sin overflow:hidden ni mask-image). En cuanto esa animación termina:
+        //   1) se añade .reel-done a .h-carousel -> reactiva overflow:hidden al instante.
+        //   2) se anima a mano (requestAnimationFrame) el MISMO mask-image original,
+        //      yendo de "sin sombra" a la sombra real, con un ease-out, porque
+        //      transicionar mask-image por CSS no se interpola de forma fiable
+        //      entre navegadores (por eso antes aparecía de golpe).
+        (function initReelShadow() {
+          const viewStage = document.querySelector(".view-stage");
+          const hCarouselEl = document.querySelector(".h-carousel");
+          if (!viewStage || !hCarouselEl) return;
 
-        <div class="descripcion-texto">
-          <h2>Sobre mí</h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
-          </p>
+          const ORIGINAL_MASK =
+            "linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent)";
 
-          <p>
-            Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.
-          </p>
-        </div>
-      </div>
-      <div class="carousel-wrapper">
-        <div class="carousel-track">
-          <div class="carousel-item">
-            <img
-              src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400"
-              alt=""
-            />
-            <p>Nombre 1</p>
-          </div>
+          function fadeInShadow(el, duration = 900) {
+            el.style.willChange = "mask-image, -webkit-mask-image";
+            const start = performance.now();
+            function step(now) {
+              const t = Math.min(1, (now - start) / duration);
+              const eased = 1 - Math.pow(1 - t, 3); // ease-out cúbico
+              const edgeAlpha = 1 - eased; // 1 (sin sombra) -> 0 (sombra completa, igual que el original)
+              const gradient = `linear-gradient(90deg, rgba(0,0,0,${edgeAlpha}), #000 6%, #000 94%, rgba(0,0,0,${edgeAlpha}))`;
+              el.style.webkitMaskImage = gradient;
+              el.style.maskImage = gradient;
+              if (t < 1) {
+                requestAnimationFrame(step);
+              } else {
+                // Al terminar, fija EXACTAMENTE el degradado original (sin redondeos de alpha)
+                el.style.webkitMaskImage = ORIGINAL_MASK;
+                el.style.maskImage = ORIGINAL_MASK;
+                el.style.willChange = "auto"; // libera la capa GPU, ya no hace falta
+              }
+            }
+            requestAnimationFrame(step);
+          }
 
-          <div class="carousel-item">
-            <img
-              src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400"
-              alt=""
-            />
-            <p>Nombre 2</p>
-          </div>
+          viewStage.addEventListener("animationend", (e) => {
+            if (e.animationName === "carousel-slide-in") {
+              viewStage.style.willChange = "auto"; // la animación de entrada ya terminó, liberar
+              hCarouselEl.classList.add("reel-done");
+              fadeInShadow(hCarouselEl, 900);
+              document.documentElement.style.overflowY = ""; // libera el scroll en cuanto aparece el carrusel horizontal
+              document.body.style.overflowY = "";
+            }
+          });
+        })();
+        const PROYECTOS = [
+          {
+            id: "v1",
+            titulo: "Nocturno",
+            subtitulo: "prueba",
+            visitas: "1.2k",
+            link: "https://vimeo.com/ejemplo1",
+          },
+          {
+            id: "v2",
+            titulo: "Aura",
+            subtitulo: "prueba",
+            visitas: "1.2k",
+            link: "https://vimeo.com/ejemplo2",
+          },
+          {
+            id: "v3",
+            titulo: "Ríos",
+            subtitulo: "prueba",
+            visitas: "1.2k",
+            link: "https://vimeo.com/ejemplo3",
+          },
+          {
+            id: "v4",
+            titulo: "Umbral",
+            subtitulo: "prueba",
+            visitas: "1.2k",
+            link: "https://vimeo.com/ejemplo4",
+          },
+          {
+            id: "v5",
+            titulo: "Eco",
+            subtitulo: "prueba",
+            visitas: "1.2k",
+            link: "https://vimeo.com/ejemplo5",
+          },
+          {
+            id: "v6",
+            titulo: "Deriva",
+            subtitulo: "prueba",
+            visitas: "1.2k",
+            link: "https://vimeo.com/ejemplo6",
+          },
+          {
+            id: "v7",
+            titulo: "Latido",
+            subtitulo: "prueba",
+            visitas: "1.2k",
+            link: "https://vimeo.com/ejemplo7",
+          },
+          {
+            id: "v8",
+            titulo: "Marea",
+            subtitulo: "prueba",
+            visitas: "1.2k",
+            link: "https://vimeo.com/ejemplo8",
+          },
+          {
+            id: "v9",
+            titulo: "Fuego",
+            subtitulo: "prueba",
+            visitas: "1.2k",
+            link: "https://vimeo.com/ejemplo9",
+          },
+          {
+            id: "v10",
+            titulo: "Vigilia",
+            subtitulo: "prueba",
+            visitas: "1.2k",
+            link: "https://vimeo.com/ejemplo10",
+          },
+        ].map((p) => ({
+          ...p,
+          src: "./videos/prueba.mp4",
+          poster: "./img/NoFotoTarjeta.png",
+        }));
 
-          <div class="carousel-item">
-            <img
-              src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400"
-              alt=""
-            />
-            <p>Nombre 3</p>
-          </div>
+        const section = document.getElementById("trabajo");
+        const hTrack = document.getElementById("hTrack");
+        const vTrack = document.getElementById("vTrack");
+        const sideLeft = document.getElementById("sideLeft");
+        const sideRight = document.getElementById("sideRight");
+        const modal = document.getElementById("videoModal");
+        const modalVideo = document.getElementById("modalVideo");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalClose = document.getElementById("modalClose");
+        const modalPlayPause = document.getElementById("modalPlayPause");
 
-          <div class="carousel-item">
-            <img
-              src="https://images.unsplash.com/photo-1502767089025-6572583495b4?w=400"
-              alt=""
-            />
-            <p>Nombre 4</p>
-          </div>
+        document.documentElement.style.overflowY = "hidden";
+        document.body.style.overflowY = "hidden";
 
-          <!-- repetimos para efecto infinito -->
-          <div class="carousel-item">
-            <img
-              src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400"
-              alt=""
-            />
-            <p>Nombre 1</p>
-          </div>
+        // --- Construcción de vistas ---
+        function hItemHTML(p) {
+          return `
+<div class="h-card-wrapper" data-video="${p.id}">
+  <div class="h-card-meta">
+    <span class="h-card-name">${p.subtitulo}</span>
+    <span class="h-card-views">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+      </svg>
+      ${p.visitas}
+    </span>
+  </div>
+  <div class="h-item">
+    <video muted playsinline preload="metadata" src="${p.src}"></video>
+    <img class="h-thumb" src="${p.poster}" alt="${p.titulo}" loading="lazy">
+    <button class="h-expand" type="button">Expandir</button>
+  </div>
+</div>`;
+        }
 
-          <div class="carousel-item">
-            <img
-              src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400"
-              alt=""
-            />
-            <p>Nombre 2</p>
-          </div>
+        function vItemHTML(p) {
+          return `<div class="v-item" data-video="${p.id}">
+<video muted loop playsinline preload="metadata" src="${p.src}"></video>
+<img class="v-thumb" src="${p.poster}" alt="${p.titulo}" loading="lazy">
+<button class="v-expand" type="button">Expandir</button>
+</div>`;
+        }
 
-          <div class="carousel-item">
-            <img
-              src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400"
-              alt=""
-            />
-            <p>Nombre 3</p>
-          </div>
+        function sideLiHTML(p) {
+          return `<li data-video="${p.id}">
+<span class="side-title">${p.titulo}</span>
+<span class="side-views">- ${p.visitas}
+<svg viewBox="0 0 24 24">
+<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+</svg>
+</span>
+</li>`;
+        }
 
-          <div class="carousel-item">
-            <img
-              src="https://images.unsplash.com/photo-1502767089025-6572583495b4?w=400"
-              alt=""
-            />
-            <p>Nombre 4</p>
-          </div>
-        </div>
-      </div>
-    </section>
+        vTrack.innerHTML = PROYECTOS.map(vItemHTML).join("");
+        const mitad = Math.ceil(PROYECTOS.length / 2);
+        const izquierda = PROYECTOS.slice(0, mitad);
+        const derecha = PROYECTOS.slice(mitad);
+        sideLeft.innerHTML = izquierda.map(sideLiHTML).join("");
+        sideRight.innerHTML = derecha.map(sideLiHTML).join("");
 
-    <section
-      id="contacto"
-      style="min-height: 100vh; background: green"
-    ></section>
+        // --- Toggles ---
+        document.querySelectorAll(".toggle-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            if (isViewSwitching) return;
+            document.querySelectorAll(".toggle-btn").forEach((b) => {
+              b.classList.remove("active");
+              b.setAttribute("aria-selected", "false");
+            });
+            btn.classList.add("active");
+            btn.setAttribute("aria-selected", "true");
+            switchView(btn.dataset.viewBtn);
+          });
+        });
 
-    <script src="script.js"></script>
+        // --- Transformación Videos <-> Lista ---
+        let isViewSwitching = false;
+        const VIEW_SWITCH_MS = 700;
+
+        function setHCardsCollapsed(collapsed) {
+          hItems.forEach((item, i) => {
+            if (collapsed) {
+              const offset = Math.abs(i - CENTER_DOM_INDEX);
+              const dir = i % 2 === 0 ? -1 : 1;
+              item.style.transitionDelay = `${Math.min(offset * 30, 260)}ms`;
+              item.style.transform = `scale(.32) translateY(${dir * 90}px)`;
+              item.style.opacity = "0";
+            } else {
+              item.style.transitionDelay = "";
+              item.style.transform = "";
+              item.style.opacity = "";
+            }
+          });
+        }
+
+        function switchView(target) {
+          if (isViewSwitching || section.dataset.view === target) return;
+          isViewSwitching = true;
+
+          setHCardsCollapsed(target === "lista");
+          section.dataset.view = target;
+
+          setTimeout(() => {
+            isViewSwitching = false;
+          }, VIEW_SWITCH_MS);
+        }
+
+        // --- Carrusel horizontal ---
+        const hCarousel = document.querySelector(".h-carousel");
+        let isTransitioning = false;
+
+        hTrack.innerHTML = PROYECTOS.map(hItemHTML).join("");
+        let hItems = Array.from(hTrack.querySelectorAll(".h-card-wrapper"));
+
+        const CENTER_DOM_INDEX = 4;
+
+        function initializeCircularOrder(targetId) {
+          const currentIndex = hItems.findIndex(
+            (item) => item.dataset.video === targetId,
+          );
+          const diff = currentIndex - CENTER_DOM_INDEX;
+
+          if (diff > 0) {
+            for (let i = 0; i < diff; i++) {
+              hTrack.appendChild(hTrack.firstElementChild);
+            }
+          } else if (diff < 0) {
+            for (let i = 0; i < Math.abs(diff); i++) {
+              hTrack.insertBefore(
+                hTrack.lastElementChild,
+                hTrack.firstElementChild,
+              );
+            }
+          }
+          hItems = Array.from(hTrack.querySelectorAll(".h-card-wrapper"));
+        }
+
+        initializeCircularOrder("v3");
+
+        function updateSelectedItemClasses() {
+          hItems.forEach((item, i) => {
+            const isSel = i === CENTER_DOM_INDEX;
+            item.classList.toggle("is-selected", isSel);
+          });
+        }
+
+        function centerSelected(animate = true) {
+          updateSelectedItemClasses();
+          const centerItem = hItems[CENTER_DOM_INDEX];
+          const containerWidth = hCarousel.clientWidth;
+          const itemOffsetLeft = centerItem.offsetLeft;
+          const itemWidth = centerItem.offsetWidth;
+          const targetX = containerWidth / 2 - (itemOffsetLeft + itemWidth / 2);
+
+          hTrack.style.transition = animate
+            ? "transform .7s cubic-bezier(0.34, 1.56, 0.64, 1)"
+            : "none";
+          hTrack.style.transform = `translateX(${targetX}px)`;
+        }
+
+        function rotateCarousel(steps) {
+          if (steps === 0 || isTransitioning) return;
+          isTransitioning = true;
+
+          const animateShift = () => {
+            const targetDomIndex = CENTER_DOM_INDEX + steps;
+            const targetItem = hItems[targetDomIndex];
+            const containerWidth = hCarousel.clientWidth;
+            const targetX =
+              containerWidth / 2 -
+              (targetItem.offsetLeft + targetItem.offsetWidth / 2);
+
+            hTrack.style.transition =
+              "transform .7s cubic-bezier(0.34, 1.56, 0.64, 1)";
+            hTrack.style.transform = `translateX(${targetX}px)`;
+
+            hItems.forEach((item, i) => {
+              item.classList.toggle("is-selected", i === targetDomIndex);
+            });
+
+            setTimeout(() => {
+              if (steps > 0) {
+                for (let i = 0; i < steps; i++)
+                  hTrack.appendChild(hTrack.firstElementChild);
+              } else {
+                for (let i = 0; i < Math.abs(steps); i++)
+                  hTrack.insertBefore(
+                    hTrack.lastElementChild,
+                    hTrack.firstElementChild,
+                  );
+              }
+              hItems = Array.from(hTrack.querySelectorAll(".h-card-wrapper"));
+              centerSelected(false);
+              isTransitioning = false;
+            }, 600);
+          };
+          requestAnimationFrame(animateShift);
+        }
+
+        function attachHItemEvents() {
+          hItems.forEach((wrapper) => {
+            const item = wrapper.querySelector(".h-item");
+            const video = wrapper.querySelector("video");
+            const expandBtn = wrapper.querySelector(".h-expand");
+
+            wrapper.addEventListener("mouseenter", () => {
+              item.classList.add("is-playing");
+              video.currentTime = 0;
+              video.play().catch(() => {});
+            });
+
+            wrapper.addEventListener("mouseleave", () => {
+              item.classList.remove("is-playing");
+              video.pause();
+            });
+
+            wrapper.addEventListener("click", (e) => {
+              if (isTransitioning) return;
+              const rect = item.getBoundingClientRect();
+              const x = e.clientX - rect.left;
+              const y = e.clientY - rect.top;
+
+              const ripple = document.createElement("span");
+              ripple.className = "ripple-drop";
+              ripple.style.left = `${x}px`;
+              ripple.style.top = `${y}px`;
+              item.appendChild(ripple);
+              setTimeout(() => ripple.remove(), 750);
+
+              const clickedIndex = hItems.indexOf(wrapper);
+              rotateCarousel(clickedIndex - CENTER_DOM_INDEX);
+            });
+
+            expandBtn.addEventListener("click", (e) => {
+              e.stopPropagation();
+              openModal(wrapper.dataset.video);
+            });
+          });
+        }
+
+        attachHItemEvents();
+        centerSelected(false);
+
+        let resizeTimer;
+        window.addEventListener("resize", () => {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(() => centerSelected(false), 150);
+        });
+
+        // --- Vista Lista: carrusel vertical ---
+        const vCarousel = document.querySelector(".v-carousel");
+        let isVTransitioning = false;
+        let vItems = Array.from(vTrack.querySelectorAll(".v-item"));
+        const V_CENTER_DOM_INDEX = 4;
+
+        function initializeVCircularOrder(targetId) {
+          const currentIndex = vItems.findIndex(
+            (item) => item.dataset.video === targetId,
+          );
+          const diff = currentIndex - V_CENTER_DOM_INDEX;
+          if (diff > 0) {
+            for (let i = 0; i < diff; i++)
+              vTrack.appendChild(vTrack.firstElementChild);
+          } else if (diff < 0) {
+            for (let i = 0; i < Math.abs(diff); i++)
+              vTrack.insertBefore(
+                vTrack.lastElementChild,
+                vTrack.firstElementChild,
+              );
+          }
+          vItems = Array.from(vTrack.querySelectorAll(".v-item"));
+        }
+
+        function markActiveVideo(id) {
+          vItems.forEach((item) =>
+            item.classList.toggle("active", item.dataset.video === id),
+          );
+          document
+            .querySelectorAll(".side-list li")
+            .forEach((li) =>
+              li.classList.toggle("active", li.dataset.video === id),
+            );
+        }
+
+        function centerVSelected(animate = true) {
+          const centerItem = vItems[V_CENTER_DOM_INDEX];
+          markActiveVideo(centerItem.dataset.video);
+          const containerHeight = vCarousel.clientHeight;
+          const itemOffsetTop = centerItem.offsetTop;
+          const itemHeight = centerItem.offsetHeight;
+          const targetY =
+            containerHeight / 2 - (itemOffsetTop + itemHeight / 2);
+
+          vTrack.style.transition = animate
+            ? "transform .7s cubic-bezier(0.34, 1.56, 0.64, 1)"
+            : "none";
+          vTrack.style.transform = `translateY(${targetY}px)`;
+        }
+
+        function rotateVCarousel(steps) {
+          if (steps === 0 || isVTransitioning) return;
+          isVTransitioning = true;
+
+          const animateShift = () => {
+            const targetDomIndex = V_CENTER_DOM_INDEX + steps;
+            const targetItem = vItems[targetDomIndex];
+            const containerHeight = vCarousel.clientHeight;
+            const targetY =
+              containerHeight / 2 -
+              (targetItem.offsetTop + targetItem.offsetHeight / 2);
+
+            vTrack.style.transition =
+              "transform .7s cubic-bezier(0.34, 1.56, 0.64, 1)";
+            vTrack.style.transform = `translateY(${targetY}px)`;
+            markActiveVideo(targetItem.dataset.video);
+
+            setTimeout(() => {
+              if (steps > 0) {
+                for (let i = 0; i < steps; i++)
+                  vTrack.appendChild(vTrack.firstElementChild);
+              } else {
+                for (let i = 0; i < Math.abs(steps); i++)
+                  vTrack.insertBefore(
+                    vTrack.lastElementChild,
+                    vTrack.firstElementChild,
+                  );
+              }
+              vItems = Array.from(vTrack.querySelectorAll(".v-item"));
+              centerVSelected(false);
+              isVTransitioning = false;
+            }, 600);
+          };
+          requestAnimationFrame(animateShift);
+        }
+
+        function goToVideoInVCarousel(id) {
+          if (isVTransitioning) return;
+          const idx = vItems.findIndex((item) => item.dataset.video === id);
+          if (idx === -1) return;
+          if (idx !== V_CENTER_DOM_INDEX) {
+            rotateVCarousel(idx - V_CENTER_DOM_INDEX);
+          }
+        }
+
+        vItems.forEach((item) => {
+          const video = item.querySelector("video");
+          const expandBtn = item.querySelector(".v-expand");
+
+          item.addEventListener("click", () =>
+            goToVideoInVCarousel(item.dataset.video),
+          );
+          item.addEventListener("mouseenter", () => {
+            item.classList.add("is-playing");
+            video.currentTime = 0;
+            video.play().catch(() => {});
+          });
+          item.addEventListener("mouseleave", () => {
+            item.classList.remove("is-playing");
+            video.pause();
+          });
+
+          expandBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            openModal(item.dataset.video);
+          });
+        });
+
+        document.querySelectorAll(".side-list li").forEach((li) => {
+          li.addEventListener("click", () =>
+            goToVideoInVCarousel(li.dataset.video),
+          );
+        });
+
+        let vWheelLocked = false;
+        vCarousel.addEventListener(
+          "wheel",
+          (e) => {
+            e.preventDefault();
+            if (isVTransitioning || vWheelLocked) return;
+            const dir = e.deltaY > 0 ? 1 : -1;
+            vWheelLocked = true;
+            rotateVCarousel(dir);
+            setTimeout(() => {
+              vWheelLocked = false;
+            }, 180);
+          },
+          { passive: false },
+        );
+
+        initializeVCircularOrder("v3");
+        centerVSelected(false);
+
+        let vResizeTimer;
+        window.addEventListener("resize", () => {
+          clearTimeout(vResizeTimer);
+          vResizeTimer = setTimeout(() => centerVSelected(false), 150);
+        });
+
+        // --- Manejo del Modal ---
+        function openModal(id) {
+          const proyecto = PROYECTOS.find((p) => p.id === id);
+          if (!proyecto) return;
+          modalVideo.src = proyecto.src;
+          modalTitle.textContent = proyecto.titulo;
+
+          document.getElementById("modalInfoLink").href = proyecto.link || "#";
+
+          modal.classList.add("open");
+          modal.setAttribute("aria-hidden", "true");
+
+          modalVideo
+            .play()
+            .then(() => {
+              modalPlayPause.classList.remove("visible");
+              modalPlayPause.classList.add("is-playing");
+            })
+            .catch(() => {
+              modalPlayPause.classList.add("visible");
+              modalPlayPause.classList.remove("is-playing");
+            });
+        }
+
+        function closeModal() {
+          modal.classList.remove("open");
+          modalVideo.pause();
+          modalVideo.removeAttribute("src");
+          modalVideo.load();
+          modalPlayPause.classList.remove("visible", "is-playing", "flash");
+        }
+
+        function togglePlay() {
+          modalPlayPause.classList.remove("flash");
+
+          if (modalVideo.paused) {
+            modalVideo
+              .play()
+              .then(() => {
+                modalPlayPause.classList.remove("visible");
+                modalPlayPause.classList.add("is-playing");
+                void modalPlayPause.offsetWidth;
+                modalPlayPause.classList.add("flash");
+                setTimeout(() => {
+                  modalPlayPause.classList.remove("flash");
+                }, 750);
+              })
+              .catch(() => {});
+          } else {
+            modalVideo.pause();
+            modalPlayPause.classList.remove("is-playing");
+            modalPlayPause.classList.add("visible");
+          }
+        }
+
+        modalVideo.addEventListener("click", togglePlay);
+        modalPlayPause.addEventListener("click", (e) => {
+          e.stopPropagation();
+          togglePlay();
+        });
+
+        modalVideo.addEventListener("ended", closeModal);
+        modalClose.addEventListener("click", closeModal);
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) closeModal();
+        });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") closeModal();
+        });
+      })();
+    </script>
   </body>
 </html>
