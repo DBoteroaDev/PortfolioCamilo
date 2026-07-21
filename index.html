@@ -6,14 +6,28 @@
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght=400;500;600&display=swap");
       :root {
+        /* --- NEGRO (secundario) y variantes --- */
         --black: #0a0a0b;
         --black-soft: #151517;
         --black-card: #1b1b1d;
-        --yellow: #f5c518;
-        --yellow-dim: #c9a312;
-        --cream: #f3efe4;
-        --gray: #8c8c8f;
         --gray-line: #2a2a2c;
+        --gray: #8c8c8f;
+        --cream: #f3efe4;
+
+        /* --- AMARILLO (principal) y variantes --- */
+        --yellow: #ffdf00;
+        --yellow-dim: #c9b000;
+        --yellow-dark: #8f7c00;
+        --yellow-light: #ffe94d;
+        --yellow-pale: #fff3a3;
+
+        /* --- MORADO (semi principal) y variantes --- */
+        --purple: #9729c4;
+        --purple-dim: #7a1f9e;
+        --purple-dark: #591675;
+        --purple-light: #b657da;
+        --purple-pale: #dba6f0;
+
         --font-display: "Bebas Neue", sans-serif;
         --font-body: "Space Grotesk", sans-serif;
 
@@ -124,7 +138,7 @@
           background: radial-gradient(
             circle,
             #ffffff 10%,
-            #7dbbff 70%,
+            var(--purple-light) 70%,
             transparent 100%
           );
         }
@@ -135,18 +149,18 @@
           opacity: 0.95;
           background: radial-gradient(
             circle,
-            #ffffff 20%,
-            #a4ceff 80%,
-            transparent 100%
+            #ffffff 15%,
+            var(--purple) 55%,
+            var(--yellow) 100%
           );
         }
         46% {
-          opacity: 0.8;
+          opacity: 0.85;
           background: radial-gradient(
             circle,
             #ffffff 10%,
-            #f5c518 60%,
-            transparent 100%
+            var(--yellow) 55%,
+            var(--purple) 100%
           );
         }
         48% {
@@ -159,7 +173,7 @@
         0% {
           opacity: 0;
           transform: scale(0.85);
-          text-shadow: 0 0 50px rgba(245, 197, 24, 0.8);
+          text-shadow: 0 0 50px rgba(255, 223, 0, 0.8);
         }
         11% {
           opacity: 0.1;
@@ -169,19 +183,19 @@
           opacity: 1;
           text-shadow:
             0 0 10px #fff,
-            0 0 30px #00a2ff,
-            0 0 60px #00a2ff;
+            0 0 30px var(--purple-light),
+            0 0 60px var(--purple);
         }
         14% {
           text-shadow:
             0 0 5px #fff,
-            0 0 15px #00a2ff;
+            0 0 15px var(--purple-light);
         }
         16% {
           text-shadow:
             0 0 20px #fff,
-            0 0 40px #f5c518,
-            0 0 80px #f5c518;
+            0 0 40px var(--yellow),
+            0 0 70px var(--purple);
         }
         25% {
           opacity: 1;
@@ -194,7 +208,8 @@
         46% {
           text-shadow:
             0 0 20px #fff,
-            0 0 50px #f5c518;
+            0 0 45px var(--yellow),
+            0 0 75px var(--purple);
         }
         48% {
           text-shadow: none;
@@ -281,7 +296,7 @@
         font-weight: 600;
       }
       .toggle-btn:hover:not(.active) {
-        color: var(--cream);
+        color: var(--purple-light);
       }
       .toggle-btn:focus-visible {
         outline: 2px solid var(--yellow);
@@ -489,6 +504,12 @@
         border-color: var(--yellow);
         box-shadow: 0 25px 50px rgba(0, 0, 0, 0.55);
       }
+      .h-card-wrapper.item-alt.is-selected .h-item {
+        border-color: var(--purple-light);
+        box-shadow:
+          0 25px 50px rgba(0, 0, 0, 0.55),
+          0 0 0 1px rgba(151, 41, 196, 0.35);
+      }
 
       /* SEPARACIÓN INTELIGENTE CON GPU */
       .h-card-wrapper:has(~ .h-card-wrapper.is-selected) {
@@ -508,7 +529,7 @@
         width: 448px;
         height: 448px;
         border-radius: 50%;
-        background: rgba(245, 197, 24, 0.35);
+        background: rgba(255, 223, 0, 0.35);
         transform: translate(-50%, -50%) scale(0);
         opacity: 0.9;
         pointer-events: none;
@@ -520,14 +541,36 @@
           transform: translate(-50%, -50%) scale(0);
           opacity: 0.9;
           box-shadow:
-            0 0 0 0px rgba(245, 197, 24, 0.4),
+            0 0 0 0px rgba(255, 223, 0, 0.4),
             inset 0 0 15px rgba(255, 255, 255, 0.4);
         }
         100% {
           transform: translate(-50%, -50%) scale(1);
           opacity: 0;
           box-shadow:
-            0 0 0 30px rgba(245, 197, 24, 0),
+            0 0 0 30px rgba(255, 223, 0, 0),
+            inset 0 0 30px rgba(255, 255, 255, 0);
+        }
+      }
+      .ripple-drop.ripple-alt {
+        background: rgba(151, 41, 196, 0.35);
+      }
+      .ripple-drop.ripple-alt {
+        animation-name: ripple-water-alt;
+      }
+      @keyframes ripple-water-alt {
+        0% {
+          transform: translate(-50%, -50%) scale(0);
+          opacity: 0.9;
+          box-shadow:
+            0 0 0 0px rgba(151, 41, 196, 0.4),
+            inset 0 0 15px rgba(255, 255, 255, 0.4);
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+          opacity: 0;
+          box-shadow:
+            0 0 0 30px rgba(151, 41, 196, 0),
             inset 0 0 30px rgba(255, 255, 255, 0);
         }
       }
@@ -573,6 +616,12 @@
         background: var(--yellow);
         border-color: var(--yellow);
         color: var(--black);
+      }
+      .h-card-wrapper.item-alt .h-expand:hover,
+      .v-item.item-alt .v-expand:hover {
+        background: var(--purple);
+        border-color: var(--purple);
+        color: var(--cream);
       }
 
       /* --- Vista LISTA --- */
@@ -623,6 +672,9 @@
         color: var(--yellow);
         opacity: 1;
         transform: scale(1.08);
+      }
+      .side-list li.item-alt.active {
+        color: var(--purple-light);
       }
       .side-views {
         display: inline-flex;
@@ -717,6 +769,12 @@
         border-color: var(--yellow);
         transform: scale(1.06);
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.65);
+      }
+      .v-item.item-alt.active {
+        border-color: var(--purple-light);
+        box-shadow:
+          0 20px 40px rgba(0, 0, 0, 0.65),
+          0 0 0 1px rgba(151, 41, 196, 0.35);
       }
 
       /* ========================================================
@@ -874,7 +932,7 @@
       .modal-close:hover {
         border-color: var(--yellow);
         color: var(--yellow);
-        background: rgba(245, 197, 24, 0.1);
+        background: rgba(255, 223, 0, 0.1);
       }
 
       .modal-play-pause {
@@ -908,7 +966,7 @@
         fill: currentColor;
       }
       .modal-play-pause:hover {
-        background: rgba(245, 197, 24, 0.15);
+        background: rgba(255, 223, 0, 0.15);
         border-color: var(--yellow);
         transform: translate(-50%, -50%) scale(1.05);
       }
@@ -964,7 +1022,14 @@
         font-size: 1.9rem;
         letter-spacing: 0.04em;
         text-transform: none;
-        color: var(--cream);
+        background: linear-gradient(
+          100deg,
+          var(--yellow),
+          var(--purple-light)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
       }
       .video-modal.open .modal-watermark {
         opacity: 1;
@@ -1110,6 +1175,10 @@
         border-color: var(--yellow);
         color: var(--yellow);
       }
+      .youtuber-card:nth-child(even):hover {
+        border-color: var(--purple-light);
+        color: var(--purple-light);
+      }
 
       @media (max-width: 900px) {
         .descripcion {
@@ -1126,6 +1195,271 @@
         }
         .descripcion-intro p {
           margin: 0 auto;
+        }
+      }
+
+      /* ========================================================
+   SEPARADOR ENTRE SECCIONES
+   ======================================================== */
+      .section-divider {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 8vw;
+      }
+      .section-divider::before,
+      .section-divider::after {
+        content: "";
+        flex: 1;
+        height: 2px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          var(--purple-dim) 35%,
+          var(--yellow) 85%,
+          var(--yellow)
+        );
+      }
+      .section-divider::after {
+        background: linear-gradient(
+          to left,
+          transparent,
+          var(--purple-dim) 35%,
+          var(--yellow) 85%,
+          var(--yellow)
+        );
+      }
+      .section-divider .divider-spark {
+        position: relative;
+        width: 13px;
+        height: 13px;
+        margin: 0 1.4rem;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 35% 30%,
+          var(--yellow-pale),
+          var(--yellow) 45%,
+          var(--purple) 100%
+        );
+        box-shadow:
+          0 0 10px 2px rgba(255, 223, 0, 0.75),
+          0 0 26px 8px rgba(151, 41, 196, 0.55);
+        flex-shrink: 0;
+      }
+      .section-divider .divider-spark::before {
+        content: "";
+        position: absolute;
+        inset: -6px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 223, 0, 0.35);
+      }
+
+      @media (max-width: 600px) {
+        .section-divider {
+          padding: 0 6vw;
+        }
+        .section-divider .divider-spark {
+          width: 11px;
+          height: 11px;
+          margin: 0 0.9rem;
+        }
+      }
+
+      /* ========================================================
+   SECTION - CONTACTO (Redes sociales + formulario)
+   ======================================================== */
+      .contacto {
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2.6rem;
+        padding: 7rem 8vw;
+        background: transparent;
+      }
+
+      .contacto-header {
+        text-align: center;
+        max-width: 560px;
+      }
+      .contacto-header h3 {
+        font-family: var(--font-body);
+        text-transform: uppercase;
+        letter-spacing: 0.25em;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--yellow);
+        margin-bottom: 0.6rem;
+      }
+      .contacto-header h1 {
+        font-family: var(--font-display);
+        font-size: clamp(2.6rem, 5vw, 4.5rem);
+        line-height: 0.9;
+        color: var(--cream);
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        margin-bottom: 1rem;
+      }
+      .contacto-header p {
+        font-family: var(--font-body);
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--gray);
+        margin: 0 auto;
+      }
+
+      /* --- Iconos de redes sociales --- */
+      .contacto-social {
+        display: flex;
+        gap: 1.1rem;
+      }
+      .social-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: 1px solid var(--gray-line);
+        background: var(--black-card);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition:
+          border-color 0.25s ease,
+          background 0.25s ease,
+          transform 0.25s ease;
+      }
+      .social-icon svg {
+        width: 20px;
+        height: 20px;
+        fill: var(--cream);
+        transition: fill 0.25s ease;
+      }
+      .social-icon:hover {
+        border-color: var(--yellow);
+        background: var(--yellow);
+        transform: translateY(-4px);
+      }
+      .social-icon:hover svg {
+        fill: var(--black);
+      }
+      .social-icon:nth-child(even):hover {
+        border-color: var(--purple);
+        background: var(--purple);
+      }
+      .social-icon:nth-child(even):hover svg {
+        fill: var(--cream);
+      }
+
+      /* --- Formulario de contacto --- */
+      .contacto-form {
+        position: relative;
+        width: 100%;
+        max-width: 520px;
+        display: flex;
+        flex-direction: column;
+        gap: 1.3rem;
+        background: var(--black-card);
+        border: 1px solid var(--gray-line);
+        border-radius: 16px;
+        padding: 2.6rem;
+        overflow: hidden;
+      }
+      .contacto-form::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(
+          to right,
+          var(--purple),
+          var(--yellow)
+        );
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .form-group label {
+        font-family: var(--font-body);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: var(--gray);
+      }
+      .form-group input,
+      .form-group textarea {
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        color: var(--cream);
+        background: var(--black-soft);
+        border: 1px solid var(--gray-line);
+        border-radius: 8px;
+        padding: 0.85rem 1rem;
+        outline: none;
+        resize: none;
+        transition: border-color 0.25s ease;
+      }
+      .form-group input::placeholder,
+      .form-group textarea::placeholder {
+        color: var(--gray);
+        opacity: 0.7;
+      }
+      .form-group input:focus,
+      .form-group textarea:focus {
+        border-color: var(--yellow);
+      }
+      .form-group textarea {
+        min-height: 130px;
+        line-height: 1.5;
+      }
+
+      .form-submit {
+        margin-top: 0.4rem;
+        padding: 0.95rem 1.5rem;
+        border: none;
+        border-radius: 999px;
+        background: var(--yellow);
+        color: var(--black);
+        font-family: var(--font-body);
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition:
+          background 0.25s ease,
+          transform 0.2s ease;
+      }
+      .form-submit:hover {
+        background: var(--yellow-dim);
+        transform: translateY(-2px);
+      }
+      .form-submit:active {
+        transform: translateY(0);
+      }
+
+      @media (max-width: 600px) {
+        .contacto {
+          padding: 5rem 6vw;
+        }
+        .contacto-form {
+          padding: 2rem 1.4rem;
+        }
+        .social-icon {
+          width: 46px;
+          height: 46px;
         }
       }
     </style>
@@ -1176,6 +1510,8 @@
       </div>
     </section>
 
+    <div class="section-divider"><span class="divider-spark"></span></div>
+
     <section id="descripcion" class="descripcion">
       <!-- Contenido Descripción -->
       <div class="descripcion-col descripcion-intro">
@@ -1199,6 +1535,104 @@
           <div class="youtuber-card">Youtuber 4</div>
         </div>
       </div>
+    </section>
+
+    <div class="section-divider"><span class="divider-spark"></span></div>
+
+    <section id="contacto" class="contacto">
+      <div class="contacto-header">
+        <h3>Hablemos</h3>
+        <h1>Contacto</h1>
+        <p>¿Tienes un proyecto en mente? Escríbeme y lo hacemos realidad.</p>
+      </div>
+
+      <div class="contacto-social">
+        <a
+          href="#"
+          class="social-icon"
+          aria-label="X (Twitter)"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.22-6.82-5.97 6.82H1.66l7.73-8.84L1.25 2.25h6.83l4.71 6.23zm-1.16 17.52h1.83L7.08 4.13H5.12z"
+            />
+          </svg>
+        </a>
+        <a
+          href="#"
+          class="social-icon"
+          aria-label="Instagram"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 2.2c3.15 0 3.52 0 4.77.07 1.2.06 1.85.24 2.28.4.57.22.98.49 1.4.92.43.42.7.83.93 1.4.16.42.34 1.08.4 2.28.06 1.25.07 1.62.07 4.77s0 3.52-.07 4.77c-.06 1.2-.24 1.85-.4 2.28-.22.57-.5.98-.92 1.4-.43.43-.84.7-1.4.93-.44.16-1.09.34-2.29.4-1.25.06-1.62.07-4.77.07s-3.52 0-4.77-.07c-1.2-.06-1.85-.24-2.28-.4-.57-.22-.98-.5-1.4-.93a3.9 3.9 0 0 1-.93-1.4c-.16-.42-.34-1.08-.4-2.28C2.21 15.52 2.2 15.15 2.2 12s0-3.52.07-4.77c.06-1.2.24-1.85.4-2.28.22-.57.5-.98.93-1.4.42-.43.83-.7 1.4-.93.42-.16 1.08-.34 2.28-.4C8.48 2.21 8.85 2.2 12 2.2zm0 1.8c-3.1 0-3.47 0-4.68.07-.96.05-1.48.2-1.83.34-.46.18-.78.39-1.13.74-.35.34-.56.66-.74 1.12-.14.36-.3.87-.34 1.83C3.21 8.53 3.2 8.9 3.2 12s.01 3.47.07 4.7c.05.95.2 1.46.34 1.82.18.46.39.78.74 1.12.35.35.67.56 1.13.74.35.14.87.3 1.83.34 1.21.06 1.58.07 4.68.07s3.47 0 4.68-.07c.96-.05 1.48-.2 1.83-.34.46-.18.78-.39 1.13-.74.35-.34.56-.66.74-1.12.14-.36.3-.87.34-1.83.06-1.22.07-1.59.07-4.7s-.01-3.47-.07-4.7c-.05-.95-.2-1.46-.34-1.82a2.98 2.98 0 0 0-.74-1.12 3.06 3.06 0 0 0-1.13-.74c-.35-.14-.87-.3-1.83-.34-1.21-.07-1.58-.07-4.68-.07zm0 3.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 1.8a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4zm4.7-2.1a1.05 1.05 0 1 1 0 2.1 1.05 1.05 0 0 1 0-2.1z"
+            />
+          </svg>
+        </a>
+        <a
+          href="#"
+          class="social-icon"
+          aria-label="WhatsApp"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M17.5 14.38c-.3-.15-1.76-.86-2.03-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.14.3-.35.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.66-1.61-.9-2.2-.24-.58-.48-.5-.66-.5h-.56c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.5s1.07 2.9 1.22 3.1c.15.2 2.1 3.24 5.1 4.55.71.31 1.27.5 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.76-.72 2-1.4.24-.7.24-1.28.17-1.4-.07-.13-.27-.2-.57-.36zM12.02 2C6.5 2 2 6.5 2 12.02c0 1.9.53 3.7 1.44 5.22L2 22l4.94-1.4a10.03 10.03 0 0 0 5.08 1.38h.01c5.52 0 10-4.5 10-10.02C22.02 6.5 17.53 2 12.02 2zm0 18.13c-1.7 0-3.28-.5-4.6-1.35l-.33-.2-3.06.87.85-3.03-.2-.32a8.13 8.13 0 0 1-1.28-4.08c0-4.5 3.65-8.15 8.13-8.15 4.48 0 8.12 3.65 8.12 8.15s-3.64 8.14-8.12 8.14z"
+            />
+          </svg>
+        </a>
+        <a
+          href="#"
+          class="social-icon"
+          aria-label="Gmail"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"
+            />
+          </svg>
+        </a>
+      </div>
+
+      <form class="contacto-form" id="contactoForm">
+        <div class="form-group">
+          <label for="contacto-nombre">Nombre completo</label>
+          <input
+            type="text"
+            id="contacto-nombre"
+            name="nombre"
+            placeholder="Tu nombre y apellidos"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="contacto-email">Correo electrónico</label>
+          <input
+            type="email"
+            id="contacto-email"
+            name="email"
+            placeholder="tucorreo@ejemplo.com"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="contacto-descripcion">Descripción</label>
+          <textarea
+            id="contacto-descripcion"
+            name="descripcion"
+            placeholder="Cuéntame sobre tu proyecto..."
+            required
+          ></textarea>
+        </div>
+        <button type="submit" class="form-submit">Enviar mensaje</button>
+      </form>
     </section>
 
     <div class="video-modal" id="videoModal" aria-hidden="true">
@@ -1387,9 +1821,14 @@
         document.body.style.overflowY = "hidden";
 
         // --- Construcción de vistas ---
+        function altClass(p) {
+          const n = parseInt(String(p.id).replace(/\D/g, ""), 10) || 0;
+          return n % 2 === 0 ? " item-alt" : "";
+        }
+
         function hItemHTML(p) {
           return `
-<div class="h-card-wrapper" data-video="${p.id}">
+<div class="h-card-wrapper${altClass(p)}" data-video="${p.id}">
   <div class="h-card-meta">
     <span class="h-card-name">${p.subtitulo}</span>
     <span class="h-card-views">
@@ -1408,7 +1847,7 @@
         }
 
         function vItemHTML(p) {
-          return `<div class="v-item" data-video="${p.id}">
+          return `<div class="v-item${altClass(p)}" data-video="${p.id}">
 <video muted loop playsinline preload="metadata" src="${p.src}"></video>
 <img class="v-thumb" src="${p.poster}" alt="${p.titulo}" loading="lazy">
 <button class="v-expand" type="button">Expandir</button>
@@ -1416,7 +1855,7 @@
         }
 
         function sideLiHTML(p) {
-          return `<li data-video="${p.id}">
+          return `<li class="${altClass(p).trim()}" data-video="${p.id}">
 <span class="side-title">${p.titulo}</span>
 <span class="side-views">- ${p.visitas}
 <svg viewBox="0 0 24 24">
@@ -1595,7 +2034,9 @@
               const y = e.clientY - rect.top;
 
               const ripple = document.createElement("span");
-              ripple.className = "ripple-drop";
+              ripple.className = wrapper.classList.contains("item-alt")
+                ? "ripple-drop ripple-alt"
+                : "ripple-drop";
               ripple.style.left = `${x}px`;
               ripple.style.top = `${y}px`;
               item.appendChild(ripple);
@@ -1839,6 +2280,14 @@
         document.addEventListener("keydown", (e) => {
           if (e.key === "Escape") closeModal();
         });
+
+        // --- Formulario de contacto (de momento solo maqueta, sin envío real) ---
+        const contactoForm = document.getElementById("contactoForm");
+        if (contactoForm) {
+          contactoForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+          });
+        }
       })();
     </script>
   </body>
