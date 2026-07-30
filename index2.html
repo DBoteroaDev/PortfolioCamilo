@@ -1,418 +1,301 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Marco Vidal — Filmmaker</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <!-- Botón menú (flecha lateral) -->
-    <button
-      id="menuBtn"
-      class="menu-btn"
-      aria-label="Abrir menú"
-      aria-expanded="false"
-    >
-      <span class="menu-arrow">&#8250;</span>
-    </button>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Filmmaker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /*
+    ============================================================
+    NOTA (integración de video real)
+    ============================================================
+    Los videos se listan en el array VIDEO_SOURCES, al final del
+    archivo (dentro del <script>). A medida que tengas más clips, 
+    solo agrega más rutas a ese array.
+    ============================================================
+  */
 
-    <div id="overlay" class="overlay"></div>
+  :root{
+    /* --- NEGRO (secundario) y variantes --- */
+    --black: #0a0a0b;
+    --black-soft: #151517;
+    --black-card: #1b1b1d;
+    --gray-line: #2a2a2c;
+    --cream: #f3efe4;
 
-    <!-- Menú lateral -->
-    <nav id="sidebar" class="sidebar">
-      <div class="sidebar-header">
-        <span class="sidebar-logo">M<span class="dot">.</span>V</span>
-        <button id="closeBtn" class="close-btn" aria-label="Cerrar menú">
-          &times;
-        </button>
-      </div>
-      <div class="sprocket-row">
-        <span></span><span></span><span></span><span></span><span></span
-        ><span></span>
-      </div>
-      <ul class="sidebar-links">
-        <li><a href="#trabajo" class="nav-link" data-index="01">Trabajo</a></li>
-        <li>
-          <a href="#descripcion" class="nav-link" data-index="02"
-            >Descripción</a
-          >
-        </li>
-        <li>
-          <a href="#contacto" class="nav-link" data-index="03">Contáctame</a>
-        </li>
-      </ul>
-      <div class="sidebar-footer">
-        <p>Basado en Barcelona<br />Disponible en todo el mundo</p>
-        <div class="sidebar-social">
-          <a href="#">Instagram</a>
-          <a href="#">Vimeo</a>
-          <a href="#">IMDb</a>
-        </div>
-      </div>
-    </nav>
+    /* --- AMARILLO y variantes (para los respaldos de las tarjetas) --- */
+    --yellow-dim: #c9b000;
+    --yellow-dark: #8f7c00;
 
-    <!-- Contenido principal -->
-    <main id="top">
-      <!-- HERO -->
-      <header class="hero">
-        <div class="film-strip film-strip--top">
-          <span></span><span></span><span></span><span></span><span></span
-          ><span></span><span></span><span></span><span></span><span></span
-          ><span></span><span></span>
-        </div>
-        <div class="hero-content">
-          <p class="eyebrow">Director &amp; Director de Fotografía</p>
-          <h1 class="hero-title">
-            MARCO<br /><span class="outline">VIDAL</span>
-          </h1>
-          <p class="hero-tagline">Historias que se sienten, no solo se ven.</p>
-          <a href="#trabajo" class="btn-primary nav-link">Ver el trabajo →</a>
-        </div>
-        <div class="film-strip film-strip--bottom">
-          <span></span><span></span><span></span><span></span><span></span
-          ><span></span><span></span><span></span><span></span><span></span
-          ><span></span><span></span>
-        </div>
-      </header>
+    /* --- MORADO y variantes (para los respaldos de las tarjetas) --- */
+    --purple-dim: #7a1f9e;
+    --purple-dark: #591675;
 
-      <!-- SECCIÓN 1: TRABAJO / VIDEOS -->
-      <section id="trabajo" class="section section--work">
-        <div class="section-heading">
-          <span class="reel-tag">ROLLO 01</span>
-          <h2>Trabajo</h2>
-          <p class="section-sub">
-            Documentales, cortometrajes y piezas de marca rodadas entre 2019 y
-            2026.
-          </p>
-        </div>
+    --row-h: 25vh;
+    --gap: 14px;
+  }
 
-        <div class="filters">
-          <button class="filter-btn active" data-filter="all">Todo</button>
-          <button class="filter-btn" data-filter="documental">
-            Documental
-          </button>
-          <button class="filter-btn" data-filter="corto">Cortometraje</button>
-          <button class="filter-btn" data-filter="comercial">Comercial</button>
-          <button class="filter-btn" data-filter="videoclip">Videoclip</button>
-        </div>
+  *{ margin:0; padding:0; box-sizing:border-box; }
 
-        <div class="video-grid">
-          <article
-            class="video-card"
-            data-category="documental"
-            data-title="La Última Marea"
-            data-year="2026"
-            data-desc="Un retrato de los últimos pescadores artesanales de la costa cantábrica."
-          >
-            <div
-              class="video-thumb"
-              style="background: linear-gradient(135deg, #1c1c1e, #3a3a1a)"
-            >
-              <button class="play-btn" aria-label="Reproducir tráiler">
-                ▶
-              </button>
-            </div>
-            <div class="video-info">
-              <h3>La Última Marea</h3>
-              <p>Documental · 2026</p>
-            </div>
-          </article>
+  html, body{
+    background: var(--black);
+    color: var(--cream);
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    font-family: 'Space Grotesk', sans-serif;
+  }
 
-          <article
-            class="video-card"
-            data-category="corto"
-            data-title="Ceniza"
-            data-year="2025"
-            data-desc="Cortometraje de ficción sobre la memoria y el fuego. Selección Oficial, Festival de Málaga."
-          >
-            <div
-              class="video-thumb"
-              style="background: linear-gradient(135deg, #2a1a1a, #3a2a10)"
-            >
-              <button class="play-btn" aria-label="Reproducir tráiler">
-                ▶
-              </button>
-            </div>
-            <div class="video-info">
-              <h3>Ceniza</h3>
-              <p>Cortometraje · 2025</p>
-            </div>
-          </article>
+  /* ===================== ESCENARIO DE CARRUSELES ===================== */
 
-          <article
-            class="video-card"
-            data-category="comercial"
-            data-title="Nace — Campaña"
-            data-year="2025"
-            data-desc="Campaña de lanzamiento para la marca de moda sostenible Nace."
-          >
-            <div
-              class="video-thumb"
-              style="background: linear-gradient(135deg, #1a1a1a, #2c2c05)"
-            >
-              <button class="play-btn" aria-label="Reproducir tráiler">
-                ▶
-              </button>
-            </div>
-            <div class="video-info">
-              <h3>Nace — Campaña</h3>
-              <p>Comercial · 2025</p>
-            </div>
-          </article>
+  #carousel-stage{
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--black);
+    z-index: 1;
+    transition: opacity 1s ease, filter 1s ease;
+  }
 
-          <article
-            class="video-card"
-            data-category="videoclip"
-            data-title="Sombra Eléctrica"
-            data-year="2024"
-            data-desc="Videoclip para la banda Sombra Eléctrica, rodado en 16mm."
-          >
-            <div
-              class="video-thumb"
-              style="background: linear-gradient(135deg, #111, #332800)"
-            >
-              <button class="play-btn" aria-label="Reproducir tráiler">
-                ▶
-              </button>
-            </div>
-            <div class="video-info">
-              <h3>Sombra Eléctrica</h3>
-              <p>Videoclip · 2024</p>
-            </div>
-          </article>
+  .row-track{
+    position: relative;
+    height: var(--row-h);
+    overflow: hidden;
+  }
 
-          <article
-            class="video-card"
-            data-category="documental"
-            data-title="Barrio de Cristal"
-            data-year="2023"
-            data-desc="Serie documental corta sobre los talleres de vidrio soplado de Barcelona."
-          >
-            <div
-              class="video-thumb"
-              style="background: linear-gradient(135deg, #1c1c1e, #2b2405)"
-            >
-              <button class="play-btn" aria-label="Reproducir tráiler">
-                ▶
-              </button>
-            </div>
-            <div class="video-info">
-              <h3>Barrio de Cristal</h3>
-              <p>Documental · 2023</p>
-            </div>
-          </article>
+  .row{
+    position: absolute;
+    top: 0; left: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--gap);
+    height: 100%;
+    width: max-content;
+    will-change: transform;
+    transition: animation-duration .8s linear, opacity .9s ease, filter .9s ease;
+  }
 
-          <article
-            class="video-card"
-            data-category="corto"
-            data-title="Domingo"
-            data-year="2022"
-            data-desc="Cortometraje sobre tres generaciones alrededor de una misma mesa."
-          >
-            <div
-              class="video-thumb"
-              style="background: linear-gradient(135deg, #161616, #2e2410)"
-            >
-              <button class="play-btn" aria-label="Reproducir tráiler">
-                ▶
-              </button>
-            </div>
-            <div class="video-info">
-              <h3>Domingo</h3>
-              <p>Cortometraje · 2022</p>
-            </div>
-          </article>
-        </div>
-      </section>
+  @keyframes moveRight{
+    from{ transform: translate3d(-50%,0,0); }
+    to{   transform: translate3d(0,0,0);  }
+  }
+  @keyframes moveLeft{
+    from{ transform: translate3d(0,0,0);   }
+    to{   transform: translate3d(-50%,0,0); }
+  }
 
-      <!-- SECCIÓN 2: DESCRIPCIÓN -->
-      <section id="descripcion" class="section section--about">
-        <div class="about-grid">
-          <div class="about-portrait">
-            <div class="portrait-frame">
-              <div class="portrait-placeholder">MV</div>
-            </div>
-            <div class="sprocket-row sprocket-row--vertical">
-              <span></span><span></span><span></span><span></span><span></span>
-            </div>
-          </div>
+  .row-1{ animation: moveRight 24s linear infinite; }
+  .row-2{ animation: moveLeft  20s linear infinite; }
+  .row-3{ animation: moveRight 26s linear infinite; }
+  .row-4{ animation: moveLeft  22s linear infinite; }
 
-          <div class="about-text">
-            <span class="reel-tag">ROLLO 02</span>
-            <h2>Descripción</h2>
-            <p class="about-lead">
-              Soy Marco Vidal, director y director de fotografía con base en
-              Barcelona. Llevo diez años contando historias reales con ojo de
-              ficción: cámara al hombro, luz natural y paciencia para esperar el
-              momento que no se puede dirigir.
-            </p>
-            <p>
-              Mi trabajo se mueve entre el documental de autor y la pieza de
-              marca, siempre con la misma exigencia: que la imagen tenga textura
-              y que el silencio también hable. He rodado en Cantabria,
-              Barcelona, Lisboa y Buenos Aires, casi siempre con equipos
-              pequeños y mucho 16mm.
-            </p>
+  .card{
+    position: relative;
+    height: calc(var(--row-h) - 20px);
+    aspect-ratio: 16 / 9;
+    border-radius: 6px;
+    overflow: hidden;
+    flex: 0 0 auto;
+    border: 1px solid var(--gray-line);
+    box-shadow: 0 6px 18px rgba(0,0,0,.5);
+    contain: content;
+    transform: translateZ(0);
+  }
 
-            <div class="stats-row">
-              <div class="stat">
-                <span class="stat-num">37</span>
-                <span class="stat-label">Proyectos rodados</span>
-              </div>
-              <div class="stat">
-                <span class="stat-num">9</span>
-                <span class="stat-label">Premios de festival</span>
-              </div>
-              <div class="stat">
-                <span class="stat-num">10</span>
-                <span class="stat-label">Años detrás de cámara</span>
-              </div>
-            </div>
+  /* Fondo de respaldo (se ve un instante mientras el .mp4 carga, o si falla la ruta) */
+  .v1{ background: linear-gradient(150deg, var(--black-card), var(--purple-dark) 130%); }
+  .v2{ background: linear-gradient(150deg, var(--black-card), var(--yellow-dark) 130%); }
+  .v3{ background: linear-gradient(150deg, var(--purple-dim), var(--black-soft) 120%); }
+  .v4{ background: linear-gradient(150deg, var(--yellow-dim), var(--black-soft) 120%); }
+  .v5{ background: linear-gradient(150deg, var(--black-card), var(--black-soft)); }
 
-            <div class="timeline">
-              <div class="timeline-item">
-                <span class="timeline-year">2026</span>
-                <span class="timeline-text"
-                  >Estreno de "La Última Marea" en el Festival de Gijón.</span
-                >
-              </div>
-              <div class="timeline-item">
-                <span class="timeline-year">2023</span>
-                <span class="timeline-text"
-                  >Mención especial del jurado por "Barrio de Cristal".</span
-                >
-              </div>
-              <div class="timeline-item">
-                <span class="timeline-year">2019</span>
-                <span class="timeline-text"
-                  >Fundación de Vidal Films, estudio de producción
-                  independiente.</span
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+  .thumb-video{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity .6s ease;
+  }
+  .thumb-video.is-ready{
+    opacity: 1;
+  }
 
-      <!-- SECCIÓN 3: CONTACTO -->
-      <section id="contacto" class="section section--contact">
-        <div class="section-heading">
-          <span class="reel-tag">ROLLO 03</span>
-          <h2>Contáctame</h2>
-          <p class="section-sub">
-            Cuéntame sobre tu proyecto. Respondo en menos de 48 horas.
-          </p>
-        </div>
+  /* ===================== ACELERACIÓN Y SALIDA DE CARRUSELES ===================== */
 
-        <div class="contact-grid">
-          <form id="contactForm" class="contact-form" novalidate>
-            <div class="form-row">
-              <label for="name">Nombre</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="Tu nombre"
-                required
-              />
-              <span class="error-msg" data-for="name"></span>
-            </div>
+  /* Oscurece el escenario a los 3.2s */
+  body.phase-dim #carousel-stage{ filter: brightness(.5) saturate(.7); }
 
-            <div class="form-row">
-              <label for="email">Correo electrónico</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="tucorreo@ejemplo.com"
-                required
-              />
-              <span class="error-msg" data-for="email"></span>
-            </div>
+  /* Acelera y difumina las filas a los 5.9s */
+  body.phase-exit .row-1{ animation-duration: 2.6s; }
+  body.phase-exit .row-2{ animation-duration: 2.1s; }
+  body.phase-exit .row-3{ animation-duration: 2.8s; }
+  body.phase-exit .row-4{ animation-duration: 2.3s; }
+  body.phase-exit .row{
+    filter: brightness(.35) blur(2px);
+    opacity: 0;
+  }
 
-            <div class="form-row">
-              <label for="projectType">Tipo de proyecto</label>
-              <select id="projectType" name="projectType" required>
-                <option value="" disabled selected>
-                  Selecciona una opción
-                </option>
-                <option value="documental">Documental</option>
-                <option value="corto">Cortometraje</option>
-                <option value="comercial">Comercial / Marca</option>
-                <option value="videoclip">Videoclip</option>
-                <option value="otro">Otro</option>
-              </select>
-              <span class="error-msg" data-for="projectType"></span>
-            </div>
+  /* Oculta totalmente los carruseles a los 7.15s */
+  body.phase-cover #carousel-stage {
+    opacity: 0;
+    pointer-events: none;
+  }
 
-            <div class="form-row">
-              <label for="message">Mensaje</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="5"
-                placeholder="Cuéntame sobre tu idea, plazos y presupuesto aproximado"
-                required
-              ></textarea>
-              <span class="error-msg" data-for="message"></span>
-            </div>
+  /* ===================== PORTADA ===================== */
 
-            <button type="submit" class="btn-primary btn-submit">
-              Enviar mensaje
-            </button>
+  #cover{
+    position: fixed; inset:0;
+    background: var(--black);
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 1s ease;
+    pointer-events:none;
+  }
+  body.phase-cover #cover{
+    opacity: 1;
+    pointer-events:auto;
+  }
 
-            <p id="formSuccess" class="form-success" hidden>
-              Gracias — tu mensaje ha sido enviado. Te responderé muy pronto.
-            </p>
-          </form>
+  /* ===================== ACCESIBILIDAD / MOTION ===================== */
 
-          <div class="contact-side">
-            <div class="contact-info-block">
-              <h3>Correo</h3>
-              <p>hola@marcovidalfilms.com</p>
-            </div>
-            <div class="contact-info-block">
-              <h3>Teléfono</h3>
-              <p>+34 600 000 000</p>
-            </div>
-            <div class="contact-info-block">
-              <h3>Estudio</h3>
-              <p>Barcelona, España</p>
-            </div>
-            <div class="sprocket-row">
-              <span></span><span></span><span></span><span></span><span></span
-              ><span></span>
-            </div>
-          </div>
-        </div>
-      </section>
+  @media (prefers-reduced-motion: reduce){
+    .row { animation: none !important; }
+    #carousel-stage{ display:none; }
+    #cover{ opacity:1 !important; pointer-events:auto; }
+  }
 
-      <footer class="site-footer">
-        <p>&copy; 2026 Marco Vidal Films. Todos los derechos reservados.</p>
-        <a href="#top" class="back-top">Volver arriba ↑</a>
-      </footer>
-    </main>
+  @media (max-width: 700px){
+    :root{ --row-h: 16.5vh; --gap: 8px; }
+  }
+</style>
+</head>
+<body>
 
-    <!-- Modal de vídeo -->
-    <div id="videoModal" class="video-modal" hidden>
-      <div class="video-modal-inner">
-        <button id="modalClose" class="modal-close" aria-label="Cerrar">
-          &times;
-        </button>
-        <div class="modal-video-area">
-          <span class="modal-play">▶</span>
-        </div>
-        <h3 id="modalTitle"></h3>
-        <p id="modalDesc"></p>
-      </div>
-    </div>
+  <!-- ===================== 4 CARRUSELES "SERPIENTE" ===================== -->
+  <div id="carousel-stage">
+    <div class="row-track"><div class="row row-1" id="row1"></div></div>
+    <div class="row-track"><div class="row row-2" id="row2"></div></div>
+    <div class="row-track"><div class="row row-3" id="row3"></div></div>
+    <div class="row-track"><div class="row row-4" id="row4"></div></div>
+  </div>
 
-    <script src="script2.js"></script>
-  </body>
+  <!-- ===================== PORTADA (negra por ahora) ===================== -->
+  <div id="cover"></div>
+
+  <script>
+    // ============================================================
+    // ARRAY MODULAR DE VIDEOS
+    // ============================================================
+    const VIDEO_SOURCES = [
+      './videos/prueba.webm',
+      './videos/wallpaper1.webm',
+      // Agrega más rutas de video aquí
+    ];
+
+    // ---------- Generación de las 40 tarjetas (10 por fila) ----------
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const v = entry.target;
+        // Solo reproduce si al menos el 15% del video está visible en pantalla
+        if (entry.isIntersecting) {
+          // Usamos un pequeño timeout para no saturar el arranque simultáneo
+          requestAnimationFrame(() => {
+            v.play().catch(() => {});
+          });
+        } else {
+          v.pause();
+        }
+      });
+    }, { 
+      threshold: 0.15,
+      rootMargin: "50px 0px" // Da un margen de carga antes de entrar
+    });
+
+    function buildRow(elId, start){
+      const el = document.getElementById(elId);
+      const fragment = document.createDocumentFragment();
+      const cardsData = [];
+
+      for(let i = 0; i < 10; i++){
+        const n = start + i;
+        cardsData.push({
+          label: 'PROYECTO ' + String(n).padStart(2, '0'),
+          variant: (n % 5) + 1,
+          src: VIDEO_SOURCES[(n - 1) % VIDEO_SOURCES.length]
+        });
+      }
+
+      // se duplica el set (x2) para lograr el loop infinito sin cortes
+      const doubled = cardsData.concat(cardsData);
+
+      doubled.forEach((data) => {
+        const card = document.createElement('div');
+        card.className = 'card v' + data.variant;
+
+        const video = document.createElement('video');
+        video.className = 'thumb-video';
+        video.src = data.src;
+        video.muted = true;
+        video.loop = true;
+        video.autoplay = true;
+        video.playsInline = true;
+        
+        // --- NUEVOS AJUSTES DE RENDIMIENTO ---
+        video.preload = 'metadata'; // No descarga el video entero de golpe, solo los datos básicos
+        video.setAttribute('decoding', 'async'); // Saca la decodificación del hilo principal (evita los trompicones)
+        // -------------------------------------
+        
+        video.addEventListener('loadeddata', () => video.classList.add('is-ready'), { once: true });
+
+        card.appendChild(video);
+        fragment.appendChild(card);
+
+        // El observer que ya tienes hará que solo se reproduzcan los que están en pantalla
+        videoObserver.observe(video);
+      });
+
+      el.appendChild(fragment);
+    }
+
+    buildRow('row1', 1);
+    buildRow('row2', 11);
+    buildRow('row3', 21);
+    buildRow('row4', 31);
+
+// ---------- Línea de tiempo de la intro ----------
+    const body = document.body;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Función para liberar la memoria y destruir los videos
+    function destroyCarousels() {
+      const carouselStage = document.getElementById('carousel-stage');
+      if (carouselStage) {
+        videoObserver.disconnect(); // Apagamos el "vigilante" de los videos
+        carouselStage.remove();     // Eliminamos todo el HTML de los carruseles
+        console.log("Carruseles destruidos. Memoria liberada."); // (Opcional, para que lo compruebes en consola)
+      }
+    }
+
+    if(!reduceMotion){
+      setTimeout(() => body.classList.add('phase-dim'),   3200);
+      setTimeout(() => body.classList.add('phase-exit'),  5900);
+      
+      setTimeout(() => {
+        body.classList.add('phase-cover');
+        
+        // Destruimos los carruseles 1 segundo después de que aparezca la portada
+        // para dar tiempo a que termine cualquier transición visual
+        setTimeout(destroyCarousels, 1000); 
+      }, 7150);
+      
+    } else {
+      body.classList.add('phase-cover');
+      destroyCarousels(); // Si tiene el movimiento reducido, los destruimos de inmediato
+    }
+  </script>
+</body>
 </html>
