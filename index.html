@@ -1,2634 +1,2057 @@
 <!doctype html>
 <html lang="es">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Sección Trabajo — Videos / Lista</title>
-  <style>
-    @font-face {
-      font-family: "Sequel Sans Display";
-      src: url("./font/sequel-sans-display-bold.ttf") format("truetype");
-      font-weight: bold;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    :root {
-      /* --- NEGRO (secundario) y variantes --- */
-      --black: #0a0a0b;
-      --black-soft: #151517;
-      --black-card: #1b1b1d;
-      --gray-line: #2a2a2c;
-      --gray: #8c8c8f;
-      --cream: #f3efe4;
-
-      /* --- AMARILLO (principal) y variantes --- */
-      --yellow: #ffdf00;
-      --yellow-dim: #c9b000;
-      --yellow-dark: #8f7c00;
-      --yellow-light: #ffe94d;
-      --yellow-pale: #fff3a3;
-
-      /* --- MORADO (semi principal) y variantes --- */
-      --purple: #9729c4;
-      --purple-dim: #7a1f9e;
-      --purple-dark: #591675;
-      --purple-light: #b657da;
-      --purple-pale: #dba6f0;
-
-      --font-display: "Sequel Sans Display", sans-serif;
-      --font-body: "Sequel Sans Display", sans-serif;
-
-      /* SEPARACIÓN DE LAS LISTAS LATERALES */
-      --gap-lg: clamp(4rem, 12vw, 15rem);
-
-      /* ANCHO DEL CONTENEDOR VERTICAL */
-      --v-container-w: clamp(340px, 32vw, 480px);
-      /* ANCHO DE LAS TARJETAS VERTICALES */
-      --v-card-w: clamp(260px, 22vw, 360px);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      min-height: 100dvh;
-      width: 100%;
-      max-width: 100vw;
-      overflow-x: hidden;
-      /* Evita scroll horizontal, pero permite scroll vertical */
-      background: radial-gradient(circle at 50% 50%,
-          var(--black-soft),
-          var(--black));
-      font-family: var(--font-body);
-      position: relative;
-      -webkit-text-size-adjust: 100%;
-      text-size-adjust: 100%;
-    }
-
-    img,
-    video {
-      max-width: 100%;
-    }
-
-    h1,
-    h2,
-    h3 {
-      font-family: var(--font-display);
-      letter-spacing: 0.02em;
-      margin: 0;
-      color: var(--cream);
-    }
-
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    a,
-    button {
-      color: inherit;
-    }
-
-    /* ========================================================
-   INTRO ANIMADA / CENTRADO ABSOLUTO AJUSTADO
-   ======================================================== */
-    .intro-wallpaper-container {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      height: 100dvh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    /* Capa de relámpagos ambientales */
-    .lightning-flash {
-      position: absolute;
-      inset: 0;
-      background: #fff;
-      opacity: 0;
-      z-index: 1;
-      pointer-events: none;
-      mix-blend-mode: color-dodge;
-      animation: storm-lightning 2.2s cubic-bezier(0.15, 0.85, 0.3, 1) 0.2s forwards;
-    }
-
-    .intro-name {
-      position: relative;
-      z-index: 2;
-      font-family: var(--font-display);
-      color: var(--cream);
-      text-align: center;
-      white-space: nowrap;
-      text-transform: uppercase;
-
-      /* Reducimos el tamaño de 24vw a 14vw (puedes ajustarlo a tu gusto) */
-      font-size: 14vw;
-      line-height: 0.85;
-
-      /* Eliminamos el margin-top para que quede 100% centrado */
-
-      will-change: transform, opacity;
-      animation:
-        intro-electricity 1.6s cubic-bezier(0.25, 1, 0.5, 1) 0.3s forwards,
-        transform-to-wallpaper 2.5s cubic-bezier(0.25, 1, 0.3, 1) 1.9s forwards;
-      max-width: 100vw;
-    }
-
-    /* Animación: Descarga de rayos ambientales */
-    @keyframes storm-lightning {
-
-      0%,
-      11%,
-      15%,
-      45%,
-      49%,
-      100% {
-        opacity: 0;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Camilo — Editor de Video</title>
+    <style>
+      @font-face {
+        font-family: "Sequel Sans";
+        src: url("./font/sequel-sans-display-bold.ttf") format("truetype");
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
       }
 
-      12% {
-        opacity: 0.9;
-        background: radial-gradient(circle,
-            #ffffff 10%,
-            var(--purple-light) 70%,
-            transparent 100%);
-      }
-
-      14% {
-        opacity: 0.3;
-      }
-
-      16% {
-        opacity: 0.95;
-        background: radial-gradient(circle,
-            #ffffff 15%,
-            var(--purple) 55%,
-            var(--yellow) 100%);
-      }
-
-      46% {
-        opacity: 0.85;
-        background: radial-gradient(circle,
-            #ffffff 10%,
-            var(--yellow) 55%,
-            var(--purple) 100%);
-      }
-
-      48% {
-        opacity: 0.2;
-      }
-    }
-
-    /* Animación: Sobrecarga eléctrica en las letras sin saltos 3D */
-    @keyframes intro-electricity {
-      0% {
-        opacity: 0;
-        transform: scale(0.85);
-        text-shadow: 0 0 50px rgba(255, 223, 0, 0.8);
-      }
-
-      11% {
-        opacity: 0.1;
-        text-shadow: none;
-      }
-
-      12% {
-        opacity: 1;
-        text-shadow:
-          0 0 10px #fff,
-          0 0 30px var(--purple-light),
-          0 0 60px var(--purple);
-      }
-
-      14% {
-        text-shadow:
-          0 0 5px #fff,
-          0 0 15px var(--purple-light);
-      }
-
-      16% {
-        text-shadow:
-          0 0 20px #fff,
-          0 0 40px var(--yellow),
-          0 0 70px var(--purple);
-      }
-
-      25% {
-        opacity: 1;
-        transform: scale(1);
-        text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
-      }
-
-      45% {
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
-      }
-
-      46% {
-        text-shadow:
-          0 0 20px #fff,
-          0 0 45px var(--yellow),
-          0 0 75px var(--purple);
-      }
-
-      48% {
-        text-shadow: none;
-      }
-
-      100% {
-        opacity: 1;
-        transform: scale(1);
-        text-shadow: 0 0 15px rgba(243, 239, 228, 0.15);
-      }
-    }
-
-    /* Animación: Transición de zoom */
-    @keyframes transform-to-wallpaper {
-      0% {
-        opacity: 1;
-        transform: scale(1);
-        letter-spacing: 0.05em;
-      }
-
-      100% {
-        opacity: 0;
-        transform: scaleX(1.5) scaleY(2.4);
-        letter-spacing: 0.1em;
-        text-shadow: none;
-      }
-    }
-
-    /* Video de fondo que sustituye al texto "CAMILO" cuando arranca el carrusel */
-    .intro-bg-video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 0;
-      opacity: 0;
-      transition: opacity 2.6s ease-in-out;
-    }
-
-    /* Al activarse (cuando arranca el carrusel): el video va apareciendo poco a poco,
-       en armonía con el propio desvanecimiento de "CAMILO", que ya se apaga solo
-       gracias a su animación de zoom (transform-to-wallpaper) */
-    .intro-wallpaper-container.video-active .intro-bg-video {
-      opacity: 1;
-    }
-
-    /* ========================================================
-   SECTION - TRABAJO (Diseño con Centrado Absoluto del Carrusel)
-   ======================================================== */
-    .trabajo {
-      position: relative;
-      height: 100vh;
-      height: 100dvh;
-      width: 100%;
-      z-index: 2;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* --- Toggle superior (Sin left especificado) --- */
-    .trabajo-toggle {
-      position: absolute;
-      top: 40px;
-      display: flex;
-      gap: 6px;
-      padding: 6px;
-      border: 1px solid var(--gray-line);
-      border-radius: 999px;
-      background: var(--black-soft);
-      z-index: 10;
-
-      opacity: 0;
-      transform: translateY(-10px);
-      animation: toggle-fade-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) 2.6s forwards;
-      transition:
-        opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-        visibility 0s linear 0s;
-    }
-
-    @keyframes toggle-fade-in {
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .toggle-btn {
-      font-family: var(--font-body);
-      font-size: 0.8rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 10px 24px;
-      border-radius: 999px;
-      border: none;
-      background: transparent;
-      color: var(--gray);
-      cursor: pointer;
-      transition:
-        background 0.25s ease,
-        color 0.25s ease;
-    }
-
-    .toggle-btn.active {
-      background: var(--yellow);
-      color: var(--black);
-      font-weight: 600;
-    }
-
-    .toggle-btn:hover:not(.active) {
-      color: var(--purple-light);
-    }
-
-    .toggle-btn:focus-visible {
-      outline: 2px solid var(--yellow);
-      outline-offset: 3px;
-    }
-
-    /* --- Contenedor de vistas (Entrada de carrete físico: derecha a izquierda, sin fade) --- */
-    .view-stage {
-      width: 100%;
-      height: 100%;
-      max-width: 1690px;
-      position: relative;
-      perspective: 1400px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      /* Empieza completamente fuera de pantalla (derecha) Y con opacity:0.
-   Así queda garantizado que no se pueda ver nada del carrusel en ningún
-   momento antes de que arranque su propia animación (que se dispara justo
-   cuando termina el zoom del nombre, vía el delay de abajo). En cuanto la
-   animación arranca, pasa a opacity:1 de golpe (ya en movimiento) y se
-   desliza hasta el centro. */
-      opacity: 0;
-      transform: translateX(100vw);
-      will-change: transform, opacity;
-      animation: carousel-slide-in 2.4s cubic-bezier(0.1, 0.85, 0.25, 1) 2.2s forwards;
-    }
-
-    @keyframes carousel-slide-in {
-      0% {
-        opacity: 1;
-        transform: translateX(100vw);
-      }
-
-      100% {
-        opacity: 1;
-        transform: translateX(0);
-        /* Se desliza hasta su posición centrada de forma gradual */
-      }
-    }
-
-    .view {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition:
-        opacity 0.65s cubic-bezier(0.65, 0, 0.35, 1),
-        transform 0.65s cubic-bezier(0.65, 0, 0.35, 1);
-      will-change: opacity, transform;
-      backface-visibility: hidden;
-    }
-
-    .view-lista {
-      gap: var(--gap-lg);
-    }
-
-    .trabajo[data-view="videos"] .view-videos {
-      opacity: 1;
-      transform: none;
-      pointer-events: auto;
-      z-index: 2;
-    }
-
-    .trabajo[data-view="videos"] .view-lista {
-      opacity: 0;
-      transform: scaleX(0.3) rotateY(8deg);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .trabajo[data-view="lista"] .view-lista {
-      opacity: 1;
-      transform: none;
-      pointer-events: auto;
-      z-index: 2;
-    }
-
-    .trabajo[data-view="lista"] .view-videos {
-      opacity: 0;
-      transform: scaleX(0.3) rotateY(-8deg);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    /* --- Vista VIDEOS: carrusel centrado --- */
-    .h-carousel {
-      width: 100%;
-      padding: 60px 0;
-      display: flex;
-      align-items: center;
-      /* Base tal cual: SIN overflow:hidden y SIN mask-image.
-   Así, durante toda la animación de carrete se ve el carrusel completo,
-   sin recortar ni cortar ninguna tarjeta. */
-    }
-
-    .h-carousel.reel-done {
-      /* El overflow se activa al instante; el mask-image (la sombra) lo controla
-   el JS con un fade manual (ver initReelShadow) para que aparezca poco a
-   poco en vez de de golpe. */
-      overflow: hidden;
-    }
-
-    .h-track {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      width: max-content;
-      will-change: transform;
-      backface-visibility: hidden;
-      transform: translateX(0);
-    }
-
-    /* --- CONTENEDOR DE TARJETA EXTERNA --- */
-    .h-card-wrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      flex-shrink: 0;
-      transition:
-        transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
-        opacity 0.4s ease;
-      transform: scale(0.92);
-      opacity: 0.55;
-    }
-
-    /* --- Metadatos Superiores Externos --- */
-    .h-card-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 4px;
-      font-family: var(--font-body);
-      color: var(--cream);
-      font-size: 0.72rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      opacity: 0;
-      transform: translateY(5px);
-      transition:
-        opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1),
-        transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-
-    .h-card-views {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .h-card-views svg {
-      width: 12px;
-      height: 12px;
-      fill: currentColor;
-    }
-
-    .h-card-wrapper:hover .h-card-meta {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .h-card-wrapper.is-selected .h-card-meta {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* --- El Recuadro del Video / Tarjeta --- */
-    .h-item {
-      position: relative;
-      width: min(30vw, 300px);
-      aspect-ratio: 16 / 10;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1px solid var(--gray-line);
-      cursor: pointer;
-      filter: grayscale(35%);
-      transition:
-        filter 0.4s ease,
-        border-color 0.4s ease,
-        box-shadow 0.4s ease;
-    }
-
-    .h-item video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .h-thumb {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      opacity: 1;
-      transition: opacity 0.35s ease;
-      pointer-events: none;
-    }
-
-    .h-item.is-playing .h-thumb {
-      opacity: 0;
-    }
-
-    .h-card-wrapper.is-selected {
-      opacity: 1;
-      transform: scale(1.22);
-      z-index: 4;
-    }
-
-    .h-card-wrapper.is-selected .h-item {
-      filter: grayscale(0);
-      border-color: var(--yellow);
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.55);
-    }
-
-    .h-card-wrapper.item-alt.is-selected .h-item {
-      border-color: var(--purple-light);
-      box-shadow:
-        0 25px 50px rgba(0, 0, 0, 0.55),
-        0 0 0 1px rgba(151, 41, 196, 0.35);
-    }
-
-    /* SEPARACIÓN INTELIGENTE CON GPU */
-    .h-card-wrapper:has(~ .h-card-wrapper.is-selected) {
-      transform: scale(0.92) translateX(-22px);
-    }
-
-    .h-card-wrapper.is-selected~.h-card-wrapper {
-      transform: scale(0.92) translateX(22px);
-    }
-
-    /* EFFECT RIPPLE
-   Optimización: se anima transform:scale (solo compositor) en vez de
-   width/height (que obligaría a recalcular layout en cada frame). El
-   tamaño final se fija ya en la propia regla (320px) y se "esconde"
-   con scale(0), así el resultado visual es idéntico pero mucho más fluido. */
-    .ripple-drop {
-      position: absolute;
-      width: 448px;
-      height: 448px;
-      border-radius: 50%;
-      background: rgba(255, 223, 0, 0.35);
-      transform: translate(-50%, -50%) scale(0);
-      opacity: 0.9;
-      pointer-events: none;
-      z-index: 10;
-      animation: ripple-water 0.75s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
-    }
-
-    @keyframes ripple-water {
-      0% {
-        transform: translate(-50%, -50%) scale(0);
-        opacity: 0.9;
-        box-shadow:
-          0 0 0 0px rgba(255, 223, 0, 0.4),
-          inset 0 0 15px rgba(255, 255, 255, 0.4);
-      }
-
-      100% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0;
-        box-shadow:
-          0 0 0 30px rgba(255, 223, 0, 0),
-          inset 0 0 30px rgba(255, 255, 255, 0);
-      }
-    }
-
-    .ripple-drop.ripple-alt {
-      background: rgba(151, 41, 196, 0.35);
-    }
-
-    .ripple-drop.ripple-alt {
-      animation-name: ripple-water-alt;
-    }
-
-    @keyframes ripple-water-alt {
-      0% {
-        transform: translate(-50%, -50%) scale(0);
-        opacity: 0.9;
-        box-shadow:
-          0 0 0 0px rgba(151, 41, 196, 0.4),
-          inset 0 0 15px rgba(255, 255, 255, 0.4);
-      }
-
-      100% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0;
-        box-shadow:
-          0 0 0 30px rgba(151, 41, 196, 0),
-          inset 0 0 30px rgba(255, 255, 255, 0);
-      }
-    }
-
-    /* Botones Expandir */
-    .h-expand,
-    .v-expand {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.7);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 18px;
-      border-radius: 999px;
-      border: 1px solid rgba(243, 239, 228, 0.4);
-      background: rgba(10, 10, 11, 0.75);
-      backdrop-filter: blur(6px);
-      color: var(--cream);
-      font-family: var(--font-body);
-      font-size: 0.78rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      cursor: pointer;
-      opacity: 0;
-      pointer-events: none;
-      transition:
-        opacity 0.3s ease,
-        transform 0.3s ease,
-        background 0.25s ease,
-        border-color 0.25s ease;
-      z-index: 5;
-    }
-
-    .h-card-wrapper.is-selected .h-expand,
-    .v-item.active .v-expand {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translate(-50%, -50%) scale(1);
-    }
-
-    .h-expand:hover,
-    .v-expand:hover {
-      background: var(--yellow);
-      border-color: var(--yellow);
-      color: var(--black);
-    }
-
-    .h-card-wrapper.item-alt .h-expand:hover,
-    .v-item.item-alt .v-expand:hover {
-      background: var(--purple);
-      border-color: var(--purple);
-      color: var(--cream);
-    }
-
-    /* --- Vista LISTA --- */
-    .side-list {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 2px;
-      width: 230px;
-      z-index: 5;
-    }
-
-    .side-left {
-      align-items: flex-end;
-      text-align: right;
-    }
-
-    .side-right {
-      align-items: flex-start;
-      text-align: left;
-    }
-
-    .side-list li {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      font-family: var(--font-display);
-      font-size: 1.4rem;
-      color: var(--gray);
-      opacity: 0.4;
-      padding: 10px 6px;
-      cursor: pointer;
-      transition:
-        color 0.3s ease,
-        opacity 0.3s ease,
-        transform 0.3s ease;
-    }
-
-    .side-left li {
-      transform-origin: right center;
-      justify-content: flex-end;
-    }
-
-    .side-right li {
-      transform-origin: left center;
-      justify-content: flex-start;
-    }
-
-    .side-list li:hover:not(.active) {
-      color: var(--cream);
-      opacity: 0.65;
-    }
-
-    .side-list li.active {
-      color: var(--yellow);
-      opacity: 1;
-      transform: scale(1.08);
-    }
-
-    .side-list li.item-alt.active {
-      color: var(--purple-light);
-    }
-
-    .side-views {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-family: var(--font-body);
-      font-size: 0.74rem;
-      letter-spacing: 0.04em;
-      text-transform: none;
-      color: inherit;
-      opacity: 0.8;
-    }
-
-    .side-views svg {
-      width: 12px;
-      height: 12px;
-      fill: currentColor;
-    }
-
-    /* CONTENEDOR VERTICAL */
-    .v-carousel {
-      position: relative;
-      width: var(--v-container-w);
-      height: min(68vh, 700px);
-      overflow: hidden;
-      -webkit-mask-image: linear-gradient(180deg,
-          transparent,
-          #000 8%,
-          #000 92%,
-          transparent);
-      mask-image: linear-gradient(180deg,
-          transparent,
-          #000 8%,
-          #000 92%,
-          transparent);
-      z-index: 4;
-    }
-
-    .v-track {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--v-gap, 22px);
-      width: 100%;
-      will-change: transform;
-      backface-visibility: hidden;
-      transform: translateY(0);
-    }
-
-    /* TARJETAS VERTICALES */
-    .v-item {
-      position: relative;
-      width: var(--v-card-w);
-      aspect-ratio: 16 / 10;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 2px solid var(--gray-line);
-      background: var(--black-card);
-      cursor: pointer;
-      flex-shrink: 0;
-      opacity: 0.5;
-      transform: scale(0.9);
-      transition:
-        border-color 0.35s ease,
-        transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-        opacity 0.35s ease,
-        box-shadow 0.35s ease;
-    }
-
-    .v-item video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .v-thumb {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      opacity: 1;
-      transition: opacity 0.35s ease;
-      pointer-events: none;
-    }
-
-    .v-item.is-playing .v-thumb {
-      opacity: 0;
-    }
-
-    .v-item.active {
-      opacity: 1;
-      border-color: var(--yellow);
-      transform: scale(1.06);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.65);
-    }
-
-    .v-item.item-alt.active {
-      border-color: var(--purple-light);
-      box-shadow:
-        0 20px 40px rgba(0, 0, 0, 0.65),
-        0 0 0 1px rgba(151, 41, 196, 0.35);
-    }
-
-    /* ========================================================
-   MODAL DE VIDEO A PANTALLA COMPLETA
-   ======================================================== */
-    .video-modal {
-      position: fixed;
-      inset: 0;
-      background: var(--black);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.9s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-
-    .video-modal.open {
-      opacity: 1;
-      pointer-events: auto;
-      transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .video-modal video {
-      width: 100vw;
-      height: 100vh;
-      height: 100dvh;
-      object-fit: cover;
-      transform: scale(0.85);
-      transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
-      cursor: pointer;
-    }
-
-    @media (max-width: 768px) {
-      .video-modal video {
-        width: auto;
-        height: auto;
-        max-width: 100vw;
-        max-height: 100vh;
-        max-height: 100dvh;
-        object-fit: contain;
-      }
-    }
-
-    .video-modal.open video {
-      transform: scale(1);
-      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .modal-header {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      padding: 24px 32px;
-      z-index: 10;
-      background: linear-gradient(180deg,
-          rgba(10, 10, 11, 0.85) 0%,
-          rgba(10, 10, 11, 0) 100%);
-      pointer-events: none;
-      opacity: 0;
-      transform: translateY(-10px);
-      transition:
-        opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
-        transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-
-    .video-modal.open .modal-header {
-      pointer-events: auto;
-      opacity: 1;
-      transform: translateY(0);
-      transition-delay: 0.3s;
-    }
-
-    .modal-info-wrapper {
-      justify-self: start;
-      position: relative;
-      display: flex;
-      align-items: center;
-      height: 44px;
-      max-width: 44px;
-      background: rgba(10, 10, 11, 0.55);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(243, 239, 228, 0.2);
-      border-radius: 999px;
-      overflow: hidden;
-      transition:
-        max-width 0.5s cubic-bezier(0.25, 1, 0.5, 1),
-        border-color 0.25s ease;
-    }
-
-    .modal-info-wrapper.open {
-      max-width: 320px;
-      border-color: var(--yellow);
-    }
-
-    .modal-info-toggle {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 42px;
-      height: 42px;
-      flex-shrink: 0;
-      border-radius: 50%;
-      border: none;
-      background: transparent;
-      color: var(--cream);
-      cursor: pointer;
-      transition: color 0.25s ease;
-    }
-
-    .modal-info-toggle svg {
-      width: 18px;
-      height: 18px;
-      fill: currentColor;
-      transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-
-    .modal-info-wrapper.open .modal-info-toggle {
-      color: var(--yellow);
-    }
-
-    .modal-info-wrapper.open .modal-info-toggle svg {
-      transform: rotate(180deg);
-    }
-
-    .modal-info-banner {
-      white-space: nowrap;
-      font-family: var(--font-body);
-      font-size: 0.78rem;
-      letter-spacing: 0.05em;
-      color: var(--cream);
-      text-decoration: none;
-      padding-right: 20px;
-      opacity: 0;
-      transform: translateX(-10px);
-      transition:
-        opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-        transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-
-    .modal-info-wrapper.open .modal-info-banner {
-      opacity: 1;
-      transform: translateX(0);
-      transition-delay: 0.1s;
-    }
-
-    .modal-title {
-      grid-column: 2;
-      text-align: center;
-      font-family: var(--font-display);
-      font-size: 2.2rem;
-      color: var(--cream);
-      letter-spacing: 0.04em;
-      text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .modal-close {
-      grid-column: 3;
-      justify-self: end;
-      background: rgba(10, 10, 11, 0.55);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(243, 239, 228, 0.2);
-      color: var(--cream);
-      font-size: 1.3rem;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.25s ease;
-    }
-
-    .modal-close:hover {
-      border-color: var(--yellow);
-      color: var(--yellow);
-      background: rgba(255, 223, 0, 0.1);
-    }
-
-    .modal-play-pause {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.9);
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: rgba(10, 10, 11, 0.65);
-      backdrop-filter: blur(8px);
-      border: 2px solid rgba(243, 239, 228, 0.25);
-      color: var(--yellow);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 15;
-      opacity: 0;
-      pointer-events: none;
-      transition:
-        opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1),
-        transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-        background 0.25s ease,
-        border-color 0.25s ease;
-    }
-
-    .modal-play-pause svg {
-      width: 32px;
-      height: 32px;
-      fill: currentColor;
-    }
-
-    .modal-play-pause:hover {
-      background: rgba(255, 223, 0, 0.15);
-      border-color: var(--yellow);
-      transform: translate(-50%, -50%) scale(1.05);
-    }
-
-    .modal-play-pause .icon-pause {
-      display: none;
-    }
-
-    .modal-play-pause.is-playing .icon-play {
-      display: none;
-    }
-
-    .modal-play-pause.is-playing .icon-pause {
-      display: block;
-    }
-
-    .modal-play-pause.visible {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translate(-50%, -50%) scale(1);
-    }
-
-    .modal-play-pause.flash {
-      animation: play-flash 0.75s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-
-    @keyframes play-flash {
-      0% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-      }
-
-      100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(1.3);
-      }
-    }
-
-    .modal-watermark {
-      position: absolute;
-      bottom: 34px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: var(--font-body);
-      font-size: 0.78rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gray);
-      pointer-events: none;
-      z-index: 10;
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      opacity: 0;
-      transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.8s;
-    }
-
-    .modal-watermark span {
-      font-family: var(--font-display);
-      font-size: 1.9rem;
-      letter-spacing: 0.04em;
-      text-transform: none;
-      background: linear-gradient(100deg,
-          var(--yellow),
-          var(--purple-light));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .video-modal.open .modal-watermark {
-      opacity: 1;
-    }
-
-    @media (max-width: 1024px) {
+      /* ============ TOKENS ============ */
       :root {
-        --gap-lg: clamp(1.5rem, 4vw, 3rem);
-      }
-    }
+        --black: #0a0a0b;
+        --black-soft: #151517;
+        --black-card: #1b1b1d;
+        --gray-line: #2a2a2c;
+        --gray: #8c8c8f;
+        --cream: #f3efe4;
 
-    @media (max-width: 768px) {
-      .trabajo-toggle {
-        opacity: 0 !important;
-        visibility: hidden;
-        pointer-events: none;
-        transition:
-          opacity 0.22s cubic-bezier(0.4, 0, 1, 1),
-          visibility 0s linear 0.22s;
-      }
-    }
+        --yellow: #ffdf00;
+        --yellow-pale: #fff6c2;
+        --yellow-dim: #c9b000;
 
-    @media (max-width: 860px) {
-      :root {
-        --v-container-w: 300px;
-        --v-card-w: 230px;
-        --v-gap: 16px;
-        --gap-lg: 18px;
+        --purple: #9729c4;
+        --purple-light: #b657da;
+        --purple-dim: #7a1f9e;
+        --font: "Sequel Sans", "Arial Black", Arial, sans-serif;
+        --grad: linear-gradient(to right, var(--purple-dim), var(--yellow) 85%);
       }
 
-      .trabajo-toggle {
-        top: 20px;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
 
-      .side-list {
-        width: 100px;
+      body {
+        background: var(--black);
+        color: var(--cream);
+        font-family: var(--font);
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
       }
 
-      .side-list li {
-        font-size: 0.95rem;
-        padding: 7px 2px;
-      }
-
-      .v-carousel {
-        height: min(60vh, 560px);
-      }
-
-      .modal-title {
-        font-size: 1.5rem;
-      }
-
-      .modal-header {
-        padding: 16px 20px;
-      }
-
-      .modal-play-pause {
-        width: 64px;
-        height: 64px;
-      }
-
-      .modal-play-pause svg {
-        width: 24px;
-        height: 24px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      :root {
-        --v-container-w: 190px;
-        --v-card-w: 130px;
-        --v-gap: 12px;
-        --gap-lg: 8px;
-      }
-
-      .side-list {
-        width: 68px;
-        gap: 0;
-      }
-
-      .side-list li {
-        font-size: 0.66rem;
-        padding: 5px 2px;
-        gap: 3px;
-      }
-
-      .side-title {
-        max-width: 60px;
+      body.lock-scroll {
         overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        display: inline-block;
+        height: 100vh;
       }
 
-      .side-views {
-        display: none;
+      ::selection {
+        background: var(--yellow-dim);
+        color: var(--black);
       }
 
-      .v-carousel {
-        height: min(64vh, 500px);
-      }
-    }
-
-    @media (max-width: 360px) {
-      :root {
-        --v-container-w: 165px;
-        --v-card-w: 112px;
-        --v-gap: 10px;
-        --gap-lg: 4px;
+      a {
+        color: inherit;
+        text-decoration: none;
       }
 
-      .h-item {
-        width: min(36vw, 220px);
+      img {
+        display: block;
+        max-width: 100%;
       }
 
-      .side-list {
-        width: 54px;
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
       }
 
-      .side-title {
-        max-width: 48px;
+      /* ============ INTRO LOADER ============ */
+      #intro-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        background: var(--black);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: opacity 0.7s ease;
       }
 
-      .v-carousel {
-        height: min(62vh, 460px);
-      }
-    }
-
-    @media (max-height: 520px) and (orientation: landscape) {
-      .intro-name {
-        font-size: 14vh;
+      #intro-loader.fade-out {
+        opacity: 0;
+        pointer-events: none;
       }
 
-      .trabajo-toggle {
-        top: 10px;
+      #dark-overlay {
+        position: absolute;
+        inset: 0;
+        background: var(--black);
+        opacity: 0;
+        z-index: 5;
+        transition: opacity 0.5s ease;
       }
 
-      .h-carousel {
-        padding: 20px 0;
+      #dark-overlay.active {
+        opacity: 0.86;
       }
 
-      .v-carousel {
-        height: min(80vh, 380px);
+      /* Cada fila ocupa un tercio exacto de la altura de la pantalla */
+      .reel-track {
+        flex: 1 1 0;
+        min-height: 0;
+        overflow: hidden;
+        position: relative;
+        border-bottom: 1px solid var(--black-soft);
+        padding-top: 5px;
+        padding-bottom: 5px;
+        box-sizing: border-box;
       }
 
-      :root {
-        --v-container-w: 260px;
-        --v-card-w: 200px;
-        --v-gap: 14px;
+      .reel-track:last-child {
+        border-bottom: none;
       }
-    }
 
-    /* ========================================================
-   SECTION - DESCRIPCIÓN (3 columnas)
-   ======================================================== */
-    .descripcion {
-      position: relative;
-      z-index: 2;
-      height: 100vh;
-      width: 99%;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 33% 33% 33%;
-      gap: 0;
-      padding: 0;
-      background: transparent;
-      /* deja ver el wallpaper de CAMILO detrás */
-    }
+      .reel-row {
+        display: flex;
+        height: 100%;
+        width: max-content;
+        gap: 6px;
+        will-change: transform;
+      }
 
-    .descripcion-col {
-      position: relative;
-      z-index: 2;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 0 2.5rem;
-    }
+      .reel-row.dir-left {
+        animation: scroll-left 34s linear infinite;
+      }
+      .reel-row.dir-right {
+        animation: scroll-right 40s linear infinite;
+      }
+      .reel-row.dir-slow {
+        animation: scroll-left 52s linear infinite;
+      }
 
-    /* --- Columna 1: presentación --- */
-    .descripcion-intro h3 {
-      font-family: var(--font-body);
-      text-transform: uppercase;
-      letter-spacing: 0.25em;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--yellow);
-      margin-bottom: 0.6rem;
-    }
+      @keyframes scroll-left {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      @keyframes scroll-right {
+        from {
+          transform: translateX(-50%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
 
-    .descripcion-intro h1 {
-      font-family: var(--font-display);
-      font-size: clamp(3rem, 6vw, 6rem);
-      line-height: 0.88;
-      color: var(--cream);
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-      margin-bottom: 1.2rem;
-    }
+      .thumb {
+        position: relative;
+        flex: 0 0 auto;
+        height: 100%;
+        aspect-ratio: 16 / 10;
+        overflow: hidden;
+        background: var(--black-card);
+        border: 3px solid var(--yellow);
+        border-radius: 16px;
+        box-sizing: border-box;
+      }
 
-    .descripcion-intro p {
-      font-family: var(--font-body);
-      font-size: 1rem;
-      line-height: 1.6;
-      color: var(--gray);
-      max-width: 380px;
-    }
+      .thumb.alt {
+        border-color: var(--purple);
+      }
 
-    /* --- Columna 2: foto de perfil (placeholder) --- */
-    .descripcion-col-foto {
-      align-items: center;
-    }
-
-    .foto-placeholder {
-      height: 90%;
-      width: 90%;
-      background: #e4e0bc;
-      /* recuadro rojo temporal */
-      border-radius: 16px;
-    }
-
-    /* --- Columna 3: descripción breve + fichas youtubers --- */
-    .descripcion-texto {
-      font-family: var(--font-body);
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: var(--gray);
-      margin-bottom: 2rem;
-    }
-
-    .youtuber-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-    }
-
-    .youtuber-card {
-      background: var(--black-card);
-      border: 1px solid var(--gray-line);
-      border-radius: 10px;
-      padding: 1.4rem 1rem;
-      text-align: center;
-      font-family: var(--font-body);
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      color: var(--cream);
-      transition:
-        border-color 0.25s ease,
-        color 0.25s ease;
-    }
-
-    .youtuber-card:hover {
-      border-color: var(--yellow);
-      color: var(--yellow);
-    }
-
-    .youtuber-card:nth-child(even):hover {
-      border-color: var(--purple-light);
-      color: var(--purple-light);
-    }
-
-    @media (max-width: 900px) {
-      .descripcion {
-        height: auto;
+      .thumb-img {
         width: 100%;
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-        text-align: center;
-        padding: 4rem 8vw;
+        height: 100%;
+        object-fit: cover;
       }
 
-      .descripcion-col {
-        height: auto;
+      /* ============ LOGO REVEAL ============ */
+      #logo-reveal {
+        position: fixed;
+        inset: 0;
+        z-index: 300;
+        display: flex;
         align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        opacity: 0;
+        transform: translateY(-130vh) rotate(-6deg);
       }
 
-      .descripcion-col-foto {
+      #logo-reveal.drop {
+        opacity: 1;
+        animation: fall-in 0.75s cubic-bezier(0.34, 1.2, 0.5, 1) forwards;
+      }
+
+      #logo-reveal.zoom-out {
+        animation: zoom-away 0.7s cubic-bezier(0.6, 0, 0.9, 0.3) forwards;
+      }
+
+      @keyframes fall-in {
+        0% {
+          transform: translateY(-130vh) rotate(-6deg);
+        }
+        58% {
+          transform: translateY(18px) rotate(2deg);
+        }
+        75% {
+          transform: translateY(-10px) rotate(-1deg);
+        }
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+      }
+
+      @keyframes zoom-away {
+        0% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(7);
+          opacity: 0;
+        }
+      }
+
+      .logo-container {
+        background: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: min(94vw, 1350px);
+      }
+
+      .logo-svg {
+        display: block;
         width: 100%;
-        order: 0;
+        font-family: var(--font);
+        font-size: 180px;
+        font-weight: 900;
+        letter-spacing: 14px;
       }
 
-      .foto-placeholder {
-        width: min(70vw, 320px);
-        height: min(70vw, 320px);
-        aspect-ratio: 1 / 1;
+      .text-base {
+        fill: #ffffff;
       }
 
-      .descripcion-intro p {
+      .text-glow {
+        fill: transparent;
+        stroke: url(#light-beam);
+        stroke-width: 4px;
+        stroke-dasharray: 150 400;
+        stroke-dashoffset: 400;
+        animation: sweep 4s ease-in-out infinite alternate;
+      }
+
+      @keyframes sweep {
+        0% {
+          stroke-dashoffset: 400;
+        }
+        100% {
+          stroke-dashoffset: -400;
+        }
+      }
+
+      /* ============ MAIN PAGE ============ */
+      #main-page {
+        position: relative;
+        z-index: 1;
+        opacity: 0;
+        transform: scale(1.06);
+        transition:
+          opacity 0.9s ease,
+          transform 0.9s cubic-bezier(0.2, 0.7, 0.3, 1);
+      }
+
+      /* El header vive fuera de #main-page: así no hereda su animación de
+     entrada y queda libre para desplazarse con el scroll de la página. */
+      #header-float {
+        position: relative;
+        z-index: 51;
+        opacity: 0;
+        transition: opacity 0.6s ease 0.15s;
+      }
+
+      #header-float.visible {
+        opacity: 1;
+      }
+
+      #main-page.visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      .wrap {
+        max-width: 1100px;
         margin: 0 auto;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .descripcion {
-        padding: 3rem 6vw;
-        gap: 2rem;
+        padding: 0 32px;
       }
 
-      .youtuber-grid {
-        gap: 0.7rem;
+      .section {
+        height: calc(100vh - 90px);
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
-      .descripcion-intro h1 {
-        font-size: clamp(2.4rem, 12vw, 4rem);
-      }
-    }
-
-    @media (max-width: 360px) {
-      .youtuber-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* ========================================================
-   SEPARADOR ENTRE SECCIONES
-   ======================================================== */
-    .section-divider {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 8vw;
-    }
-
-    .section-divider::before,
-    .section-divider::after {
-      content: "";
-      flex: 1;
-      height: 2px;
-      background: linear-gradient(to right,
-          transparent,
-          var(--purple-dim) 35%,
-          var(--yellow) 85%,
-          var(--yellow));
-    }
-
-    .section-divider::after {
-      background: linear-gradient(to left,
-          transparent,
-          var(--purple-dim) 35%,
-          var(--yellow) 85%,
-          var(--yellow));
-    }
-
-    .section-divider .divider-spark {
-      position: relative;
-      width: 13px;
-      height: 13px;
-      margin: 0 1.4rem;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%,
-          var(--yellow-pale),
-          var(--yellow) 45%,
-          var(--purple) 100%);
-      box-shadow:
-        0 0 10px 2px rgba(255, 223, 0, 0.75),
-        0 0 26px 8px rgba(151, 41, 196, 0.55);
-      flex-shrink: 0;
-    }
-
-    .section-divider .divider-spark::before {
-      content: "";
-      position: absolute;
-      inset: -6px;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 223, 0, 0.35);
-    }
-
-    @media (max-width: 600px) {
+      /* ========================================================
+     SEPARADOR ENTRE SECCIONES
+     ======================================================== */
       .section-divider {
-        padding: 0 6vw;
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        height: 90px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 8vw;
+      }
+
+      .section-divider::before,
+      .section-divider::after {
+        content: "";
+        flex: 1;
+        height: 2px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          var(--purple-dim) 35%,
+          var(--yellow) 85%,
+          var(--yellow)
+        );
+      }
+
+      .section-divider::after {
+        background: linear-gradient(
+          to left,
+          transparent,
+          var(--purple-dim) 35%,
+          var(--yellow) 85%,
+          var(--yellow)
+        );
       }
 
       .section-divider .divider-spark {
-        width: 11px;
-        height: 11px;
-        margin: 0 0.9rem;
-      }
-    }
-
-    /* ========================================================
-   SECTION - CONTACTO (Redes sociales + formulario)
-   ======================================================== */
-    .contacto {
-      position: relative;
-      z-index: 2;
-      min-height: 100vh;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 2.6rem;
-      padding: 7rem 8vw;
-      background: transparent;
-    }
-
-    .contacto-header {
-      text-align: center;
-      max-width: 560px;
-    }
-
-    .contacto-header h3 {
-      font-family: var(--font-body);
-      text-transform: uppercase;
-      letter-spacing: 0.25em;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--yellow);
-      margin-bottom: 0.6rem;
-    }
-
-    .contacto-header h1 {
-      font-family: var(--font-display);
-      font-size: clamp(2.6rem, 5vw, 4.5rem);
-      line-height: 0.9;
-      color: var(--cream);
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-      margin-bottom: 1rem;
-    }
-
-    .contacto-header p {
-      font-family: var(--font-body);
-      font-size: 1rem;
-      line-height: 1.6;
-      color: var(--gray);
-      margin: 0 auto;
-    }
-
-    /* --- Iconos de redes sociales --- */
-    .contacto-social {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.1rem;
-    }
-
-    .social-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      border: 1px solid var(--gray-line);
-      background: var(--black-card);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      transition:
-        border-color 0.25s ease,
-        background 0.25s ease,
-        transform 0.25s ease;
-    }
-
-    .social-icon svg {
-      width: 20px;
-      height: 20px;
-      fill: var(--cream);
-      transition: fill 0.25s ease;
-    }
-
-    .social-icon:hover {
-      border-color: var(--yellow);
-      background: var(--yellow);
-      transform: translateY(-4px);
-    }
-
-    .social-icon:hover svg {
-      fill: var(--black);
-    }
-
-    .social-icon:nth-child(even):hover {
-      border-color: var(--purple);
-      background: var(--purple);
-    }
-
-    .social-icon:nth-child(even):hover svg {
-      fill: var(--cream);
-    }
-
-    /* --- Formulario de contacto --- */
-    .contacto-form {
-      position: relative;
-      width: 100%;
-      max-width: 520px;
-      display: flex;
-      flex-direction: column;
-      gap: 1.3rem;
-      background: var(--black-card);
-      border: 1px solid var(--gray-line);
-      border-radius: 16px;
-      padding: 2.6rem;
-      overflow: hidden;
-    }
-
-    .contacto-form::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(to right,
-          var(--purple),
-          var(--yellow));
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .form-group label {
-      font-family: var(--font-body);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--gray);
-    }
-
-    .form-group input,
-    .form-group textarea {
-      font-family: var(--font-body);
-      font-size: 0.95rem;
-      color: var(--cream);
-      background: var(--black-soft);
-      border: 1px solid var(--gray-line);
-      border-radius: 8px;
-      padding: 0.85rem 1rem;
-      outline: none;
-      resize: none;
-      transition: border-color 0.25s ease;
-    }
-
-    .form-group input::placeholder,
-    .form-group textarea::placeholder {
-      color: var(--gray);
-      opacity: 0.7;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      border-color: var(--yellow);
-    }
-
-    .form-group textarea {
-      min-height: 130px;
-      line-height: 1.5;
-    }
-
-    .form-submit {
-      margin-top: 0.4rem;
-      padding: 0.95rem 1.5rem;
-      border: none;
-      border-radius: 999px;
-      background: var(--yellow);
-      color: var(--black);
-      font-family: var(--font-body);
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition:
-        background 0.25s ease,
-        transform 0.2s ease;
-    }
-
-    .form-submit:hover {
-      background: var(--yellow-dim);
-      transform: translateY(-2px);
-    }
-
-    .form-submit:active {
-      transform: translateY(0);
-    }
-
-    @media (max-width: 600px) {
-      .contacto {
-        padding: 5rem 6vw;
+        position: relative;
+        width: 13px;
+        height: 13px;
+        margin: 0 1.4rem;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 35% 30%,
+          var(--yellow-pale),
+          var(--yellow) 45%,
+          var(--purple) 100%
+        );
+        box-shadow:
+          0 0 10px 2px rgba(255, 223, 0, 0.75),
+          0 0 26px 8px rgba(151, 41, 196, 0.55);
+        flex-shrink: 0;
       }
 
-      .contacto-form {
-        padding: 2rem 1.4rem;
+      .section-divider .divider-spark::before {
+        content: "";
+        position: absolute;
+        inset: -6px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 223, 0, 0.35);
       }
 
-      .social-icon {
-        width: 46px;
-        height: 46px;
+      @media (max-width: 600px) {
+        .section-divider {
+          padding: 0 6vw;
+        }
+
+        .section-divider .divider-spark {
+          width: 11px;
+          height: 11px;
+          margin: 0 0.9rem;
+        }
       }
 
-      .form-group input,
-      .form-group textarea {
+      /* ============ HEADER (fijo) ============ */
+      .site-header {
+        position: fixed;
+        top: 22px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 50;
+        width: min(92vw, 1100px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 14px 28px;
+        border-radius: 999px;
+        border: 1.5px solid transparent;
+        background:
+          linear-gradient(var(--black), var(--black)) padding-box,
+          var(--grad) border-box;
+      }
+
+      .header-mark {
+        font-family: var(--font);
+        font-size: 20px;
+        letter-spacing: 0.05em;
+        color: var(--cream);
+      }
+
+      .header-icons {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+
+      .header-icons a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        opacity: 0.92;
+        transition:
+          opacity 0.2s ease,
+          transform 0.2s ease,
+          filter 0.2s ease;
+      }
+
+      .header-icons a svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      /* Iconos alternando amarillo y morado */
+      .header-icons a:nth-child(odd) {
+        color: var(--yellow);
+      }
+      .header-icons a:nth-child(even) {
+        color: var(--purple-light);
+      }
+
+      .header-icons a:hover {
+        opacity: 1;
+        filter: brightness(1.25);
+        transform: translateY(-2px);
+      }
+
+      @media (max-width: 560px) {
+        .site-header {
+          padding: 12px 18px;
+          top: 14px;
+        }
+        .header-icons {
+          gap: 14px;
+        }
+        .header-icons a {
+          width: 19px;
+          height: 19px;
+        }
+      }
+
+      /* ============ DESCRIPCIÓN: NOMBRE | FOTO | CANALES ============ */
+      #descripcion .wrap {
+        max-width: 1280px;
+      }
+
+      .descripcion-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        gap: 32px;
+        align-items: center;
+        width: 100%;
+      }
+
+      /* El texto queda por encima de la foto, que se solapa un poco con él */
+      .descripcion-col {
+        position: relative;
+        z-index: 1;
+      }
+
+      .descripcion-kicker {
+        display: block;
+        font-size: 20px;
+        letter-spacing: 0.04em;
+        color: var(--purple-light);
+        margin-bottom: 6px;
+      }
+
+      .descripcion-nombre {
+        font-size: clamp(56px, 6.8vw, 104px);
+        line-height: 0.95;
+        text-transform: uppercase;
+        color: var(--cream);
+      }
+
+      .descripcion-rol {
+        margin: 14px 0 16px;
+        font-size: 15px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--yellow);
+      }
+
+      .descripcion-texto {
+        color: var(--gray);
+        font-size: 15px;
+        line-height: 1.75;
+        max-width: 340px;
+      }
+
+      /* Foto central con resplandor morado/amarillo y bordes difuminados */
+      .descripcion-foto-wrap {
+        position: relative;
+        isolation: isolate;
+        height: min(80vh, 660px);
+        aspect-ratio: 4 / 5;
+        margin: 0 -64px;
+      }
+
+      .descripcion-foto-wrap::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 50% 40% at 22% 82%, rgba(151, 41, 196, 0.45), transparent),
+          radial-gradient(ellipse 45% 35% at 80% 18%, rgba(255, 223, 0, 0.18), transparent);
+      }
+
+      /* Capa por encima de la foto: funde los cuatro bordes con el fondo negro */
+      .descripcion-foto-wrap::after {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        z-index: 2;
+        pointer-events: none;
+        background:
+          linear-gradient(to bottom, var(--black) 0%, transparent 24%, transparent 50%, var(--black) 98%),
+          linear-gradient(to right, var(--black) 0%, transparent 30%, transparent 70%, var(--black) 100%);
+      }
+
+      .descripcion-foto {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+      }
+
+      .clientes-titulo {
+        margin-bottom: 16px;
+        font-size: 13px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gray);
+      }
+
+      .clientes-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        max-width: 320px;
+      }
+
+      /* Cada canal es un botón con borde amarillo/morado alterno */
+      .cliente-card {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 8px 20px 8px 8px;
+        border-radius: 999px;
+        border: 1.5px solid var(--yellow);
+        background: var(--black-card);
+        transition:
+          transform 0.25s ease,
+          background 0.25s ease;
+      }
+
+      .cliente-card.alt {
+        border-color: var(--purple);
+      }
+
+      .cliente-card::after {
+        content: "↗";
+        margin-left: auto;
+        color: var(--yellow);
+      }
+
+      .cliente-card.alt::after {
+        color: var(--purple-light);
+      }
+
+      .cliente-card:hover {
+        transform: translateX(-6px);
+        background: var(--black-soft);
+      }
+
+      .cliente-img-wrap {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: var(--black-soft);
+        flex-shrink: 0;
+      }
+
+      .cliente-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .cliente-nombre {
+        font-size: 17px;
+        color: var(--cream);
+      }
+
+      @media (max-width: 800px) {
+        #descripcion {
+          height: auto;
+          min-height: calc(100vh - 90px);
+          padding: 96px 0 40px;
+        }
+        .descripcion-grid {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 20px;
+          text-align: center;
+        }
+        .descripcion-texto {
+          margin: 0 auto;
+        }
+        .descripcion-foto-wrap {
+          height: min(54vh, 400px);
+          margin: 0 auto;
+        }
+        .clientes-titulo {
+          text-align: center;
+        }
+
+        /* Canales: 3 + 2 en dos filas, todos visibles */
+        .clientes-grid {
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 10px;
+          max-width: 340px;
+          margin: 0 auto;
+        }
+        .cliente-card {
+          flex: 0 0 calc((100% - 20px) / 3);
+          flex-direction: column;
+          gap: 6px;
+          padding: 12px 6px;
+          border-radius: 18px;
+        }
+        .cliente-card::after {
+          display: none;
+        }
+        .cliente-card:hover {
+          transform: none;
+        }
+        .cliente-img-wrap {
+          width: 48px;
+          height: 48px;
+        }
+        .cliente-nombre {
+          font-size: 13px;
+        }
+      }
+
+      /* ============ VÍDEOS MÁS VISTOS ============ */
+      #videos-mas-vistos {
+        position: relative;
+        display: block;
+        height: 100vh;
+        height: 100svh;
+        min-height: 360px;
+        overflow: hidden;
+        background: #000;
+      }
+
+      .vmv-videos {
+        position: absolute;
+        inset: 0;
+      }
+
+      .vmv-videos video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+      }
+
+      .vmv-videos video.on {
+        opacity: 1;
+      }
+
+      .vmv-sombra {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          linear-gradient(
+            to right,
+            rgba(0, 0, 0, 0.7),
+            rgba(0, 0, 0, 0.15) 55%,
+            transparent
+          ),
+          linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent 30%);
+      }
+
+      .vmv-progreso {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 3;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .vmv-progreso-fill {
+        width: 0;
+        height: 100%;
+        background: var(--yellow);
+      }
+
+      .vmv-punto {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--yellow);
+        transform: translate(-50%, -50%);
+      }
+
+      .vmv-lista {
+        --h: 52px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: min(520px, 80vw);
+        z-index: 2;
+        overflow: hidden;
+        cursor: grab;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: pan-x;
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          transparent,
+          #000 22%,
+          #000 88%,
+          transparent
+        );
+        mask-image: linear-gradient(
+          to bottom,
+          transparent,
+          #000 22%,
+          #000 88%,
+          transparent
+        );
+      }
+
+      .vmv-lista.drag {
+        cursor: grabbing;
+      }
+
+      .vmv-items {
+        position: absolute;
+        left: 32px;
+        right: 0;
+        top: 0;
+        transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.3, 1);
+      }
+
+      .vmv-item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: var(--h);
+        padding: 0;
+        border: 0;
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+        background: none;
+        cursor: pointer;
+        text-align: left;
+        -webkit-tap-highlight-color: transparent;
+        font-family: var(--font);
+        font-size: 12px;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        color: var(--cream);
+        opacity: max(0.15, calc(1 - var(--d, 0) * 0.22));
+        transition:
+          opacity 0.4s,
+          font-size 0.4s,
+          color 0.4s;
+      }
+
+      .vmv-item:hover {
+        opacity: 1;
+      }
+
+      .vmv-item.on {
+        border-top-color: rgba(255, 255, 255, 0.25);
+        border-bottom-color: rgba(255, 255, 255, 0.25);
+        color: var(--yellow);
+        font-size: 15px;
+        opacity: 1;
+      }
+
+      .vmv-watch {
+        position: absolute;
+        right: 24px;
+        bottom: 24px;
+        z-index: 3;
+        padding: 14px 26px;
+        border: 1.5px solid transparent;
+        border-radius: 999px;
+        font-family: var(--font);
+        font-size: 14px;
+        letter-spacing: 0.08em;
+        color: var(--cream);
+        cursor: pointer;
+        background:
+          linear-gradient(var(--black), var(--black)) padding-box,
+          var(--grad) border-box;
+        transition: color 0.2s;
+      }
+
+      .vmv-watch:hover {
+        color: var(--yellow);
+      }
+
+      body.vmv-modal-open {
+        overflow: hidden;
+      }
+
+      .vmv-modal {
+        position: fixed;
+        width: min(1000px, 92vw);
+        max-height: 92vh;
+        margin: auto;
+        padding: 0;
+        overflow: hidden;
+        color: var(--cream);
+        border: 1.5px solid transparent;
+        border-radius: 16px;
+        background:
+          linear-gradient(#000, #000) padding-box,
+          var(--grad) border-box;
+      }
+
+      .vmv-modal::backdrop {
+        background: rgba(0, 0, 0, 0.88);
+      }
+
+      .vmv-modal video {
+        display: block;
+        width: 100%;
+        max-height: 80vh;
+        background: #000;
+      }
+
+      .vmv-modal-titulo {
+        padding: 14px 20px;
+        font-family: var(--font);
+        font-size: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .vmv-modal-cerrar {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 2;
+        width: 38px;
+        height: 38px;
+        border: 0;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.65);
+        color: var(--cream);
         font-size: 16px;
+        cursor: pointer;
+        transition: color 0.2s;
       }
-    }
-  </style>
-</head>
 
-<body>
-  <!-- CAPA DE INTRO CON ZOOM DE CENTRADO ABSOLUTO AJUSTADO -->
-  <div class="intro-wallpaper-container">
-    <video class="intro-bg-video" autoplay muted loop playsinline preload="auto">
-      <source src="./videos/wallpaper1.mp4" type="video/mp4">
-    </video>
-    <div class="lightning-flash"></div>
-    <div class="intro-name">Camilo</div>
-  </div>
+      .vmv-modal-cerrar:hover {
+        color: var(--yellow);
+      }
 
-  <section id="trabajo" class="trabajo" data-view="videos">
-    <div class="trabajo-toggle" role="tablist" aria-label="Cambiar vista de trabajo">
-      <button class="toggle-btn active" data-view-btn="videos" role="tab" aria-selected="true">
-        Videos
-      </button>
-      <button class="toggle-btn" data-view-btn="lista" role="tab" aria-selected="false">
-        Lista
-      </button>
+      @media (max-height: 500px) {
+        .vmv-lista {
+          --h: 38px;
+        }
+
+        .vmv-items {
+          left: 20px;
+        }
+
+        .vmv-item {
+          font-size: 11px;
+        }
+
+        .vmv-item.on {
+          font-size: 13px;
+        }
+
+        .vmv-watch {
+          right: 16px;
+          bottom: 16px;
+          padding: 10px 20px;
+        }
+      }
+
+      @media (max-width: 800px) and (min-height: 501px), (max-aspect-ratio: 1/1) {
+        #videos-mas-vistos {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          height: auto;
+          min-height: 100svh;
+          padding: 96px 0 40px;
+        }
+
+        .vmv-videos {
+          position: relative;
+          inset: auto;
+          order: 1;
+          width: 100%;
+          aspect-ratio: 16 / 9;
+        }
+
+        .vmv-videos video {
+          object-fit: contain;
+        }
+
+        .vmv-sombra {
+          display: none;
+        }
+
+        .vmv-progreso {
+          position: relative;
+          inset: auto;
+          order: 2;
+        }
+
+        .vmv-lista {
+          --h: 56px;
+          position: relative;
+          inset: auto;
+          order: 3;
+          width: 100%;
+          height: var(--h);
+          margin-top: 18px;
+          touch-action: pan-y;
+          -webkit-mask-image: linear-gradient(
+            to right,
+            transparent,
+            #000 18%,
+            #000 82%,
+            transparent
+          );
+          mask-image: linear-gradient(
+            to right,
+            transparent,
+            #000 18%,
+            #000 82%,
+            transparent
+          );
+        }
+
+        .vmv-items {
+          left: 0;
+          right: auto;
+          display: flex;
+          width: max-content;
+          height: 100%;
+        }
+
+        .vmv-item {
+          flex: none;
+          width: auto;
+          max-width: calc(100vw - 40px);
+          padding: 0 20px;
+          border-top: 0;
+          border-bottom: 2px solid transparent;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-size: 13px;
+          white-space: nowrap;
+        }
+
+        .vmv-item.on {
+          border-bottom-color: var(--yellow);
+          font-size: 13px;
+        }
+
+        .vmv-watch {
+          position: static;
+          order: 4;
+          align-self: center;
+          margin-top: 22px;
+        }
+      }
+
+      @media (max-width: 800px) {
+        .vmv-modal video {
+          max-height: 70svh;
+        }
+      }
+
+      /* ============ CONTACTO: TÍTULO ============ */
+      .contact-wrap {
+        width: min(90vw, 560px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .contact-heading {
+        text-align: center;
+      }
+
+      .contact-kicker {
+        display: block;
+        font-family: var(--font);
+        font-size: 15px;
+        letter-spacing: 0.03em;
+        color: var(--purple-light);
+        margin-bottom: 4px;
+      }
+
+      .contact-title {
+        font-family: var(--font);
+        font-size: 42px;
+        line-height: 1.1;
+        color: var(--cream);
+        margin-bottom: 12px;
+      }
+
+      .contact-subtitle {
+        color: var(--gray);
+        font-size: 15px;
+        max-width: 420px;
+        margin: 0 auto;
+      }
+
+      /* ============ FORMULARIO DE CONTACTO ============ */
+      .contact-box {
+        width: 100%;
+        border-radius: 24px;
+        border: 1.5px solid transparent;
+        background:
+          linear-gradient(var(--black-card), var(--black-card)) padding-box,
+          var(--grad) border-box;
+        padding: 32px;
+      }
+
+      .contact-form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .field label {
+        font-size: 13.5px;
+        font-weight: 700;
+        color: var(--gray);
+      }
+
+      .field input,
+      .field textarea {
+        font-family: var(--font);
+        font-size: 15px;
+        color: var(--cream);
+        background: var(--black-soft);
+        border: 1.5px solid var(--gray-line);
+        border-radius: 12px;
+        padding: 13px 16px;
+        outline: none;
+        transition: border-color 0.2s ease;
+      }
+
+      .field textarea {
+        resize: vertical;
+        min-height: 110px;
+      }
+
+      .field:nth-child(odd) input:focus,
+      .field:nth-child(odd) textarea:focus {
+        border-color: var(--yellow);
+      }
+
+      .field:nth-child(even) input:focus,
+      .field:nth-child(even) textarea:focus {
+        border-color: var(--purple);
+      }
+
+      .field input::placeholder,
+      .field textarea::placeholder {
+        color: var(--gray);
+        opacity: 0.6;
+      }
+
+      .contact-submit {
+        margin-top: 6px;
+        align-self: flex-start;
+        padding: 14px 30px;
+        border-radius: 999px;
+        border: 1.5px solid var(--yellow);
+        background: transparent;
+        color: var(--cream);
+        font-family: var(--font);
+        font-weight: 700;
+        font-size: 14.5px;
+        cursor: pointer;
+        transition:
+          background 0.25s ease,
+          color 0.25s ease;
+      }
+
+      .contact-submit:hover {
+        background: var(--yellow);
+        color: var(--black);
+      }
+
+      .hp {
+        position: absolute;
+        left: -9999px;
+      }
+
+      .contact-submit:disabled {
+        opacity: 0.6;
+        cursor: wait;
+      }
+
+      .contact-status {
+        min-height: 1.4em;
+        font-size: 14px;
+        color: var(--gray);
+      }
+
+      .contact-status.ok {
+        color: var(--yellow);
+      }
+
+      .contact-status.error {
+        color: var(--purple-light);
+      }
+    </style>
+  </head>
+  <body class="lock-scroll">
+    <!-- ======================================================= -->
+    <!-- MAIN PAGE (debajo, se revela tras la intro)               -->
+    <!-- ======================================================= -->
+    <div id="header-float">
+      <header class="site-header" id="site-header">
+        <span class="header-mark">CAMILO</span>
+        <nav class="header-icons">
+          <!-- Cada enlace es editable: cambia el href por el contacto real -->
+          <a
+            href="mailto:info.camilobotero@gmail.com"
+            aria-label="Gmail"
+            title="Escríbeme un correo"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 6h18v12H3z" />
+              <path d="M3 6l9 7 9-7" />
+            </svg>
+          </a>
+          <a
+            href="https://www.instagram.com/camiloboterooo/"
+            target="_blank"
+            rel="noopener"
+            aria-label="Instagram"
+            title="Instagram"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle
+                cx="17.2"
+                cy="6.8"
+                r="1.1"
+                fill="currentColor"
+                stroke="none"
+              />
+            </svg>
+          </a>
+          <a
+            href="https://wa.me/34605075110"
+            target="_blank"
+            rel="noopener"
+            aria-label="WhatsApp"
+            title="WhatsApp"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18.2a8.1 8.1 0 0 1-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5l.4-.5c.1-.1.1-.2.2-.4 0-.1 0-.3 0-.4l-.7-1.7c-.2-.4-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.4c.1.2 1.6 2.4 3.8 3.4.5.2.9.4 1.3.5.5.2 1 .1 1.4.1.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.1-.2-.1-.4-.2z"
+              />
+            </svg>
+          </a>
+        </nav>
+      </header>
     </div>
-    <div class="view-stage">
-      <div class="view view-videos">
-        <div class="h-carousel">
-          <div class="h-track" id="hTrack"></div>
+
+    <div id="main-page">
+      <section class="section" id="videos-mas-vistos">
+        <div class="vmv-videos" id="vmv-videos"></div>
+        <div class="vmv-sombra"></div>
+        <div class="vmv-progreso">
+          <div class="vmv-progreso-fill" id="vmv-fill"></div>
+          <span class="vmv-punto" id="vmv-punto"></span>
         </div>
-      </div>
-      <div class="view view-lista">
-        <ul class="side-list side-left" id="sideLeft"></ul>
-        <div class="v-carousel">
-          <div class="v-track" id="vTrack"></div>
+        <div class="vmv-lista" id="vmv-lista">
+          <div class="vmv-items" id="vmv-items"></div>
         </div>
-        <ul class="side-list side-right" id="sideRight"></ul>
+        <button type="button" class="vmv-watch" id="vmv-watch">VER</button>
+      </section>
+
+      <div class="section-divider"><span class="divider-spark"></span></div>
+
+      <section class="section" id="descripcion">
+        <div class="wrap">
+          <div class="descripcion-grid">
+            <div class="descripcion-col">
+              <span class="descripcion-kicker">Hola, soy</span>
+              <h1 class="descripcion-nombre">Camilo</h1>
+              <p class="descripcion-rol">Editor de vídeo</p>
+              <p class="descripcion-texto">
+                Edito vídeos con ritmo y personalidad para creadores que quieren
+                destacar. Cada corte está pensado para enganchar desde el primer
+                segundo.
+              </p>
+            </div>
+
+            <div class="descripcion-foto-wrap">
+              <img
+                class="descripcion-foto"
+                src="./img/fotoPerfil.jpeg"
+                alt="Camilo"
+              />
+            </div>
+
+            <div class="descripcion-col">
+              <h2 class="clientes-titulo">Ha trabajado con</h2>
+              <div class="clientes-grid" id="clientes-grid"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"><span class="divider-spark"></span></div>
+
+      <section class="section" id="contacto">
+        <div class="contact-wrap">
+          <div class="contact-heading">
+            <span class="contact-kicker">Hablemos</span>
+            <h2 class="contact-title">Contacto</h2>
+            <p class="contact-subtitle">
+              ¿Tienes un proyecto en mente? Escríbeme y lo hacemos realidad.
+            </p>
+          </div>
+          <div class="contact-box">
+            <form class="contact-form" id="contact-form">
+              <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+              <div class="field">
+                <label for="cf-nombre">Nombre</label>
+                <input
+                  type="text"
+                  id="cf-nombre"
+                  name="nombre"
+                  required
+                  placeholder="Tu nombre"
+                />
+              </div>
+              <div class="field">
+                <label for="cf-correo">Correo electrónico</label>
+                <input
+                  type="email"
+                  id="cf-correo"
+                  name="correo"
+                  required
+                  placeholder="tucorreo@email.com"
+                />
+              </div>
+              <div class="field">
+                <label for="cf-telefono">Teléfono</label>
+                <input
+                  type="tel"
+                  id="cf-telefono"
+                  name="telefono"
+                  placeholder="+34 600 000 000"
+                />
+              </div>
+              <div class="field">
+                <label for="cf-descripcion">Cuéntame sobre tu proyecto</label>
+                <textarea
+                  id="cf-descripcion"
+                  name="descripcion"
+                  required
+                  placeholder="Describe brevemente qué necesitas..."
+                ></textarea>
+              </div>
+              <button type="submit" class="contact-submit">
+                Enviar mensaje
+              </button>
+              <p class="contact-status" id="contact-status" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- INTRO LOADER: 3 filas de carruseles                       -->
+    <!-- ======================================================= -->
+    <div id="intro-loader">
+      <div class="reel-track">
+        <div class="reel-row dir-left" id="row-1"></div>
       </div>
-    </div>
-  </section>
-
-  <div class="section-divider"><span class="divider-spark"></span></div>
-
-  <section id="descripcion" class="descripcion">
-    <!-- Contenido Descripción -->
-    <div class="descripcion-col descripcion-intro">
-      <h3>Hola soy</h3>
-      <h1>Camilo</h1>
-      <p>Editor de los mejores youtubers de España.</p>
-    </div>
-
-    <div class="descripcion-col descripcion-col-foto">
-      <div class="foto-placeholder"></div>
-    </div>
-
-    <div class="descripcion-col descripcion-col-info">
-      <p class="descripcion-texto">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      </p>
-      <div class="youtuber-grid">
-        <div class="youtuber-card">Youtuber 1</div>
-        <div class="youtuber-card">Youtuber 2</div>
-        <div class="youtuber-card">Youtuber 3</div>
-        <div class="youtuber-card">Youtuber 4</div>
+      <div class="reel-track">
+        <div class="reel-row dir-right" id="row-2"></div>
       </div>
-    </div>
-  </section>
+      <div class="reel-track">
+        <div class="reel-row dir-slow" id="row-3"></div>
+      </div>
 
-  <div class="section-divider"><span class="divider-spark"></span></div>
-
-  <section id="contacto" class="contacto">
-    <div class="contacto-header">
-      <h3>Hablemos</h3>
-      <h1>Contacto</h1>
-      <p>¿Tienes un proyecto en mente? Escríbeme y lo hacemos realidad.</p>
+      <div id="dark-overlay"></div>
     </div>
 
-    <div class="contacto-social">
-      <a href="#" class="social-icon" aria-label="X (Twitter)" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24">
-          <path
-            d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.22-6.82-5.97 6.82H1.66l7.73-8.84L1.25 2.25h6.83l4.71 6.23zm-1.16 17.52h1.83L7.08 4.13H5.12z" />
+    <!-- ======================================================= -->
+    <!-- LOGO REVEAL: CAMILO cayendo                                -->
+    <!-- ======================================================= -->
+    <div id="logo-reveal">
+      <div class="logo-container">
+        <svg viewBox="0 0 1350 270" class="logo-svg">
+          <text
+            x="50%"
+            y="55%"
+            dominant-baseline="middle"
+            text-anchor="middle"
+            class="text-base"
+          >
+            CAMILO
+          </text>
+          <text
+            x="50%"
+            y="55%"
+            dominant-baseline="middle"
+            text-anchor="middle"
+            class="text-glow"
+          >
+            CAMILO
+          </text>
         </svg>
-      </a>
-      <a href="#" class="social-icon" aria-label="Instagram" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24">
-          <path
-            d="M12 2.2c3.15 0 3.52 0 4.77.07 1.2.06 1.85.24 2.28.4.57.22.98.49 1.4.92.43.42.7.83.93 1.4.16.42.34 1.08.4 2.28.06 1.25.07 1.62.07 4.77s0 3.52-.07 4.77c-.06 1.2-.24 1.85-.4 2.28-.22.57-.5.98-.92 1.4-.43.43-.84.7-1.4.93-.44.16-1.09.34-2.29.4-1.25.06-1.62.07-4.77.07s-3.52 0-4.77-.07c-1.2-.06-1.85-.24-2.28-.4-.57-.22-.98-.5-1.4-.93a3.9 3.9 0 0 1-.93-1.4c-.16-.42-.34-1.08-.4-2.28C2.21 15.52 2.2 15.15 2.2 12s0-3.52.07-4.77c.06-1.2.24-1.85.4-2.28.22-.57.5-.98.93-1.4.42-.43.83-.7 1.4-.93.42-.16 1.08-.34 2.28-.4C8.48 2.21 8.85 2.2 12 2.2zm0 1.8c-3.1 0-3.47 0-4.68.07-.96.05-1.48.2-1.83.34-.46.18-.78.39-1.13.74-.35.34-.56.66-.74 1.12-.14.36-.3.87-.34 1.83C3.21 8.53 3.2 8.9 3.2 12s.01 3.47.07 4.7c.05.95.2 1.46.34 1.82.18.46.39.78.74 1.12.35.35.67.56 1.13.74.35.14.87.3 1.83.34 1.21.06 1.58.07 4.68.07s3.47 0 4.68-.07c.96-.05 1.48-.2 1.83-.34.46-.18.78-.39 1.13-.74.35-.34.56-.66.74-1.12.14-.36.3-.87.34-1.83.06-1.22.07-1.59.07-4.7s-.01-3.47-.07-4.7c-.05-.95-.2-1.46-.34-1.82a2.98 2.98 0 0 0-.74-1.12 3.06 3.06 0 0 0-1.13-.74c-.35-.14-.87-.3-1.83-.34-1.21-.07-1.58-.07-4.68-.07zm0 3.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9zm0 1.8a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4zm4.7-2.1a1.05 1.05 0 1 1 0 2.1 1.05 1.05 0 0 1 0-2.1z" />
-        </svg>
-      </a>
-      <a href="#" class="social-icon" aria-label="WhatsApp" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24">
-          <path
-            d="M17.5 14.38c-.3-.15-1.76-.86-2.03-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.14.3-.35.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.66-1.61-.9-2.2-.24-.58-.48-.5-.66-.5h-.56c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.5s1.07 2.9 1.22 3.1c.15.2 2.1 3.24 5.1 4.55.71.31 1.27.5 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.76-.72 2-1.4.24-.7.24-1.28.17-1.4-.07-.13-.27-.2-.57-.36zM12.02 2C6.5 2 2 6.5 2 12.02c0 1.9.53 3.7 1.44 5.22L2 22l4.94-1.4a10.03 10.03 0 0 0 5.08 1.38h.01c5.52 0 10-4.5 10-10.02C22.02 6.5 17.53 2 12.02 2zm0 18.13c-1.7 0-3.28-.5-4.6-1.35l-.33-.2-3.06.87.85-3.03-.2-.32a8.13 8.13 0 0 1-1.28-4.08c0-4.5 3.65-8.15 8.13-8.15 4.48 0 8.12 3.65 8.12 8.15s-3.64 8.14-8.12 8.14z" />
-        </svg>
-      </a>
-      <a href="#" class="social-icon" aria-label="Gmail" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24">
-          <path
-            d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z" />
-        </svg>
-      </a>
+      </div>
+
+      <svg width="0" height="0" style="position: absolute">
+        <defs>
+          <linearGradient id="light-beam" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="var(--purple)" />
+            <stop offset="49.9%" stop-color="var(--purple)" />
+            <stop offset="50%" stop-color="var(--yellow)" />
+            <stop offset="100%" stop-color="var(--yellow)" />
+          </linearGradient>
+        </defs>
+      </svg>
     </div>
 
-    <form class="contacto-form" id="contactoForm">
-      <div class="form-group">
-        <label for="contacto-nombre">Nombre completo</label>
-        <input type="text" id="contacto-nombre" name="nombre" placeholder="Tu nombre y apellidos" required />
-      </div>
-      <div class="form-group">
-        <label for="contacto-email">Correo electrónico</label>
-        <input type="email" id="contacto-email" name="email" placeholder="tucorreo@ejemplo.com" required />
-      </div>
-      <div class="form-group">
-        <label for="contacto-descripcion">Descripción</label>
-        <textarea id="contacto-descripcion" name="descripcion" placeholder="Cuéntame sobre tu proyecto..."
-          required></textarea>
-      </div>
-      <button type="submit" class="form-submit">Enviar mensaje</button>
-    </form>
-  </section>
-
-  <div class="video-modal" id="videoModal" aria-hidden="true">
-    <div class="modal-header">
-      <div class="modal-info-wrapper" id="modalInfoWrapper">
-        <button class="modal-info-toggle" id="modalInfoToggle" type="button"
-          aria-label="Mostrar enlace al proyecto original" aria-expanded="false">
-          <svg viewBox="0 0 24 24">
-            <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z" />
-          </svg>
-        </button>
-        <a href="#" class="modal-info-banner" id="modalInfoLink" target="_blank" rel="noopener">Ir al proyecto
-          original</a>
-      </div>
-
-      <span class="modal-title" id="modalTitle"></span>
-      <button class="modal-close" id="modalClose" aria-label="Cerrar vídeo">
+    <dialog class="vmv-modal" id="vmv-modal">
+      <button
+        type="button"
+        class="vmv-modal-cerrar"
+        id="vmv-modal-cerrar"
+        aria-label="Cerrar"
+      >
         ✕
       </button>
-    </div>
+      <video id="vmv-modal-video" controls playsinline loop></video>
+      <p class="vmv-modal-titulo" id="vmv-modal-titulo"></p>
+    </dialog>
 
-    <video id="modalVideo" playsinline></video>
+    <script>
+      (function () {
+        /* ---------- Miniaturas del carrusel de carga ---------- */
+        const IMG_POR_DEFECTO = "./img/NoFotoTarjeta.png";
 
-    <button class="modal-play-pause" id="modalPlayPause" aria-label="Reproducir o pausar">
-      <svg class="icon-play" viewBox="0 0 24 24">
-        <path d="M8 5v14l11-7z" />
-      </svg>
-      <svg class="icon-pause" viewBox="0 0 24 24">
-        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-      </svg>
-    </button>
+        const miniaturas = [
+          "./img/MINIATURES/Miniaturas BETADOS/Hicimos los retos más extremos en un pantano.webp",
+          "./img/MINIATURES/Miniatures CRVSH/Reaccionando a vuestros videos de fiesta.webp",
+          "./img/MINIATURES/Miniatures CRVSH/10 chicas VS 10 chicos - Verdad o reto extremo.webp",
+          "./img/MINIATURES/Miniaturas VARELA/Adivina el rumano.webp",
+          "./img/MINIATURES/Miniatures CRVSH/Fiesta de 1€ VS 10000€.webp",
+          "./img/MINIATURES/Miniatures CRVSH/Salí de fiesta vestido de mujer.webp",
+          "./img/MINIATURES/Miniaturas BETADOS/Estos Karts no deberían existir.webp",
+          "./img/MINIATURES/Miniatures CRVSH/5 chicas VS 15 chicos - Globo caliente.webp",
+          "./img/MINIATURES/Miniatures CRVSH/Adivina el DJ.webp",
+          "./img/MINIATURES/Miniatures CRVSH/Retos acuáticos extremos de fiesta.webp",
+          "./img/MINIATURES/Miniaturas Ceciarmy/Investigué una infidelidad (real).webp",
+          "./img/MINIATURES/Miniatures CRVSH/Live set CRVSH x Beltry & Tonitega.webp",
+          "./img/MINIATURES/Miniatures CRVSH/10 chicas VS 10 chicos - Citas a ciegas.webp",
+          "./img/MINIATURES/Miniaturas BETADOS/Abrimos Lucky Blocks en la vida real.webp",
+          "./img/MINIATURES/Miniatures CRVSH/La peor fiesta de nuestra vida.webp",
+          "./img/MINIATURES/Miniatures CRVSH/Nuestra primera fiesta se nos fue de las manos.webp",
+          "./img/MINIATURES/Miniatures CRVSH/7 chicas VS 15 chicos - Globo caliente.webp",
+          "./img/MINIATURES/Miniaturas VARELA/Adivina la gitana.webp",
+          "./img/MINIATURES/Miniatures CRVSH/Se acostó con mi ex y con mi hermana - Confesionario del Amor #1.webp",
+          "./img/MINIATURES/Miniatures CRVSH/Cambié mi trabajo con un desconocido por una noche.webp",
+          "./img/MINIATURES/Miniaturas BETADOS/Escondite Extremo en un Centro Comercial.webp",
+          "./img/MINIATURES/Miniatures CRVSH/Reaccionando al España 1-0 Argentina Campeones del Mundo.webp",
+          "./img/MINIATURES/Miniatures CRVSH/10 chicas VS 10 chicos - Semáforo del amor.webp",
+          "./img/MINIATURES/Miniatures CRVSH/Una noche del revés.webp",
+          "./img/MINIATURES/Miniaturas KAPPAH/Quien tiene más drip_.webp",
+          "./img/MINIATURES/Miniatures CRVSH/Junté a 5 desconocidos en mi fiesta.webp",
+          "./img/MINIATURES/Miniatures CRVSH/48 horas sin dormir para montar 2 fiestas.webp",
+          "./img/MINIATURES/Miniaturas BETADOS/Jugamos al Wii Sports en la vida Real.webp",
+          "./img/MINIATURES/Miniatures CRVSH/Clasificando mujeres por su atractivo - 5 chicas VS 5 chicos.webp",
+          "./img/MINIATURES/Miniatures CRVSH/Las olimpiadas del amor descontrol total.webp",
+          "./img/MINIATURES/Miniaturas VARELA/Respondiendo a Haters - VTEAM.webp",
+          "./img/MINIATURES/Miniatures CRVSH/1 influencer VS 50 chicas - Tinder en la vida real.webp",
+          "./img/MINIATURES/Miniatures CRVSH/Adivina el portero de discoteca.webp",
+          "./img/MINIATURES/Miniatures CRVSH/10 chicas VS 10 chicos - Globo caliente.webp",
+          "./img/MINIATURES/Miniaturas BETADOS/Adivina el personaje - Nivel Imposible.webp",
+          "./img/MINIATURES/Miniatures CRVSH/MATCH O PRENDA - CRVSHPONG.webp",
+          "./img/MINIATURES/Miniatures CRVSH/5 chicos VS 1 influencer - Citas en bañador.webp",
+          "./img/MINIATURES/Miniaturas BETADOS/El escondite más extremo que hemos hecho.webp",
+          "./img/MINIATURES/Miniatures CRVSH/Retos extremos en directo - Directo.webp",
+          "./img/MINIATURES/Miniatures CRVSH/La ruleta de la muerte - Directo CRVSH.webp",
+          "./img/MINIATURES/Miniaturas VARELA/Quien es más listo_ Pasapalabra - VTEAM.webp",
+          "./img/MINIATURES/Miniaturas BETADOS/Pensábamos que surfear era fácil....webp",
+          "./img/MINIATURES/Miniatures CRVSH/6 chicas VS 12 chicos - Globo caliente.webp",
+          "./img/MINIATURES/Miniatures CRVSH/10 chicas VS 10 chicos - Globo caliente.webp",
+        ].map((img) => ({
+          img,
+          nombre: img
+            .split("/")
+            .pop()
+            .replace(/\.[^.]+$/, ""),
+        }));
 
-    <div class="modal-watermark">Editado por <span>Camilo</span></div>
-  </div>
-
-  <script>
-    (function () {
-      // --- Reactivar recorte + sombra del carrusel al terminar la animación de carrete ---
-      // Mientras .view-stage hace el "carousel-slide-in" el carrusel se ve completo
-      // (sin overflow:hidden ni mask-image). En cuanto esa animación termina:
-      //   1) se añade .reel-done a .h-carousel -> reactiva overflow:hidden al instante.
-      //   2) se anima a mano (requestAnimationFrame) el MISMO mask-image original,
-      //      yendo de "sin sombra" a la sombra real, con un ease-out, porque
-      //      transicionar mask-image por CSS no se interpola de forma fiable
-      //      entre navegadores (por eso antes aparecía de golpe).
-      (function initReelShadow() {
-        const viewStage = document.querySelector(".view-stage");
-        const hCarouselEl = document.querySelector(".h-carousel");
-        if (!viewStage || !hCarouselEl) return;
-
-        const ORIGINAL_MASK =
-          "linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent)";
-
-        function fadeInShadow(el, duration = 900) {
-          el.style.willChange = "mask-image, -webkit-mask-image";
-          const start = performance.now();
-          function step(now) {
-            const t = Math.min(1, (now - start) / duration);
-            const eased = 1 - Math.pow(1 - t, 3); // ease-out cúbico
-            const edgeAlpha = 1 - eased; // 1 (sin sombra) -> 0 (sombra completa, igual que el original)
-            const gradient = `linear-gradient(90deg, rgba(0,0,0,${edgeAlpha}), #000 6%, #000 94%, rgba(0,0,0,${edgeAlpha}))`;
-            el.style.webkitMaskImage = gradient;
-            el.style.maskImage = gradient;
-            if (t < 1) {
-              requestAnimationFrame(step);
-            } else {
-              // Al terminar, fija EXACTAMENTE el degradado original (sin redondeos de alpha)
-              el.style.webkitMaskImage = ORIGINAL_MASK;
-              el.style.maskImage = ORIGINAL_MASK;
-              el.style.willChange = "auto"; // libera la capa GPU, ya no hace falta
-            }
+        // Baraja aleatoriamente en cada carga de página (Fisher-Yates)
+        function barajar(arr) {
+          const a = [...arr];
+          for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
           }
-          requestAnimationFrame(step);
+          return a;
         }
 
-        viewStage.addEventListener("animationend", (e) => {
-          if (e.animationName === "carousel-slide-in") {
-            viewStage.style.willChange = "auto"; // la animación de entrada ya terminó, liberar
-            hCarouselEl.classList.add("reel-done");
-            fadeInShadow(hCarouselEl, 900);
-            document.documentElement.style.overflowY = ""; // libera el scroll en cuanto aparece el carrusel horizontal
-            document.body.style.overflowY = "";
-          }
-        });
-      })();
-      // --- El video de fondo aparece poco a poco cuando ARRANCA la animación del carrusel ---
-      (function initIntroBgVideo() {
-        const introContainer = document.querySelector(".intro-wallpaper-container");
-        const viewStage = document.querySelector(".view-stage");
-        const bgVideo = document.querySelector(".intro-bg-video");
-        if (!introContainer || !viewStage || !bgVideo) return;
+        const miniaturasBarajadas = barajar(miniaturas);
 
-        // Arrancamos el video ya (aunque esté con opacity:0) para que llegue
-        // "calentado" -cargado y reproduciéndose- al momento del cross-fade,
-        // y así no haya espera ni salto al mostrarlo.
-        bgVideo.play().catch(() => { });
-
-        viewStage.addEventListener("animationstart", (e) => {
-          if (e.animationName === "carousel-slide-in") {
-            introContainer.classList.add("video-active");
-          }
-        });
-      })();
-
-      const PROYECTOS = [
-        {
-          id: "v1",
-          titulo: "Nocturno",
-          subtitulo: "prueba",
-          visitas: "1.2k",
-          link: "https://vimeo.com/ejemplo1",
-        },
-        {
-          id: "v2",
-          titulo: "Aura",
-          subtitulo: "prueba",
-          visitas: "1.2k",
-          link: "https://vimeo.com/ejemplo2",
-        },
-        {
-          id: "v3",
-          titulo: "Ríos",
-          subtitulo: "prueba",
-          visitas: "1.2k",
-          link: "https://vimeo.com/ejemplo3",
-        },
-        {
-          id: "v4",
-          titulo: "Umbral",
-          subtitulo: "prueba",
-          visitas: "1.2k",
-          link: "https://vimeo.com/ejemplo4",
-        },
-        {
-          id: "v5",
-          titulo: "Eco",
-          subtitulo: "prueba",
-          visitas: "1.2k",
-          link: "https://vimeo.com/ejemplo5",
-        },
-        {
-          id: "v6",
-          titulo: "Deriva",
-          subtitulo: "prueba",
-          visitas: "1.2k",
-          link: "https://vimeo.com/ejemplo6",
-        },
-        {
-          id: "v7",
-          titulo: "Latido",
-          subtitulo: "prueba",
-          visitas: "1.2k",
-          link: "https://vimeo.com/ejemplo7",
-        },
-        {
-          id: "v8",
-          titulo: "Marea",
-          subtitulo: "prueba",
-          visitas: "1.2k",
-          link: "https://vimeo.com/ejemplo8",
-        },
-        {
-          id: "v9",
-          titulo: "Fuego",
-          subtitulo: "prueba",
-          visitas: "1.2k",
-          link: "https://vimeo.com/ejemplo9",
-        },
-        {
-          id: "v10",
-          titulo: "Vigilia",
-          subtitulo: "prueba",
-          visitas: "1.2k",
-          link: "https://vimeo.com/ejemplo10",
-        },
-      ].map((p) => ({
-        ...p,
-        src: "./videos/prueba.mp4",
-        poster: "./img/NoFotoTarjeta.png",
-      }));
-
-      const section = document.getElementById("trabajo");
-      const hTrack = document.getElementById("hTrack");
-      const vTrack = document.getElementById("vTrack");
-      const sideLeft = document.getElementById("sideLeft");
-      const sideRight = document.getElementById("sideRight");
-      const modal = document.getElementById("videoModal");
-      const modalVideo = document.getElementById("modalVideo");
-      const modalTitle = document.getElementById("modalTitle");
-      const modalClose = document.getElementById("modalClose");
-      const modalPlayPause = document.getElementById("modalPlayPause");
-      const modalInfoWrapper = document.getElementById("modalInfoWrapper");
-      const modalInfoToggle = document.getElementById("modalInfoToggle");
-
-      document.documentElement.style.overflowY = "hidden";
-      document.body.style.overflowY = "hidden";
-
-      // --- Construcción de vistas ---
-      function altClass(p) {
-        const n = parseInt(String(p.id).replace(/\D/g, ""), 10) || 0;
-        return n % 2 === 0 ? " item-alt" : "";
-      }
-
-      function hItemHTML(p) {
-        return `
-<div class="h-card-wrapper${altClass(p)}" data-video="${p.id}">
-  <div class="h-card-meta">
-    <span class="h-card-name">${p.subtitulo}</span>
-    <span class="h-card-views">
-      <svg viewBox="0 0 24 24">
-        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
-      </svg>
-      ${p.visitas}
-    </span>
-  </div>
-  <div class="h-item">
-    <video muted playsinline preload="metadata" src="${p.src}"></video>
-    <img class="h-thumb" src="${p.poster}" alt="${p.titulo}" loading="lazy">
-    <button class="h-expand" type="button">Expandir</button>
-  </div>
-</div>`;
-      }
-
-      function vItemHTML(p) {
-        return `<div class="v-item${altClass(p)}" data-video="${p.id}">
-<video muted loop playsinline preload="metadata" src="${p.src}"></video>
-<img class="v-thumb" src="${p.poster}" alt="${p.titulo}" loading="lazy">
-<button class="v-expand" type="button">Expandir</button>
-</div>`;
-      }
-
-      function sideLiHTML(p) {
-        return `<li class="${altClass(p).trim()}" data-video="${p.id}">
-<span class="side-title">${p.titulo}</span>
-<span class="side-views">- ${p.visitas}
-<svg viewBox="0 0 24 24">
-<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
-</svg>
-</span>
-</li>`;
-      }
-
-      vTrack.innerHTML = PROYECTOS.map(vItemHTML).join("");
-      const mitad = Math.ceil(PROYECTOS.length / 2);
-      const izquierda = PROYECTOS.slice(0, mitad);
-      const derecha = PROYECTOS.slice(mitad);
-      sideLeft.innerHTML = izquierda.map(sideLiHTML).join("");
-      sideRight.innerHTML = derecha.map(sideLiHTML).join("");
-
-      // --- Toggles ---
-      document.querySelectorAll(".toggle-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          if (isViewSwitching) return;
-          userChoseView = true;
-          document.querySelectorAll(".toggle-btn").forEach((b) => {
-            b.classList.remove("active");
-            b.setAttribute("aria-selected", "false");
+        const proyectosFila1 = miniaturasBarajadas.slice(0, 15);
+        const proyectosFila2 = miniaturasBarajadas.slice(15, 29);
+        const proyectosFila3 = miniaturasBarajadas.slice(29);
+        
+        function construirFila(elId, proyectos, altStart) {
+          const frag = document.createDocumentFragment();
+          [...proyectos, ...proyectos].forEach((p, i) => { // duplicado: loop continuo
+            const thumb = document.createElement("div");
+            thumb.className = (i + altStart) % 2 === 0 ? "thumb alt" : "thumb";
+            const img = new Image();
+            img.className = "thumb-img";
+            img.decoding = "async";
+            img.alt = p.nombre;
+            img.src = p.img.split("/").map(encodeURIComponent).join("/");
+            thumb.append(img);
+            frag.append(thumb);
           });
-          btn.classList.add("active");
-          btn.setAttribute("aria-selected", "true");
-          switchView(btn.dataset.viewBtn);
+          document.getElementById(elId).append(frag);
+        }
+
+        construirFila("row-1", proyectosFila1, 0);
+        construirFila("row-2", proyectosFila2, 1);
+        construirFila("row-3", proyectosFila3, 0);
+
+        /* ---------- Tarjetas de clientes (sección Descripción) ---------- */
+
+        const clientes = [
+          { nombre: "Betados", handle: "@Betados0" },
+          { nombre: "Ceciarmy", handle: "@Ceciarmy" },
+          { nombre: "CRVSH", handle: "@CrvshExperience" },
+          { nombre: "KAPPAH", handle: "@Kappahhh" },
+          { nombre: "Varela", handle: "@vareela._" },
+        ].map((c) => ({
+          ...c,
+          img: `./img/Canales/${c.nombre}.jpg`,
+          url: `https://www.youtube.com/${c.handle}`,
+        }));
+
+        function construirClientes(elId, lista) {
+          const el = document.getElementById(elId);
+          lista.forEach((cliente, i) => {
+            const card = document.createElement("a");
+            card.className = "cliente-card" + (i % 2 === 1 ? " alt" : "");
+            card.href = cliente.url;
+            card.target = "_blank";
+            card.rel = "noopener";
+            card.title = `${cliente.nombre} en YouTube`;
+            card.innerHTML = `
+              <div class="cliente-img-wrap">
+                <img src="${cliente.img || IMG_POR_DEFECTO}" alt="${cliente.nombre}" loading="lazy">
+              </div>
+              <span class="cliente-nombre">${cliente.nombre}</span>`;
+            el.appendChild(card);
+          });
+        }
+        construirClientes("clientes-grid", clientes);
+
+        /* ---------- Vídeos más vistos (pantalla completa) ---------- */
+        const TIEMPO_MAX = 6;
+                const videosMasVistos = barajar([
+          {
+            src: "./videos/CLIPS/CRVSH/FIESTA DE 1€ VS 10.000€.mp4",
+            titulo: "Fiesta de 1€ VS 10.000€",
+          },
+          {
+            src: "./videos/CLIPS/CECIARMY/Clip Investigué Una Infidelidad (real).mp4",
+            titulo: "Investigué una infidelidad (real)",
+          },
+          {
+            src: "./videos/CLIPS/CRVSH/10 CHICAS VS 10 CHICOS  VERDAD O RETO EXTREMO.mp4",
+            titulo: "10 chicas VS 10 chicos - Verdad o reto extremo",
+          },
+          {
+            src: "./videos/CLIPS/CRVSH/SALÍ DE FIESTA VESTIDO DE MUJER me pillan.mp4",
+            titulo: "Salí de fiesta vestido de mujer",
+          },
+          {
+            src: "./videos/CLIPS/CRVSH/5 CHICOS VS 1 INFLUENCER - CITAS EN BAÑADOR.mp4",
+            titulo: "5 chicos VS 1 influencer - Citas en bañador",
+          },
+          {
+            src: "./videos/CLIPS/CRVSH/ADIVINA EL PORTERO DE DISCOTECA.mp4",
+            titulo: "Adivina el portero de discoteca",
+          },
+          {
+            src: "./videos/CLIPS/KAPPAH/Clip Kappah Quién tiene más drip.mp4",
+            titulo: "Kappah - Quién tiene más drip",
+          },
+          {
+            src: "./videos/CLIPS/CRVSH/6 CHICAS VS 12 CHICOS - GLOBO CALIENTE.mp4",
+            titulo: "6 chicas VS 12 chicos - Globo caliente",
+          },
+          {
+            src: "./videos/CLIPS/CRVSH/JUNTÉ A 5 DESCONOCIDOS EN MI FIESTA -sale mal.mp4",
+            titulo: "Junté a 5 desconocidos en mi fiesta",
+          },
+          {
+            src: "./videos/CLIPS/CRVSH/REACCIONANDO al ESPAÑA 1-0 ARGENTINA -CAMPEONES del MUNDO.mp4",
+            titulo: "Reaccionando al España 1-0 Argentina",
+          },
+          {
+            src: "./videos/CLIPS/CRVSH/1 INFLUENCER VS 50 CHICAS - TINDER EN LA VIDA REAL.mp4",
+            titulo: "1 influencer VS 50 chicas - Tinder en la vida real",
+          },
+          {
+            src: "./videos/CLIPS/CRVSH/UNA NOCHE DEL REVÉS -literalmente.mp4",
+            titulo: "Una noche del revés",
+          },
+          {
+            src: "./videos/CLIPS/CRVSH/10 CHICAS vs 10 CHICOS - SEMÁFORO DEL AMOR.mp4",
+            titulo: "10 chicas VS 10 chicos - Semáforo del amor",
+          },
+          {
+            src: "./videos/CLIPS/CRVSH/48 HORAS SIN DORMIR PARA MONTAR 2 FIESTAS -casi nos detienen.mp4",
+            titulo: "48 horas sin dormir para montar 2 fiestas",
+          },
+          {
+            src: "./videos/CLIPS/CRVSH/¿MATCH O PRENDA- - CRVSHPONG.mp4",
+            titulo: "¿Match o prenda? - CRVSH Pong",
+          },
+          {
+            src: "./videos/CLIPS/CRVSH/LA PEOR FIESTA DE NUESTRA VIDA no vino nadie.mp4",
+            titulo: "La peor fiesta de nuestra vida",
+          },
+          {
+            src: "./videos/CLIPS/CRVSH/7 CHICAS VS 15 CHICOS - GLOBO CALIENTE.mp4",
+            titulo: "7 chicas VS 15 chicos - Globo caliente",
+          },
+          {
+            src: "./videos/CLIPS/CRVSH/CAMBIÉ MI TRABAJO CON UN DESCONOCIDO POR UNA NOCHE.mp4",
+            titulo: "Cambié mi trabajo con un desconocido por una noche",
+          },
+          {
+            src: "./videos/CLIPS/CRVSH/CLASIFICANDO MUJERES POR SU ATRACTIVO  5 CHICAS VS 5 CHICOS.mp4",
+            titulo: "Clasificando mujeres por su atractivo - 5 chicas VS 5 chicos",
+          },
+        ]);
+
+        const vmvVideos = document.getElementById("vmv-videos");
+        const vmvItems = document.getElementById("vmv-items");
+        const vmvLista = document.getElementById("vmv-lista");
+        const vmvFill = document.getElementById("vmv-fill");
+        const vmvPunto = document.getElementById("vmv-punto");
+        const vmvWatch = document.getElementById("vmv-watch");
+        const vmvN = videosMasVistos.length;
+        const VMV_MQ =
+          "(max-width: 800px) and (min-height: 501px), (max-aspect-ratio: 1/1)";
+        const vmvHoriz = () => window.matchMedia(VMV_MQ).matches;
+        let vmvActual = 0;
+        let vmvArrastrando = false;
+        let vmvPausado = false;
+        let vmvIniciado = false;
+
+        const vmvVideoEls = videosMasVistos.map((data, index) => {
+          const video = document.createElement("video");
+          video.muted = true;
+          video.playsInline = true;
+          video.preload = index === 0 ? "auto" : "none";
+          video.src = encodeURI(data.src);
+          video.addEventListener("ended", () => {
+            if (vmvIniciado && !vmvArrastrando && index === vmvActual) {
+              vmvActivar((index + 1) % vmvN);
+            }
+          });
+          video.addEventListener("error", () => {
+            if (vmvIniciado && index === vmvActual) {
+              window.setTimeout(() => {
+                if (vmvIniciado && !vmvPausado && index === vmvActual) {
+                  vmvActivar((index + 1) % vmvN);
+                }
+              }, 1500);
+            }
+          });
+          vmvVideos.appendChild(video);
+          return video;
         });
-      });
 
-      // --- Transformación Videos <-> Lista ---
-      let isViewSwitching = false;
-      let userChoseView = false;
-      const VIEW_SWITCH_MS = 700;
+        const vmvItemEls = videosMasVistos.map((data, index) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "vmv-item";
+          button.textContent = data.titulo;
+          button.title = data.titulo;
+          button.addEventListener("click", () => vmvActivar(index));
+          vmvItems.appendChild(button);
+          return button;
+        });
 
-      function setHCardsCollapsed(collapsed) {
-        hItems.forEach((item, i) => {
-          if (collapsed) {
-            const offset = Math.abs(i - CENTER_DOM_INDEX);
-            const dir = i % 2 === 0 ? -1 : 1;
-            item.style.transitionDelay = `${Math.min(offset * 30, 260)}ms`;
-            item.style.transform = `scale(.32) translateY(${dir * 90}px)`;
-            item.style.opacity = "0";
+        function vmvResaltar(index) {
+          vmvItemEls.forEach((item, itemIndex) => {
+            const distance = Math.abs(itemIndex - index);
+            item.style.setProperty("--d", distance);
+            item.classList.toggle("on", itemIndex === index);
+          });
+        }
+
+        function vmvCentrar(index, delta = 0, animate = true) {
+          const item = vmvItemEls[index];
+          vmvItems.style.transition = animate ? "" : "none";
+          if (vmvHoriz()) {
+            const center = item.offsetLeft + item.offsetWidth / 2;
+            vmvItems.style.transform = `translate(${vmvLista.clientWidth / 2 - center + delta}px, 0)`;
           } else {
-            item.style.transitionDelay = "";
-            item.style.transform = "";
-            item.style.opacity = "";
-          }
-        });
-      }
-
-      function switchView(target) {
-        if (isViewSwitching || section.dataset.view === target) return;
-        isViewSwitching = true;
-
-        setHCardsCollapsed(target === "lista");
-        section.dataset.view = target;
-
-        setTimeout(() => {
-          isViewSwitching = false;
-        }, VIEW_SWITCH_MS);
-      }
-
-      // --- Carrusel horizontal ---
-      const hCarousel = document.querySelector(".h-carousel");
-      let isTransitioning = false;
-
-      hTrack.innerHTML = PROYECTOS.map(hItemHTML).join("");
-      let hItems = Array.from(hTrack.querySelectorAll(".h-card-wrapper"));
-
-      const CENTER_DOM_INDEX = 4;
-
-      function initializeCircularOrder(targetId) {
-        const currentIndex = hItems.findIndex(
-          (item) => item.dataset.video === targetId,
-        );
-        const diff = currentIndex - CENTER_DOM_INDEX;
-
-        if (diff > 0) {
-          for (let i = 0; i < diff; i++) {
-            hTrack.appendChild(hTrack.firstElementChild);
-          }
-        } else if (diff < 0) {
-          for (let i = 0; i < Math.abs(diff); i++) {
-            hTrack.insertBefore(
-              hTrack.lastElementChild,
-              hTrack.firstElementChild,
-            );
+            const center = item.offsetTop + item.offsetHeight / 2;
+            vmvItems.style.transform = `translate(0, ${vmvLista.clientHeight * 0.55 - center + delta}px)`;
           }
         }
-        hItems = Array.from(hTrack.querySelectorAll(".h-card-wrapper"));
-      }
 
-      initializeCircularOrder("v3");
-
-      function updateSelectedItemClasses() {
-        hItems.forEach((item, i) => {
-          const isSel = i === CENTER_DOM_INDEX;
-          item.classList.toggle("is-selected", isSel);
-        });
-      }
-
-      function centerSelected(animate = true) {
-        updateSelectedItemClasses();
-        const centerItem = hItems[CENTER_DOM_INDEX];
-        const containerWidth = hCarousel.clientWidth;
-        const itemOffsetLeft = centerItem.offsetLeft;
-        const itemWidth = centerItem.offsetWidth;
-        const targetX = containerWidth / 2 - (itemOffsetLeft + itemWidth / 2);
-
-        hTrack.style.transition = animate
-          ? "transform .7s cubic-bezier(0.34, 1.56, 0.64, 1)"
-          : "none";
-        hTrack.style.transform = `translateX(${targetX}px)`;
-      }
-
-      function rotateCarousel(steps) {
-        if (steps === 0 || isTransitioning) return;
-        isTransitioning = true;
-
-        const animateShift = () => {
-          const targetDomIndex = CENTER_DOM_INDEX + steps;
-          const targetItem = hItems[targetDomIndex];
-          const containerWidth = hCarousel.clientWidth;
-          const targetX =
-            containerWidth / 2 -
-            (targetItem.offsetLeft + targetItem.offsetWidth / 2);
-
-          hTrack.style.transition =
-            "transform .7s cubic-bezier(0.34, 1.56, 0.64, 1)";
-          hTrack.style.transform = `translateX(${targetX}px)`;
-
-          hItems.forEach((item, i) => {
-            item.classList.toggle("is-selected", i === targetDomIndex);
-          });
-
-          setTimeout(() => {
-            if (steps > 0) {
-              for (let i = 0; i < steps; i++)
-                hTrack.appendChild(hTrack.firstElementChild);
-            } else {
-              for (let i = 0; i < Math.abs(steps); i++)
-                hTrack.insertBefore(
-                  hTrack.lastElementChild,
-                  hTrack.firstElementChild,
-                );
-            }
-            hItems = Array.from(hTrack.querySelectorAll(".h-card-wrapper"));
-            centerSelected(false);
-            isTransitioning = false;
-          }, 600);
-        };
-        requestAnimationFrame(animateShift);
-      }
-
-      function attachHItemEvents() {
-        hItems.forEach((wrapper) => {
-          const item = wrapper.querySelector(".h-item");
-          const video = wrapper.querySelector("video");
-          const expandBtn = wrapper.querySelector(".h-expand");
-
-          wrapper.addEventListener("mouseenter", () => {
-            item.classList.add("is-playing");
-            video.currentTime = 0;
-            video.play().catch(() => { });
-          });
-
-          wrapper.addEventListener("mouseleave", () => {
-            item.classList.remove("is-playing");
-            video.pause();
-          });
-
-          wrapper.addEventListener("click", (e) => {
-            if (isTransitioning) return;
-            const rect = item.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            const ripple = document.createElement("span");
-            ripple.className = wrapper.classList.contains("item-alt")
-              ? "ripple-drop ripple-alt"
-              : "ripple-drop";
-            ripple.style.left = `${x}px`;
-            ripple.style.top = `${y}px`;
-            item.appendChild(ripple);
-            setTimeout(() => ripple.remove(), 750);
-
-            const clickedIndex = hItems.indexOf(wrapper);
-            rotateCarousel(clickedIndex - CENTER_DOM_INDEX);
-          });
-
-          expandBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            openModal(wrapper.dataset.video);
-          });
-        });
-      }
-
-      attachHItemEvents();
-      centerSelected(false);
-
-      let resizeTimer;
-      window.addEventListener("resize", () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => centerSelected(false), 150);
-      });
-
-      // --- Vista Lista: carrusel vertical ---
-      const vCarousel = document.querySelector(".v-carousel");
-      let isVTransitioning = false;
-      let vItems = Array.from(vTrack.querySelectorAll(".v-item"));
-      const V_CENTER_DOM_INDEX = 4;
-
-      function initializeVCircularOrder(targetId) {
-        const currentIndex = vItems.findIndex(
-          (item) => item.dataset.video === targetId,
-        );
-        const diff = currentIndex - V_CENTER_DOM_INDEX;
-        if (diff > 0) {
-          for (let i = 0; i < diff; i++)
-            vTrack.appendChild(vTrack.firstElementChild);
-        } else if (diff < 0) {
-          for (let i = 0; i < Math.abs(diff); i++)
-            vTrack.insertBefore(
-              vTrack.lastElementChild,
-              vTrack.firstElementChild,
-            );
+        function vmvMarcar(index, animate = true) {
+          vmvResaltar(index);
+          vmvCentrar(index, 0, animate);
+          vmvFill.style.width = "0%";
+          vmvPunto.style.left = "0%";
         }
-        vItems = Array.from(vTrack.querySelectorAll(".v-item"));
-      }
 
-      function markActiveVideo(id) {
-        vItems.forEach((item) =>
-          item.classList.toggle("active", item.dataset.video === id),
-        );
-        document
-          .querySelectorAll(".side-list li")
-          .forEach((li) =>
-            li.classList.toggle("active", li.dataset.video === id),
-          );
-      }
+        function vmvActivar(index) {
+          vmvActual = index;
+          vmvMarcar(index);
+          vmvVideoEls.forEach((video, videoIndex) => {
+            video.classList.toggle("on", videoIndex === index);
+            if (videoIndex !== index) video.pause();
+          });
 
-      function centerVSelected(animate = true) {
-        const centerItem = vItems[V_CENTER_DOM_INDEX];
-        markActiveVideo(centerItem.dataset.video);
-        const containerHeight = vCarousel.clientHeight;
-        const itemOffsetTop = centerItem.offsetTop;
-        const itemHeight = centerItem.offsetHeight;
-        const targetY =
-          containerHeight / 2 - (itemOffsetTop + itemHeight / 2);
-
-        vTrack.style.transition = animate
-          ? "transform .7s cubic-bezier(0.34, 1.56, 0.64, 1)"
-          : "none";
-        vTrack.style.transform = `translateY(${targetY}px)`;
-      }
-
-      function rotateVCarousel(steps) {
-        if (steps === 0 || isVTransitioning) return;
-        isVTransitioning = true;
-
-        const animateShift = () => {
-          const targetDomIndex = V_CENTER_DOM_INDEX + steps;
-          const targetItem = vItems[targetDomIndex];
-          const containerHeight = vCarousel.clientHeight;
-          const targetY =
-            containerHeight / 2 -
-            (targetItem.offsetTop + targetItem.offsetHeight / 2);
-
-          vTrack.style.transition =
-            "transform .7s cubic-bezier(0.34, 1.56, 0.64, 1)";
-          vTrack.style.transform = `translateY(${targetY}px)`;
-          markActiveVideo(targetItem.dataset.video);
-
-          setTimeout(() => {
-            if (steps > 0) {
-              for (let i = 0; i < steps; i++)
-                vTrack.appendChild(vTrack.firstElementChild);
-            } else {
-              for (let i = 0; i < Math.abs(steps); i++)
-                vTrack.insertBefore(
-                  vTrack.lastElementChild,
-                  vTrack.firstElementChild,
-                );
-            }
-            vItems = Array.from(vTrack.querySelectorAll(".v-item"));
-            centerVSelected(false);
-            isVTransitioning = false;
-          }, 600);
-        };
-        requestAnimationFrame(animateShift);
-      }
-
-      function goToVideoInVCarousel(id) {
-        if (isVTransitioning) return;
-        const idx = vItems.findIndex((item) => item.dataset.video === id);
-        if (idx === -1) return;
-        if (idx !== V_CENTER_DOM_INDEX) {
-          rotateVCarousel(idx - V_CENTER_DOM_INDEX);
-        }
-      }
-
-      vItems.forEach((item) => {
-        const video = item.querySelector("video");
-        const expandBtn = item.querySelector(".v-expand");
-
-        item.addEventListener("click", () =>
-          goToVideoInVCarousel(item.dataset.video),
-        );
-        item.addEventListener("mouseenter", () => {
-          item.classList.add("is-playing");
+          const video = vmvVideoEls[index];
           video.currentTime = 0;
-          video.play().catch(() => { });
-        });
-        item.addEventListener("mouseleave", () => {
-          item.classList.remove("is-playing");
-          video.pause();
-        });
-
-        expandBtn.addEventListener("click", (e) => {
-          e.stopPropagation();
-          openModal(item.dataset.video);
-        });
-      });
-
-      document.querySelectorAll(".side-list li").forEach((li) => {
-        li.addEventListener("click", () =>
-          goToVideoInVCarousel(li.dataset.video),
-        );
-      });
-
-      let vWheelLocked = false;
-      vCarousel.addEventListener(
-        "wheel",
-        (e) => {
-          e.preventDefault();
-          if (isVTransitioning || vWheelLocked) return;
-          const dir = e.deltaY > 0 ? 1 : -1;
-          vWheelLocked = true;
-          rotateVCarousel(dir);
-          setTimeout(() => {
-            vWheelLocked = false;
-          }, 180);
-        },
-        { passive: false },
-      );
-
-      // --- Swipe táctil (pasar el dedo) en el carrusel vertical ---
-      // Se comporta igual que la rueda del ratón: cada cierta distancia
-      // arrastrada con el dedo, avanza/retrocede un elemento.
-      const V_SWIPE_THRESHOLD = 42; // px de arrastre necesarios por paso
-      let vTouchLastY = null;
-      let vTouchAccum = 0;
-
-      vCarousel.addEventListener(
-        "touchstart",
-        (e) => {
-          vTouchLastY = e.touches[0].clientY;
-          vTouchAccum = 0;
-        },
-        { passive: true },
-      );
-
-      vCarousel.addEventListener(
-        "touchmove",
-        (e) => {
-          if (vTouchLastY === null) return;
-          e.preventDefault(); // evita que la página haga scroll en su lugar
-          const currentY = e.touches[0].clientY;
-          const delta = vTouchLastY - currentY; // dedo hacia arriba = avanzar (igual que deltaY > 0)
-          vTouchLastY = currentY;
-          if (isVTransitioning) return;
-
-          vTouchAccum += delta;
-          if (Math.abs(vTouchAccum) >= V_SWIPE_THRESHOLD) {
-            rotateVCarousel(vTouchAccum > 0 ? 1 : -1);
-            vTouchAccum = 0;
-          }
-        },
-        { passive: false },
-      );
-
-      vCarousel.addEventListener(
-        "touchend",
-        () => {
-          vTouchLastY = null;
-          vTouchAccum = 0;
-        },
-        { passive: true },
-      );
-
-      initializeVCircularOrder("v3");
-      centerVSelected(false);
-
-      let vResizeTimer;
-      window.addEventListener("resize", () => {
-        clearTimeout(vResizeTimer);
-        vResizeTimer = setTimeout(() => centerVSelected(false), 150);
-      });
-
-      // --- Vista automática en móvil: por debajo de 768px arranca en modo Lista ---
-      // Si el usuario cambia manualmente el toggle, dejamos de forzar la vista
-      // para respetar su elección.
-      function setActiveToggle(view) {
-        document.querySelectorAll(".toggle-btn").forEach((b) => {
-          const active = b.dataset.viewBtn === view;
-          b.classList.toggle("active", active);
-          b.setAttribute("aria-selected", active ? "true" : "false");
-        });
-      }
-
-      const MOBILE_VIEW_QUERY = window.matchMedia("(max-width: 768px)");
-
-      function applyResponsiveView() {
-        if (userChoseView) return;
-        const target = MOBILE_VIEW_QUERY.matches ? "lista" : "videos";
-        setActiveToggle(target);
-        switchView(target);
-      }
-
-      applyResponsiveView();
-      if (MOBILE_VIEW_QUERY.addEventListener) {
-        MOBILE_VIEW_QUERY.addEventListener("change", applyResponsiveView);
-      } else {
-        // Fallback para navegadores muy antiguos
-        MOBILE_VIEW_QUERY.addListener(applyResponsiveView);
-      }
-
-      // --- Manejo del Modal ---
-      function openModal(id) {
-        const proyecto = PROYECTOS.find((p) => p.id === id);
-        if (!proyecto) return;
-        modalVideo.src = proyecto.src;
-        modalTitle.textContent = proyecto.titulo;
-
-        document.getElementById("modalInfoLink").href = proyecto.link || "#";
-        modalInfoWrapper.classList.remove("open");
-        modalInfoToggle.setAttribute("aria-expanded", "false");
-
-        modal.classList.add("open");
-        modal.setAttribute("aria-hidden", "true");
-
-        modalVideo
-          .play()
-          .then(() => {
-            modalPlayPause.classList.remove("visible");
-            modalPlayPause.classList.add("is-playing");
-          })
-          .catch(() => {
-            modalPlayPause.classList.add("visible");
-            modalPlayPause.classList.remove("is-playing");
+          video.play().catch((error) => {
+            console.warn("No se pudo reproducir el vídeo seleccionado:", error);
           });
-      }
-
-      function closeModal() {
-        modal.classList.remove("open");
-        modalVideo.pause();
-        modalVideo.removeAttribute("src");
-        modalVideo.load();
-        modalPlayPause.classList.remove("visible", "is-playing", "flash");
-        modalInfoWrapper.classList.remove("open");
-        modalInfoToggle.setAttribute("aria-expanded", "false");
-      }
-
-      function togglePlay() {
-        modalPlayPause.classList.remove("flash");
-
-        if (modalVideo.paused) {
-          modalVideo
-            .play()
-            .then(() => {
-              modalPlayPause.classList.remove("visible");
-              modalPlayPause.classList.add("is-playing");
-              void modalPlayPause.offsetWidth;
-              modalPlayPause.classList.add("flash");
-              setTimeout(() => {
-                modalPlayPause.classList.remove("flash");
-              }, 750);
-            })
-            .catch(() => { });
-        } else {
-          modalVideo.pause();
-          modalPlayPause.classList.remove("is-playing");
-          modalPlayPause.classList.add("visible");
+          vmvVideoEls[(index + 1) % vmvN].preload = "auto";
         }
-      }
 
-      modalVideo.addEventListener("click", togglePlay);
-      modalPlayPause.addEventListener("click", (e) => {
-        e.stopPropagation();
-        togglePlay();
-      });
+        let vmvRaf = 0;
+        let vmvVisible = true;
+        function vmvArrancar() {
+          if (!vmvRaf) vmvRaf = requestAnimationFrame(vmvTick);
+        }
 
-      modalVideo.addEventListener("ended", closeModal);
-      modalClose.addEventListener("click", closeModal);
-      modalInfoToggle.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const isOpen = modalInfoWrapper.classList.toggle("open");
-        modalInfoToggle.setAttribute("aria-expanded", String(isOpen));
-      });
-      modal.addEventListener("click", (e) => {
-        if (e.target === modal) closeModal();
-      });
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") closeModal();
-      });
+        function vmvTick() {
+          vmvRaf = 0;
+          if (vmvPausado || !vmvVisible) return;
+          const video = vmvVideoEls[vmvActual];
+          if (video.duration && Number.isFinite(video.duration)) {
+            const limit = Math.min(TIEMPO_MAX, video.duration);
+            const progress = Math.min(video.currentTime / limit, 1);
+            vmvFill.style.width = `${progress * 100}%`;
+            vmvPunto.style.left = `${progress * 100}%`;
+            if (progress >= 1 && !vmvArrastrando && !video.ended) {
+              vmvActivar((vmvActual + 1) % vmvN);
+            }
+          }
+          vmvArrancar();
+        }
 
-      // --- Formulario de contacto (de momento solo maqueta, sin envío real) ---
-      const contactoForm = document.getElementById("contactoForm");
-      if (contactoForm) {
-        contactoForm.addEventListener("submit", (e) => {
-          e.preventDefault();
+        function iniciarVmv() {
+          if (vmvIniciado) return;
+          vmvIniciado = true;
+          vmvActivar(0);
+          vmvArrancar();
+        }
+
+        vmvVideoEls[0].classList.add("on");
+        vmvMarcar(0);
+
+        /* ---------- Arrastrar la lista (ratón y táctil) ---------- */
+        let vmvMovido = false;
+        let vmvInicio = 0;
+        let vmvDest = 0;
+
+        const vmvCentroItem = (index) => {
+          const item = vmvItemEls[index];
+          return vmvHoriz()
+            ? item.offsetLeft + item.offsetWidth / 2
+            : item.offsetTop + item.offsetHeight / 2;
+        };
+
+        vmvLista.addEventListener("pointerdown", (event) => {
+          if (event.pointerType === "mouse" && event.button !== 0) return;
+          vmvArrastrando = true;
+          vmvMovido = false;
+          vmvDest = vmvActual;
+          vmvInicio = vmvHoriz() ? event.clientX : event.clientY;
         });
-      }
-    })();
-  </script>
-</body>
 
+        window.addEventListener("pointermove", (event) => {
+          if (!vmvArrastrando) return;
+          const delta =
+            (vmvHoriz() ? event.clientX : event.clientY) - vmvInicio;
+          if (!vmvMovido && Math.abs(delta) < 6) return;
+          if (!vmvMovido) {
+            vmvMovido = true;
+            vmvLista.classList.add("drag");
+          }
+          vmvCentrar(vmvActual, delta, false);
+
+          const reference = vmvCentroItem(vmvActual) - delta;
+          let closest = 0;
+          let closestDistance = Infinity;
+          for (let index = 0; index < vmvN; index++) {
+            const distance = Math.abs(vmvCentroItem(index) - reference);
+            if (distance < closestDistance) {
+              closestDistance = distance;
+              closest = index;
+            }
+          }
+          if (closest !== vmvDest) {
+            vmvDest = closest;
+            vmvResaltar(closest);
+          }
+        });
+
+        function vmvSoltar() {
+          if (!vmvArrastrando) return;
+          vmvArrastrando = false;
+          vmvLista.classList.remove("drag");
+          if (!vmvMovido) {
+            if (vmvVideoEls[vmvActual].ended) {
+              vmvActivar((vmvActual + 1) % vmvN);
+            }
+            return;
+          }
+          if (vmvDest !== vmvActual) vmvActivar(vmvDest);
+          else if (vmvVideoEls[vmvActual].ended) {
+            vmvActivar((vmvActual + 1) % vmvN);
+          } else {
+            vmvMarcar(vmvActual);
+          }
+        }
+
+        window.addEventListener("pointerup", vmvSoltar);
+        window.addEventListener("pointercancel", vmvSoltar);
+
+        vmvLista.addEventListener(
+          "click",
+          (event) => {
+            if (vmvMovido && event.detail !== 0) {
+              event.stopPropagation();
+              event.preventDefault();
+              vmvMovido = false;
+            }
+          },
+          true,
+        );
+
+        window.addEventListener("resize", () => vmvMarcar(vmvActual, false));
+        if (document.fonts) {
+          document.fonts.ready.then(() => vmvMarcar(vmvActual, false));
+        }
+
+        new IntersectionObserver(
+          ([entry]) => {
+            vmvVisible = entry.isIntersecting;
+            if (!vmvIniciado || vmvPausado) return;
+            const video = vmvVideoEls[vmvActual];
+            if (vmvVisible) {
+              vmvArrancar();
+              video.play().catch((error) => {
+                console.warn("No se pudo reanudar el vídeo:", error);
+              });
+            } else {
+              video.pause();
+            }
+          },
+          { threshold: 0.2 },
+        ).observe(document.getElementById("videos-mas-vistos"));
+
+        /* ---------- Popup de vídeo ---------- */
+        const vmvModal = document.getElementById("vmv-modal");
+        const vmvModalVideo = document.getElementById("vmv-modal-video");
+        const vmvModalTitulo = document.getElementById("vmv-modal-titulo");
+
+        vmvWatch.addEventListener("click", () => {
+          const data = videosMasVistos[vmvActual];
+          vmvPausado = true;
+          vmvVideoEls[vmvActual].pause();
+          document.body.classList.add("vmv-modal-open");
+          vmvModalTitulo.textContent = data.titulo;
+          vmvModalVideo.src = encodeURI(data.src);
+          vmvModal.showModal();
+          vmvModalVideo.play().catch((error) => {
+            console.warn("No se pudo reproducir el vídeo del popup:", error);
+          });
+        });
+
+        vmvModal.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && vmvModal.open) {
+            event.preventDefault();
+            vmvModal.close();
+          }
+        });
+
+        vmvModal.addEventListener("close", () => {
+          vmvModalVideo.pause();
+          vmvModalVideo.removeAttribute("src");
+          vmvModalVideo.load();
+          document.body.classList.remove("vmv-modal-open");
+          vmvPausado = false;
+          vmvVideoEls[vmvActual].play().catch((error) => {
+            console.warn("No se pudo reanudar el vídeo de fondo:", error);
+          });
+          vmvArrancar();
+        });
+
+        document
+          .getElementById("vmv-modal-cerrar")
+          .addEventListener("click", () => vmvModal.close());
+        vmvModal.addEventListener("click", (event) => {
+          if (event.target === vmvModal) vmvModal.close();
+        });
+
+        /* ---------- Orquestación de la secuencia de intro ---------- */
+        const loader = document.getElementById("intro-loader");
+        const overlay = document.getElementById("dark-overlay");
+        const logoWrap = document.getElementById("logo-reveal");
+        const mainPage = document.getElementById("main-page");
+        const headerFloat = document.getElementById("header-float");
+        const body = document.body;
+
+        const reduceMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+
+        function mostrarPaginaPrincipal() {
+          loader.remove();
+          logoWrap.remove();
+          body.classList.remove("lock-scroll");
+          mainPage.classList.add("visible");
+          headerFloat.classList.add("visible");
+          iniciarVmv();
+        }
+
+        if (reduceMotion) {
+          mostrarPaginaPrincipal();
+        } else {
+          const T_CARRUSEL = 1000; // 1s de carrusel antes del logo
+          const T_CAIDA = 750; // duración de la caída del logo
+          const T_ESPERA = 1000; // 1s el logo se queda mostrando el barrido
+          const T_ZOOM = 700; // duración del zoom de transición
+
+          // 1) A los 2s: oscurece el fondo y deja caer el logo
+          setTimeout(() => {
+            overlay.classList.add("active");
+            logoWrap.classList.add("drop");
+          }, T_CARRUSEL);
+
+          // 2) Tras la caída + 1s mostrando el logo: zoom de transición
+          setTimeout(
+            () => {
+              logoWrap.classList.add("zoom-out");
+              loader.classList.add("fade-out");
+            },
+            T_CARRUSEL + T_CAIDA + T_ESPERA,
+          );
+
+          // 3) Al terminar el zoom: revelar la página principal
+          setTimeout(
+            () => {
+              mostrarPaginaPrincipal();
+            },
+            T_CARRUSEL + T_CAIDA + T_ESPERA + T_ZOOM,
+          );
+        }
+        /* ---------- Formulario de contacto (envío por FormSubmit) ---------- */
+        const EMAIL_CONTACTO = "info.camilobotero@gmail.com";
+        const form = document.getElementById("contact-form");
+        const estado = document.getElementById("contact-status");
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const boton = form.querySelector("button[type=submit]");
+          const datos = Object.fromEntries(new FormData(form));
+          if (datos._honey) return; // anti-spam: lo rellenan solo los bots
+          delete datos._honey;
+
+          boton.disabled = true;
+          estado.className = "contact-status";
+          estado.textContent = "Enviando…";
+          try {
+            const r = await fetch(`https://formsubmit.co/ajax/${EMAIL_CONTACTO}`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json", Accept: "application/json" },
+              body: JSON.stringify({
+                ...datos,
+                _subject: `Nuevo mensaje de ${datos.nombre} desde la web`,
+                _template: "table",
+                _replyto: datos.correo,
+              }),
+            });
+            const res = await r.json();
+            if (!r.ok || String(res.success) === "false") throw new Error(res.message);
+            form.reset();
+            estado.textContent = "¡Mensaje enviado! Te responderé lo antes posible.";
+            estado.classList.add("ok");
+          } catch {
+            estado.textContent = `No se pudo enviar. Escríbeme directamente a ${EMAIL_CONTACTO}`;
+            estado.classList.add("error");
+          } finally {
+            boton.disabled = false;
+          }
+        });
+
+        /* ---------- Scroll suave (rueda y teclado; en táctil se usa el nativo) ---------- */
+        if (!reduceMotion && !matchMedia("(pointer: coarse)").matches) {
+          const root = document.documentElement;
+          const TAU = 110; // ms: más bajo = más ágil, más alto = más "flotante"
+          let objetivo = 0;
+          let actual = 0;
+          let raf = 0;
+          let t0 = 0;
+          const base = () => (raf ? objetivo : scrollY);
+          const bloqueado = () => body.classList.contains("lock-scroll") || vmvModal.open;
+
+          function paso(t) {
+            actual += (objetivo - actual) * (1 - Math.exp(-Math.max(0, t - t0) / TAU));
+            t0 = t;
+            if (Math.abs(objetivo - actual) < 0.5) actual = objetivo;
+            scrollTo(0, actual);
+            raf = actual === objetivo ? 0 : requestAnimationFrame(paso);
+          }
+
+          function ir(valor) {
+            if (!raf) {
+              actual = scrollY;
+              t0 = performance.now();
+              raf = requestAnimationFrame(paso);
+            }
+            objetivo = Math.max(0, Math.min(valor, root.scrollHeight - innerHeight));
+          }
+
+          addEventListener(
+            "wheel",
+            (e) => {
+              if (e.ctrlKey || bloqueado() || e.target.closest("textarea")) return;
+              e.preventDefault();
+              const f = e.deltaMode === 1 ? 32 : e.deltaMode === 2 ? innerHeight : 1;
+              ir(base() + e.deltaY * f);
+            },
+            { passive: false },
+          );
+
+          const TECLAS = { ArrowDown: 80, ArrowUp: -80, PageDown: 0.9, PageUp: -0.9, " ": 0.9 };
+          addEventListener("keydown", (e) => {
+            if (e.altKey || e.ctrlKey || e.metaKey || bloqueado()) return;
+            if (e.target.closest("input, textarea, select, button, video, [contenteditable]")) return;
+            const v = TECLAS[e.key];
+            if (e.key === "Home" || e.key === "End") ir(e.key === "Home" ? 0 : root.scrollHeight);
+            else if (v !== undefined) {
+              const signo = e.shiftKey && e.key === " " ? -1 : 1;
+              ir(base() + (Math.abs(v) < 1 ? v * innerHeight : v) * signo);
+            } else return;
+            e.preventDefault();
+          });
+
+          // Si algo externo mueve el scroll (barra, anclas), se cancela la animación
+          addEventListener("scroll", () => {
+            if (raf && Math.abs(scrollY - actual) > 3) {
+              cancelAnimationFrame(raf);
+              raf = 0;
+            }
+          }, { passive: true });
+        }
+      })();
+    </script>
+  </body>
 </html>
